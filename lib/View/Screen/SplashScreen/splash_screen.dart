@@ -3,11 +3,18 @@ import 'package:get/get.dart';
 import '../../../Utils/AppImg/app_img.dart';
 import 'Controller/splash_controller.dart';
 
-class SplashScreen extends GetView<SplashController> {
+class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Ensure SplashController is initialized and timer starts
+    if (!Get.isRegistered<SplashController>()) {
+      Get.put(SplashController());
+    } else {
+      Get.find<SplashController>();
+    }
+
     return Scaffold(
       body: Stack(
         children: [

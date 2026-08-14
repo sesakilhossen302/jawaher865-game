@@ -13,7 +13,7 @@ class AppRoute {
       name: splashScreen,
       page: () => const SplashScreen(),
       binding: BindingsBuilder(() {
-        Get.lazyPut<SplashController>(() => SplashController());
+        Get.put<SplashController>(SplashController());
       }),
     ),
     GetPage(
