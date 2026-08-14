@@ -28,19 +28,13 @@ class OtpScreen extends GetView<OtpController> {
       decoration: BoxDecoration(
         color: const Color(0xFF065967).withValues(alpha: 0.85),
         borderRadius: BorderRadius.circular(14.r),
-        border: Border.all(
-          color: const Color(0xFF38E5D8),
-          width: 1.5.w,
-        ),
+        border: Border.all(color: const Color(0xFF38E5D8), width: 1.5.w),
       ),
     );
 
     final focusedPinTheme = defaultPinTheme.copyWith(
       decoration: defaultPinTheme.decoration!.copyWith(
-        border: Border.all(
-          color: Colors.white,
-          width: 2.w,
-        ),
+        border: Border.all(color: Colors.white, width: 2.w),
       ),
     );
 
@@ -111,13 +105,13 @@ class OtpScreen extends GetView<OtpController> {
                     ),
                   ),
 
-                  SizedBox(height: 20.h),
+                  SizedBox(height: 30.h),
 
                   // Character & Logo Illustration Image
                   Center(
                     child: Image.asset(
-                      AppImg.signPageImg,
-                      width: 175.w,
+                      AppImg.welcomeSplashImg,
+                      width: 200.w,
                       fit: BoxFit.contain,
                       errorBuilder: (context, error, stackTrace) {
                         return SizedBox(height: 100.h);
@@ -125,7 +119,7 @@ class OtpScreen extends GetView<OtpController> {
                     ),
                   ),
 
-                  SizedBox(height: 24.h),
+                  SizedBox(height: 36.h),
 
                   // Title Text: Verify Your Email
                   Center(
@@ -140,7 +134,7 @@ class OtpScreen extends GetView<OtpController> {
                     ),
                   ),
 
-                  SizedBox(height: 28.h),
+                  SizedBox(height: 32.h),
 
                   // Pinput 6-Digit OTP Field
                   Center(
@@ -156,7 +150,7 @@ class OtpScreen extends GetView<OtpController> {
                     ),
                   ),
 
-                  SizedBox(height: 32.h),
+                  SizedBox(height: 40.h),
 
                   // Verify and Continue Button
                   SizedBox(
@@ -187,7 +181,7 @@ class OtpScreen extends GetView<OtpController> {
                     ),
                   ),
 
-                  SizedBox(height: 24.h),
+                  SizedBox(height: 30.h),
 
                   // Resend Code Option
                   Center(
@@ -205,7 +199,7 @@ class OtpScreen extends GetView<OtpController> {
                     ),
                   ),
 
-                  SizedBox(height: 24.h),
+                  SizedBox(height: 40.h),
                 ],
               ),
             ),
