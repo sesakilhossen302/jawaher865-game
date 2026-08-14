@@ -15,37 +15,31 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF00C9A7),
-      body: Stack(
-        children: [
-          // Full-Screen Seamless Background Image
-          Positioned.fill(
-            child: Image.asset(
-              AppImg.globalBackground,
-              fit: BoxFit.fill,
-              width: double.infinity,
-              height: double.infinity,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xFF00C9A7), Color(0xFF008080)],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                  ),
-                );
-              },
+      body: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            // FULL PAGE BACKGROUND
+            Positioned.fill(
+              child: Image.asset(AppImg.globalBackground, fit: BoxFit.cover),
             ),
-          ),
 
-          // Main Screen Content
-          SafeArea(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 24.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+            // CONTENT ON TOP OF BACKGROUND
+            SafeArea(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight:
+                        MediaQuery.of(context).size.height -
+                        MediaQuery.of(context).padding.top -
+                        MediaQuery.of(context).padding.bottom,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                   SizedBox(height: 10.h),
 
                   // Top Navigation Bar / Back Button
@@ -364,9 +358,11 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
               ),
             ),
           ),
-        ],
-      ),
-    );
+        ),
+      ],
+    ),
+  ),
+);
   }
 
   Widget _buildTextField({

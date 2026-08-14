@@ -2,44 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:pinput/pinput.dart';
 import '../../../Utils/AppIcons/app_icons.dart';
 import '../../../Utils/AppImg/app_img.dart';
 import '../../../Utils/StaticString/static_string.dart';
-import 'Controller/otp_controller.dart';
+import 'Controller/forgot_password_controller.dart';
 
-class OtpScreen extends GetView<OtpController> {
-  const OtpScreen({super.key});
+class ForgotPasswordScreen extends GetView<ForgotPasswordController> {
+  const ForgotPasswordScreen({super.key});
 
   static const String segoeFont = 'Segoe UI';
 
   @override
   Widget build(BuildContext context) {
-    // Custom Pinput Theme matching UI design
-    final defaultPinTheme = PinTheme(
-      width: 48.w,
-      height: 54.h,
-      textStyle: TextStyle(
-        fontFamily: segoeFont,
-        fontSize: 20.sp,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
-      ),
-      decoration: BoxDecoration(
-        color: const Color(0xFF065967).withValues(alpha: 0.85),
-        borderRadius: BorderRadius.circular(14.r),
-        border: Border.all(color: const Color(0xFF38E5D8), width: 1.5.w),
-      ),
-    );
-
-    final focusedPinTheme = defaultPinTheme.copyWith(
-      decoration: defaultPinTheme.decoration!.copyWith(
-        border: Border.all(color: Colors.white, width: 2.w),
-      ),
-    );
-
-    final submittedPinTheme = defaultPinTheme;
-
     return Scaffold(
       body: SizedBox(
         width: double.infinity,
@@ -47,12 +21,16 @@ class OtpScreen extends GetView<OtpController> {
         child: Stack(
           fit: StackFit.expand,
           children: [
+            // ============================================
             // FULL PAGE BACKGROUND
+            // ============================================
             Positioned.fill(
               child: Image.asset(AppImg.globalBackground, fit: BoxFit.cover),
             ),
 
+            // ============================================
             // CONTENT ON TOP OF BACKGROUND
+            // ============================================
             SafeArea(
               child: SingleChildScrollView(
                 padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -68,7 +46,7 @@ class OtpScreen extends GetView<OtpController> {
                     children: [
                       SizedBox(height: 12.h),
 
-                      // Top Navigation Bar / Back Button
+                      // Back Button
                       Align(
                         alignment: Alignment.centerLeft,
                         child: GestureDetector(
@@ -101,7 +79,7 @@ class OtpScreen extends GetView<OtpController> {
 
                       SizedBox(height: 20.h),
 
-                      // Character & Logo Illustration Image
+                      // Character & Logo
                       Center(
                         child: Image.asset(
                           AppImg.welcomeSplashImg,
@@ -115,10 +93,10 @@ class OtpScreen extends GetView<OtpController> {
 
                       SizedBox(height: 24.h),
 
-                      // Title Text: Verify Your Email
+                      // Forgot Password
                       Center(
                         child: Text(
-                          StaticString.verifyYourEmail,
+                          StaticString.forgotPasswordTitle,
                           style: TextStyle(
                             fontFamily: segoeFont,
                             fontSize: 22.sp,
@@ -130,28 +108,22 @@ class OtpScreen extends GetView<OtpController> {
 
                       SizedBox(height: 28.h),
 
-                      // Pinput 6-Digit OTP Field
-                      Center(
-                        child: Pinput(
-                          length: 6,
-                          controller: controller.pinController,
-                          defaultPinTheme: defaultPinTheme,
-                          focusedPinTheme: focusedPinTheme,
-                          submittedPinTheme: submittedPinTheme,
-                          separatorBuilder: (index) => SizedBox(width: 8.w),
-                          showCursor: true,
-                          onCompleted: (pin) => controller.verifyOtp(),
-                        ),
+                      // Email
+                      _buildInputField(
+                        controller: controller.emailController,
+                        hintText: StaticString.email,
+                        svgPrefixIcon: AppIcons.emailIcon,
+                        keyboardType: TextInputType.emailAddress,
                       ),
 
                       SizedBox(height: 32.h),
 
-                      // Verify and Continue Button
+                      // Send Verification Code
                       SizedBox(
                         width: double.infinity,
                         height: 54.h,
                         child: ElevatedButton(
-                          onPressed: controller.verifyOtp,
+                          onPressed: controller.sendVerificationCode,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF3358FE),
                             elevation: 0,
@@ -164,30 +136,12 @@ class OtpScreen extends GetView<OtpController> {
                             ),
                           ),
                           child: Text(
-                            StaticString.verifyAndContinue,
+                            StaticString.sendVerificationCode,
                             style: TextStyle(
                               fontFamily: segoeFont,
                               fontSize: 16.sp,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(height: 24.h),
-
-                      // Resend Code Option
-                      Center(
-                        child: GestureDetector(
-                          onTap: controller.resendCode,
-                          child: Text(
-                            StaticString.resendCode,
-                            style: TextStyle(
-                              fontFamily: segoeFont,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                              color: const Color(0xFFB4ECE7),
                             ),
                           ),
                         ),
@@ -200,6 +154,59 @@ class OtpScreen extends GetView<OtpController> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInputField({
+    required TextEditingController controller,
+    required String hintText,
+    required String svgPrefixIcon,
+    TextInputType keyboardType = TextInputType.text,
+  }) {
+    return Container(
+      height: 54.h,
+      decoration: BoxDecoration(
+        color: const Color(0xFF065967).withValues(alpha: 0.85),
+        borderRadius: BorderRadius.circular(18.r),
+        border: Border.all(color: const Color(0xFF38E5D8), width: 1.5.w),
+      ),
+      child: TextField(
+        controller: controller,
+        keyboardType: keyboardType,
+        style: TextStyle(
+          fontFamily: segoeFont,
+          fontSize: 15.sp,
+          color: Colors.white,
+        ),
+        decoration: InputDecoration(
+          hintText: hintText,
+          hintStyle: TextStyle(
+            fontFamily: segoeFont,
+            fontSize: 15.sp,
+            color: Colors.white.withValues(alpha: 0.9),
+          ),
+          prefixIcon: Padding(
+            padding: EdgeInsets.all(14.r),
+            child: SvgPicture.asset(
+              svgPrefixIcon,
+              width: 20.w,
+              height: 20.h,
+              colorFilter: const ColorFilter.mode(
+                Colors.white,
+                BlendMode.srcIn,
+              ),
+              errorBuilder: (context, error, stackTrace) {
+                return Icon(Icons.input, color: Colors.white, size: 20.sp);
+              },
+            ),
+          ),
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.symmetric(
+            vertical: 14.h,
+            horizontal: 16.w,
+          ),
         ),
       ),
     );

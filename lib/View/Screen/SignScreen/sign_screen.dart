@@ -15,119 +15,112 @@ class SignScreen extends GetView<SignController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF00C9A7),
-      body: Stack(
-        children: [
-          // Global Background Image
-          Positioned.fill(
-            child: Image.asset(
-              AppImg.globalBackground,
-              fit: BoxFit.fill,
-              width: double.infinity,
-              height: double.infinity,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xFF00C9A7), Color(0xFF008080)],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                  ),
-                );
-              },
+      body: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            // FULL PAGE BACKGROUND
+            Positioned.fill(
+              child: Image.asset(AppImg.globalBackground, fit: BoxFit.cover),
             ),
-          ),
 
-          // Main Screen Content
-          SafeArea(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.w),
-              child: Column(
-                children: [
-                  SizedBox(height: 12.h),
+            // CONTENT ON TOP OF BACKGROUND
+            SafeArea(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight:
+                        MediaQuery.of(context).size.height -
+                        MediaQuery.of(context).padding.top -
+                        MediaQuery.of(context).padding.bottom,
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 12.h),
 
-                  // Top Navigation Bar / Back Button
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: GestureDetector(
-                      onTap: () => Get.back(),
-                      child: Container(
-                        padding: EdgeInsets.all(10.r),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white.withValues(alpha: 0.25),
-                        ),
-                        child: SvgPicture.asset(
-                          AppIcons.backIcon,
-                          width: 16.w,
-                          height: 16.h,
-                          colorFilter: const ColorFilter.mode(
-                            Colors.white,
-                            BlendMode.srcIn,
+                      // Top Navigation Bar / Back Button
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: GestureDetector(
+                          onTap: () => Get.back(),
+                          child: Container(
+                            padding: EdgeInsets.all(10.r),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white.withValues(alpha: 0.25),
+                            ),
+                            child: SvgPicture.asset(
+                              AppIcons.backIcon,
+                              width: 16.w,
+                              height: 16.h,
+                              colorFilter: const ColorFilter.mode(
+                                Colors.white,
+                                BlendMode.srcIn,
+                              ),
+                              errorBuilder: (context, error, stackTrace) {
+                                return Icon(
+                                  Icons.arrow_back_ios_new,
+                                  size: 16.sp,
+                                  color: Colors.white,
+                                );
+                              },
+                            ),
                           ),
+                        ),
+                      ),
+
+                      // Illustration Image Section
+                      Center(
+                        child: Image.asset(
+                          AppImg.signPageImg,
+                          width: 280.w,
+                          fit: BoxFit.contain,
                           errorBuilder: (context, error, stackTrace) {
-                            return Icon(
-                              Icons.arrow_back_ios_new,
-                              size: 16.sp,
-                              color: Colors.white,
-                            );
+                            return SizedBox(height: 200.h);
                           },
                         ),
-                      ),
-                    ),
-                  ),
-
-                  const Spacer(flex: 1),
-
-                  // Character & Logo Illustration Image
-                  Image.asset(
-                    AppImg.welcomeSplashImg,
-                    width: 250.w,
-                    fit: BoxFit.contain,
-                    errorBuilder: (context, error, stackTrace) {
-                      return SizedBox(height: 120.h);
-                    },
-                  ),
-
-                  SizedBox(height: 24.h),
-
-                  // Buttons Section
-                  Column(
-                    children: [
-                      // Continue with Google Button
-                      _buildSocialButton(
-                        onTap: () => controller.signInWithGoogle(),
-                        iconPath: AppIcons.googleIcon,
-                        label: StaticString.continueWithGoogle,
-                        backgroundColor: const Color(
-                          0xFF1E464C,
-                        ).withValues(alpha: 0.7),
-                        borderColor: const Color(
-                          0xFF5CA2A6,
-                        ).withValues(alpha: 0.4),
-                        textColor: Colors.white,
-                      ),
-
-                      SizedBox(height: 14.h),
-
-                      // Continue with Apple Button
-                      _buildSocialButton(
-                        onTap: () => controller.signInWithApple(),
-                        iconPath: AppIcons.appleIcon,
-                        label: StaticString.continueWithApple,
-                        backgroundColor: Colors.white,
-                        textColor: Colors.black,
                       ),
 
                       SizedBox(height: 20.h),
 
-                      // OR Divider
+                      // Social Login Options (Google & Apple)
+                      Column(
+                        children: [
+                          _buildSocialButton(
+                            onTap: () => controller.signInWithGoogle(),
+                            iconPath: AppIcons.googleIcon,
+                            label: StaticString.continueWithGoogle,
+                            backgroundColor: const Color(
+                              0xFF065967,
+                            ).withValues(alpha: 0.85),
+                            textColor: Colors.white,
+                          ),
+
+                          SizedBox(height: 14.h),
+
+                          _buildSocialButton(
+                            onTap: () => controller.signInWithApple(),
+                            iconPath: AppIcons.appleIcon,
+                            label: StaticString.continueWithApple,
+                            backgroundColor: const Color(
+                              0xFF065967,
+                            ).withValues(alpha: 0.85),
+                            textColor: Colors.white,
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(height: 20.h),
+
+                      // Divider with 'OR' Text
                       Row(
                         children: [
-                          Expanded(
+                          const Expanded(
                             child: Divider(
-                              color: Colors.white.withValues(alpha: 0.35),
+                              color: Color(0xFF38E5D8),
                               thickness: 1,
                             ),
                           ),
@@ -137,16 +130,15 @@ class SignScreen extends GetView<SignController> {
                               StaticString.or,
                               style: TextStyle(
                                 fontFamily: segoeFont,
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white.withValues(alpha: 0.8),
-                                letterSpacing: 1.2,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
                               ),
                             ),
                           ),
-                          Expanded(
+                          const Expanded(
                             child: Divider(
-                              color: Colors.white.withValues(alpha: 0.35),
+                              color: Color(0xFF38E5D8),
                               thickness: 1,
                             ),
                           ),
@@ -173,15 +165,15 @@ class SignScreen extends GetView<SignController> {
                         textColor: Colors.white,
                         isBold: true,
                       ),
+
+                      SizedBox(height: 40.h),
                     ],
                   ),
-
-                  SizedBox(height: 75.h),
-                ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

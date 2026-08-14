@@ -31,7 +31,7 @@ class SignInEmailController extends GetxController {
   }
 
   void goToForgotPassword() {
-    ToastMessage.showSuccessToast('Navigate to Forgot Password');
+    Get.toNamed(AppRoute.forgotPasswordScreen);
   }
 
   @override

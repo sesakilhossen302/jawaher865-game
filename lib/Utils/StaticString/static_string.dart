@@ -49,4 +49,8 @@ class StaticString {
   static const String verifyAndContinue = 'Verify and Continue';
   static const String resendCode = 'Resend Code';
   static const String codeSentToEmail = 'We have sent a verification code to your email.';
+
+  // Forgot Password Strings
+  static const String forgotPasswordTitle = 'Forgot Password';
+  static const String sendVerificationCode = 'Send Verification Code';
 }
