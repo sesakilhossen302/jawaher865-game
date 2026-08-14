@@ -134,7 +134,7 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
                   _buildTextField(
                     controller: controller.emailController,
                     hintText: StaticString.enterYourEmail,
-                    prefixIcon: Icons.mail_outline_rounded,
+                    svgPrefixIcon: AppIcons.emailIcon,
                     keyboardType: TextInputType.emailAddress,
                   ),
 
@@ -155,7 +155,7 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
                     () => _buildTextField(
                       controller: controller.passwordController,
                       hintText: StaticString.enterYourPassword,
-                      prefixIcon: Icons.lock_outline_rounded,
+                      svgPrefixIcon: AppIcons.passwordIcon,
                       isObscure: controller.isObscure.value,
                       suffixIcon: IconButton(
                         icon: Icon(
@@ -363,7 +363,7 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
   Widget _buildTextField({
     required TextEditingController controller,
     required String hintText,
-    required IconData prefixIcon,
+    required String svgPrefixIcon,
     bool isObscure = false,
     Widget? suffixIcon,
     TextInputType keyboardType = TextInputType.text,
@@ -394,10 +394,24 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
             fontSize: 14.sp,
             color: const Color(0xFF88C9CC),
           ),
-          prefixIcon: Icon(
-            prefixIcon,
-            color: const Color(0xFF88C9CC),
-            size: 20.sp,
+          prefixIcon: Padding(
+            padding: EdgeInsets.all(14.r),
+            child: SvgPicture.asset(
+              svgPrefixIcon,
+              width: 18.w,
+              height: 18.h,
+              colorFilter: const ColorFilter.mode(
+                Color(0xFF88C9CC),
+                BlendMode.srcIn,
+              ),
+              errorBuilder: (context, error, stackTrace) {
+                return Icon(
+                  Icons.input,
+                  color: const Color(0xFF88C9CC),
+                  size: 20.sp,
+                );
+              },
+            ),
           ),
           suffixIcon: suffixIcon,
           border: InputBorder.none,
