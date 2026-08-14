@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'Core/AppRoute/app_route.dart';
 import 'Core/Dependency/dependency.dart';
@@ -17,20 +18,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: AppConst.appName,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: AppColors.primaryColor,
-        scaffoldBackgroundColor: AppColors.backgroundColor,
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
-        useMaterial3: true,
-      ),
-      translations: Translator(),
-      locale: const Locale('en', 'US'),
-      fallbackLocale: const Locale('en', 'US'),
-      initialRoute: AppRoute.splashScreen,
-      getPages: AppRoute.routes,
+    return ScreenUtilInit(
+      designSize: const Size(393, 846),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return GetMaterialApp(
+          title: AppConst.appName,
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primaryColor: AppColors.primaryColor,
+            scaffoldBackgroundColor: AppColors.backgroundColor,
+            colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
+            useMaterial3: true,
+          ),
+          translations: Translator(),
+          locale: const Locale('en', 'US'),
+          fallbackLocale: const Locale('en', 'US'),
+          initialRoute: AppRoute.splashScreen,
+          getPages: AppRoute.routes,
+        );
+      },
     );
   }
 }

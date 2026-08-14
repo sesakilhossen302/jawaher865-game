@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../../Utils/AppIcons/app_icons.dart';
@@ -38,10 +39,10 @@ class SignScreen extends GetView<SignController> {
           // Main Screen Content
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: Column(
                 children: [
-                  const SizedBox(height: 12.0),
+                  SizedBox(height: 12.h),
 
                   // Top Navigation Bar / Back Button
                   Align(
@@ -49,23 +50,23 @@ class SignScreen extends GetView<SignController> {
                     child: GestureDetector(
                       onTap: () => Get.back(),
                       child: Container(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: EdgeInsets.all(10.r),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: Colors.white.withValues(alpha: 0.25),
                         ),
                         child: SvgPicture.asset(
                           AppIcons.backIcon,
-                          width: 16.0,
-                          height: 16.0,
+                          width: 16.w,
+                          height: 16.h,
                           colorFilter: const ColorFilter.mode(
                             Colors.white,
                             BlendMode.srcIn,
                           ),
                           errorBuilder: (context, error, stackTrace) {
-                            return const Icon(
+                            return Icon(
                               Icons.arrow_back_ios_new,
-                              size: 16.0,
+                              size: 16.sp,
                               color: Colors.white,
                             );
                           },
@@ -74,15 +75,15 @@ class SignScreen extends GetView<SignController> {
                     ),
                   ),
 
-                  const Spacer(flex: 1),
+                  const Spacer(flex: 3),
 
                   // Character & Logo Illustration Image
                   Image.asset(
                     AppImg.signPageImg,
-                    width: Get.width * 0.58,
+                    width: 220.w,
                     fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) {
-                      return const SizedBox(height: 120.0);
+                      return SizedBox(height: 120.h);
                     },
                   ),
 
@@ -101,7 +102,7 @@ class SignScreen extends GetView<SignController> {
                         textColor: Colors.white,
                       ),
 
-                      const SizedBox(height: 14.0),
+                      SizedBox(height: 14.h),
 
                       // Continue with Apple Button
                       _buildSocialButton(
@@ -112,7 +113,7 @@ class SignScreen extends GetView<SignController> {
                         textColor: Colors.black,
                       ),
 
-                      const SizedBox(height: 20.0),
+                      SizedBox(height: 20.h),
 
                       // OR Divider
                       Row(
@@ -124,14 +125,12 @@ class SignScreen extends GetView<SignController> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0,
-                            ),
+                            padding: EdgeInsets.symmetric(horizontal: 16.w),
                             child: Text(
                               StaticString.or,
                               style: TextStyle(
                                 fontFamily: segoeFont,
-                                fontSize: 13.0,
+                                fontSize: 13.sp,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white.withValues(alpha: 0.8),
                                 letterSpacing: 1.2,
@@ -147,7 +146,7 @@ class SignScreen extends GetView<SignController> {
                         ],
                       ),
 
-                      const SizedBox(height: 20.0),
+                      SizedBox(height: 20.h),
 
                       // Sign in with Email Button
                       _buildActionButton(
@@ -157,7 +156,7 @@ class SignScreen extends GetView<SignController> {
                         textColor: const Color(0xFF222222),
                       ),
 
-                      const SizedBox(height: 14.0),
+                      SizedBox(height: 14.h),
 
                       // Continue as Guest Button
                       _buildActionButton(
@@ -170,7 +169,7 @@ class SignScreen extends GetView<SignController> {
                     ],
                   ),
 
-                  const SizedBox(height: 36.0),
+                  SizedBox(height: 36.h),
                 ],
               ),
             ),
@@ -190,37 +189,37 @@ class SignScreen extends GetView<SignController> {
   }) {
     return SizedBox(
       width: double.infinity,
-      height: 52.0,
+      height: 52.h,
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.0),
+            borderRadius: BorderRadius.circular(16.r),
             side: borderColor != null
-                ? BorderSide(color: borderColor, width: 1.0)
+                ? BorderSide(color: borderColor, width: 1.w)
                 : BorderSide.none,
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(
               iconPath,
-              width: 22.0,
-              height: 22.0,
+              width: 22.w,
+              height: 22.h,
               errorBuilder: (context, error, stackTrace) {
-                return Icon(Icons.g_mobiledata, size: 24.0, color: textColor);
+                return Icon(Icons.g_mobiledata, size: 24.sp, color: textColor);
               },
             ),
-            const SizedBox(width: 12.0),
+            SizedBox(width: 12.w),
             Text(
               label,
               style: TextStyle(
                 fontFamily: segoeFont,
-                fontSize: 15.0,
+                fontSize: 15.sp,
                 fontWeight: FontWeight.w600,
                 color: textColor,
               ),
@@ -240,21 +239,21 @@ class SignScreen extends GetView<SignController> {
   }) {
     return SizedBox(
       width: double.infinity,
-      height: 52.0,
+      height: 52.h,
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.0),
+            borderRadius: BorderRadius.circular(16.r),
           ),
         ),
         child: Text(
           label,
           style: TextStyle(
             fontFamily: segoeFont,
-            fontSize: 16.0,
+            fontSize: 16.sp,
             fontWeight: isBold ? FontWeight.bold : FontWeight.w600,
             color: textColor,
           ),
