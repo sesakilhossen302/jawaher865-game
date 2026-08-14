@@ -46,61 +46,54 @@ class SignUpScreen extends GetView<SignUpController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 6.h),
+                  SizedBox(height: 10.h),
 
-                  // Header: Stack with Back Button Overlaying the Illustration Image
-                  SizedBox(
-                    height: 80.h,
-                    child: Stack(
-                      children: [
-                        // Centered Illustration Image
-                        Center(
-                          child: Image.asset(
-                            AppImg.signPageImg,
-                            width: 140.w,
-                            fit: BoxFit.contain,
-                            errorBuilder: (context, error, stackTrace) {
-                              return SizedBox(height: 60.h);
-                            },
-                          ),
+                  // Top Navigation Bar / Back Button
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: GestureDetector(
+                      onTap: () => Get.back(),
+                      child: Container(
+                        padding: EdgeInsets.all(10.r),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white.withValues(alpha: 0.25),
                         ),
-
-                        // Back Button Top-Left
-                        Positioned(
-                          left: 0,
-                          top: 4.h,
-                          child: GestureDetector(
-                            onTap: () => Get.back(),
-                            child: Container(
-                              padding: EdgeInsets.all(8.r),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white.withValues(alpha: 0.25),
-                              ),
-                              child: SvgPicture.asset(
-                                AppIcons.backIcon,
-                                width: 14.w,
-                                height: 14.h,
-                                colorFilter: const ColorFilter.mode(
-                                  Colors.white,
-                                  BlendMode.srcIn,
-                                ),
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Icon(
-                                    Icons.arrow_back_ios_new,
-                                    size: 14.sp,
-                                    color: Colors.white,
-                                  );
-                                },
-                              ),
-                            ),
+                        child: SvgPicture.asset(
+                          AppIcons.backIcon,
+                          width: 16.w,
+                          height: 16.h,
+                          colorFilter: const ColorFilter.mode(
+                            Colors.white,
+                            BlendMode.srcIn,
                           ),
+                          errorBuilder: (context, error, stackTrace) {
+                            return Icon(
+                              Icons.arrow_back_ios_new,
+                              size: 16.sp,
+                              color: Colors.white,
+                            );
+                          },
                         ),
-                      ],
+                      ),
                     ),
                   ),
 
-                  SizedBox(height: 8.h),
+                  SizedBox(height: 10.h),
+
+                  // Character & Logo Illustration Image
+                  Center(
+                    child: Image.asset(
+                      AppImg.signPageImg,
+                      width: 175.w,
+                      fit: BoxFit.contain,
+                      errorBuilder: (context, error, stackTrace) {
+                        return SizedBox(height: 100.h);
+                      },
+                    ),
+                  ),
+
+                  SizedBox(height: 14.h),
 
                   // Title Text: Create a new account
                   Center(
@@ -108,14 +101,14 @@ class SignUpScreen extends GetView<SignUpController> {
                       StaticString.createNewAccount,
                       style: TextStyle(
                         fontFamily: segoeFont,
-                        fontSize: 19.sp,
+                        fontSize: 21.sp,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
                   ),
 
-                  SizedBox(height: 14.h),
+                  SizedBox(height: 18.h),
 
                   // 1. Full Name Field
                   _buildFormInputField(
@@ -124,7 +117,7 @@ class SignUpScreen extends GetView<SignUpController> {
                     svgIconPath: AppIcons.fullNameIcon,
                   ),
 
-                  SizedBox(height: 8.h),
+                  SizedBox(height: 12.h),
 
                   // 2. Date of Birth Field
                   _buildFormInputField(
@@ -136,11 +129,11 @@ class SignUpScreen extends GetView<SignUpController> {
                     suffixIcon: Icon(
                       Icons.calendar_month_outlined,
                       color: Colors.white.withValues(alpha: 0.9),
-                      size: 18.sp,
+                      size: 20.sp,
                     ),
                   ),
 
-                  SizedBox(height: 8.h),
+                  SizedBox(height: 12.h),
 
                   // 3. Gender Field
                   _buildFormInputField(
@@ -152,11 +145,11 @@ class SignUpScreen extends GetView<SignUpController> {
                     suffixIcon: Icon(
                       Icons.keyboard_arrow_down_rounded,
                       color: Colors.white.withValues(alpha: 0.9),
-                      size: 22.sp,
+                      size: 24.sp,
                     ),
                   ),
 
-                  SizedBox(height: 8.h),
+                  SizedBox(height: 12.h),
 
                   // 4. Contact No Field
                   _buildFormInputField(
@@ -166,7 +159,7 @@ class SignUpScreen extends GetView<SignUpController> {
                     keyboardType: TextInputType.phone,
                   ),
 
-                  SizedBox(height: 8.h),
+                  SizedBox(height: 12.h),
 
                   // 5. Email Field
                   _buildFormInputField(
@@ -176,7 +169,7 @@ class SignUpScreen extends GetView<SignUpController> {
                     keyboardType: TextInputType.emailAddress,
                   ),
 
-                  SizedBox(height: 8.h),
+                  SizedBox(height: 12.h),
 
                   // 6. Password Field
                   Obx(
@@ -191,14 +184,14 @@ class SignUpScreen extends GetView<SignUpController> {
                               ? Icons.visibility_off_outlined
                               : Icons.visibility_outlined,
                           color: Colors.white.withValues(alpha: 0.9),
-                          size: 18.sp,
+                          size: 20.sp,
                         ),
                         onPressed: controller.togglePasswordVisibility,
                       ),
                     ),
                   ),
 
-                  SizedBox(height: 8.h),
+                  SizedBox(height: 12.h),
 
                   // 7. Confirm Password Field
                   Obx(
@@ -213,22 +206,22 @@ class SignUpScreen extends GetView<SignUpController> {
                               ? Icons.visibility_off_outlined
                               : Icons.visibility_outlined,
                           color: Colors.white.withValues(alpha: 0.9),
-                          size: 18.sp,
+                          size: 20.sp,
                         ),
                         onPressed: controller.toggleConfirmPasswordVisibility,
                       ),
                     ),
                   ),
 
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 14.h),
 
                   // Terms of Service & Privacy Policy Checkbox Row
                   Row(
                     children: [
                       Obx(
                         () => SizedBox(
-                          width: 18.w,
-                          height: 18.h,
+                          width: 20.w,
+                          height: 20.h,
                           child: Checkbox(
                             value: controller.isAgreeTerms.value,
                             onChanged: controller.toggleAgreeTerms,
@@ -244,7 +237,7 @@ class SignUpScreen extends GetView<SignUpController> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 8.w),
+                      SizedBox(width: 10.w),
                       Expanded(
                         child: GestureDetector(
                           onTap: () => controller.toggleAgreeTerms(
@@ -254,7 +247,7 @@ class SignUpScreen extends GetView<SignUpController> {
                             text: TextSpan(
                               style: TextStyle(
                                 fontFamily: segoeFont,
-                                fontSize: 11.5.sp,
+                                fontSize: 12.sp,
                                 color: const Color(0xFFB4ECE7),
                               ),
                               children: [
@@ -282,19 +275,19 @@ class SignUpScreen extends GetView<SignUpController> {
                     ],
                   ),
 
-                  SizedBox(height: 14.h),
+                  SizedBox(height: 20.h),
 
                   // Sign Up Button
                   SizedBox(
                     width: double.infinity,
-                    height: 48.h,
+                    height: 52.h,
                     child: ElevatedButton(
                       onPressed: controller.signUp,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF3358FE),
                         elevation: 0,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.r),
+                          borderRadius: BorderRadius.circular(18.r),
                           side: BorderSide(
                             color: const Color(0xFF38E5D8),
                             width: 1.5.w,
@@ -313,7 +306,7 @@ class SignUpScreen extends GetView<SignUpController> {
                     ),
                   ),
 
-                  SizedBox(height: 12.h),
+                  SizedBox(height: 16.h),
 
                   // Footer: have an account? Log in
                   Center(
@@ -323,7 +316,7 @@ class SignUpScreen extends GetView<SignUpController> {
                         text: TextSpan(
                           style: TextStyle(
                             fontFamily: segoeFont,
-                            fontSize: 13.5.sp,
+                            fontSize: 14.sp,
                             color: const Color(0xFFB4ECE7),
                           ),
                           children: [
@@ -341,7 +334,7 @@ class SignUpScreen extends GetView<SignUpController> {
                     ),
                   ),
 
-                  SizedBox(height: 14.h),
+                  SizedBox(height: 24.h),
                 ],
               ),
             ),
@@ -362,10 +355,10 @@ class SignUpScreen extends GetView<SignUpController> {
     TextInputType keyboardType = TextInputType.text,
   }) {
     return Container(
-      height: 46.h,
+      height: 52.h,
       decoration: BoxDecoration(
         color: const Color(0xFF065967).withValues(alpha: 0.85),
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: BorderRadius.circular(18.r),
         border: Border.all(
           color: const Color(0xFF38E5D8),
           width: 1.5.w,
@@ -379,22 +372,22 @@ class SignUpScreen extends GetView<SignUpController> {
         keyboardType: keyboardType,
         style: TextStyle(
           fontFamily: segoeFont,
-          fontSize: 13.5.sp,
+          fontSize: 14.sp,
           color: Colors.white,
         ),
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: TextStyle(
             fontFamily: segoeFont,
-            fontSize: 13.5.sp,
+            fontSize: 14.sp,
             color: Colors.white.withValues(alpha: 0.8),
           ),
           prefixIcon: Padding(
-            padding: EdgeInsets.all(12.r),
+            padding: EdgeInsets.all(14.r),
             child: SvgPicture.asset(
               svgIconPath,
-              width: 16.w,
-              height: 16.h,
+              width: 18.w,
+              height: 18.h,
               colorFilter: const ColorFilter.mode(
                 Colors.white,
                 BlendMode.srcIn,
@@ -403,7 +396,7 @@ class SignUpScreen extends GetView<SignUpController> {
                 return Icon(
                   Icons.input,
                   color: Colors.white,
-                  size: 18.sp,
+                  size: 20.sp,
                 );
               },
             ),
@@ -411,8 +404,8 @@ class SignUpScreen extends GetView<SignUpController> {
           suffixIcon: suffixIcon,
           border: InputBorder.none,
           contentPadding: EdgeInsets.symmetric(
-            vertical: 10.h,
-            horizontal: 14.w,
+            vertical: 14.h,
+            horizontal: 16.w,
           ),
         ),
       ),
