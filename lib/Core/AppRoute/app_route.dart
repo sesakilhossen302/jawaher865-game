@@ -3,6 +3,8 @@ import '../../View/Screen/ForgotPasswordScreen/Controller/forgot_password_contro
 import '../../View/Screen/ForgotPasswordScreen/forgot_password_screen.dart';
 import '../../View/Screen/OtpScreen/Controller/otp_controller.dart';
 import '../../View/Screen/OtpScreen/otp_screen.dart';
+import '../../View/Screen/ResetPasswordScreen/Controller/reset_password_controller.dart';
+import '../../View/Screen/ResetPasswordScreen/reset_password_screen.dart';
 import '../../View/Screen/SignInEmailScreen/Controller/sign_in_email_controller.dart';
 import '../../View/Screen/SignInEmailScreen/sign_in_email_screen.dart';
 import '../../View/Screen/SignUpScreen/Controller/sign_up_controller.dart';
@@ -19,6 +21,7 @@ class AppRoute {
   static const String signUpScreen = '/sign_up_screen';
   static const String otpScreen = '/otp_screen';
   static const String forgotPasswordScreen = '/forgot_password_screen';
+  static const String resetPasswordScreen = '/reset_password_screen';
 
   static List<GetPage> routes = [
     GetPage(
@@ -61,6 +64,13 @@ class AppRoute {
       page: () => const ForgotPasswordScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut<ForgotPasswordController>(() => ForgotPasswordController());
+      }),
+    ),
+    GetPage(
+      name: resetPasswordScreen,
+      page: () => const ResetPasswordScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<ResetPasswordController>(() => ResetPasswordController());
       }),
     ),
   ];

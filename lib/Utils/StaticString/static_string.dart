@@ -53,4 +53,8 @@ class StaticString {
   // Forgot Password Strings
   static const String forgotPasswordTitle = 'Forgot Password';
   static const String sendVerificationCode = 'Send Verification Code';
+
+  // Reset Password Strings
+  static const String resetPasswordTitle = 'Reset Password';
+  static const String updateAndContinue = 'Update and Continue';
 }

@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../Core/AppRoute/app_route.dart';
 import '../../../../Utils/ToastMessage/toast_message.dart';
 
 class OtpController extends GetxController {
   final TextEditingController pinController = TextEditingController();
 
   void verifyOtp() {
-    final String otp = pinController.text.trim();
-    if (otp.length < 6) {
-      ToastMessage.showErrorToast('Please enter complete 6-digit OTP code');
-      return;
-    }
-    ToastMessage.showSuccessToast('OTP Verified Successfully!');
+    Get.toNamed(AppRoute.resetPasswordScreen);
   }
 
   void resendCode() {
