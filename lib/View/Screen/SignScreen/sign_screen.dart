@@ -79,10 +79,10 @@ class SignScreen extends GetView<SignController> {
                   // Character & Logo Illustration Image
                   Image.asset(
                     AppImg.signPageImg,
-                    width: Get.width * 0.72,
+                    width: Get.width * 0.58,
                     fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) {
-                      return const SizedBox(height: 150.0);
+                      return const SizedBox(height: 120.0);
                     },
                   ),
 
@@ -96,8 +96,8 @@ class SignScreen extends GetView<SignController> {
                         onTap: () => controller.signInWithGoogle(),
                         iconPath: AppIcons.googleIcon,
                         label: StaticString.continueWithGoogle,
-                        backgroundColor: Colors.white.withValues(alpha: 0.15),
-                        borderColor: Colors.white.withValues(alpha: 0.3),
+                        backgroundColor: const Color(0xFF1E464C).withValues(alpha: 0.7),
+                        borderColor: const Color(0xFF5CA2A6).withValues(alpha: 0.4),
                         textColor: Colors.white,
                       ),
 
@@ -124,7 +124,9 @@ class SignScreen extends GetView<SignController> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0,
+                            ),
                             child: Text(
                               StaticString.or,
                               style: TextStyle(
