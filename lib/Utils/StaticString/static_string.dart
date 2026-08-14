@@ -43,4 +43,10 @@ class StaticString {
   static const String signUp = 'Sign Up';
   static const String haveAnAccount = 'have an account? ';
   static const String logIn = 'Log in';
+
+  // OTP Verification Strings
+  static const String verifyYourEmail = 'Verify Your Email';
+  static const String verifyAndContinue = 'Verify and Continue';
+  static const String resendCode = 'Resend Code';
+  static const String codeSentToEmail = 'We have sent a verification code to your email.';
 }

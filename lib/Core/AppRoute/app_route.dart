@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import '../../View/Screen/OtpScreen/Controller/otp_controller.dart';
+import '../../View/Screen/OtpScreen/otp_screen.dart';
 import '../../View/Screen/SignInEmailScreen/Controller/sign_in_email_controller.dart';
 import '../../View/Screen/SignInEmailScreen/sign_in_email_screen.dart';
 import '../../View/Screen/SignUpScreen/Controller/sign_up_controller.dart';
@@ -13,6 +15,7 @@ class AppRoute {
   static const String signScreen = '/sign_screen';
   static const String signInEmailScreen = '/sign_in_email_screen';
   static const String signUpScreen = '/sign_up_screen';
+  static const String otpScreen = '/otp_screen';
 
   static List<GetPage> routes = [
     GetPage(
@@ -41,6 +44,13 @@ class AppRoute {
       page: () => const SignUpScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut<SignUpController>(() => SignUpController());
+      }),
+    ),
+    GetPage(
+      name: otpScreen,
+      page: () => const OtpScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<OtpController>(() => OtpController());
       }),
     ),
   ];

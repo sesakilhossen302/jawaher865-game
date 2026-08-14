@@ -82,7 +82,7 @@ class SignScreen extends GetView<SignController> {
 
                   // Character & Logo Illustration Image
                   Image.asset(
-                    AppImg.signPageImg,
+                    AppImg.welcomeSplashImg,
                     width: 220.w,
                     fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) {
@@ -255,10 +255,7 @@ class SignScreen extends GetView<SignController> {
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18.r),
-            side: BorderSide(
-              color: const Color(0xFF38E5D8),
-              width: 1.5.w,
-            ),
+            side: BorderSide(color: const Color(0xFF38E5D8), width: 1.5.w),
           ),
         ),
         child: Text(

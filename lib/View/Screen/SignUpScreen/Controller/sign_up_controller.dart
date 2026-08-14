@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../Core/AppRoute/app_route.dart';
 import '../../../../Utils/ToastMessage/toast_message.dart';
 
 class SignUpController extends GetxController {
@@ -100,6 +101,7 @@ class SignUpController extends GetxController {
     }
 
     ToastMessage.showSuccessToast('Account created successfully!');
+    Get.toNamed(AppRoute.otpScreen);
   }
 
   void goToLogin() {
