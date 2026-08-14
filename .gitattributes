@@ -1,0 +1,8 @@
+# Mark platform boilerplate and generated files as vendored so GitHub Linguist ignores them in repo language statistics
+web/** linguist-vendored
+android/** linguist-vendored
+ios/** linguist-vendored
+windows/** linguist-vendored
+linux/** linguist-vendored
+macos/** linguist-vendored
+*.html linguist-vendored
