@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../Core/AppRoute/app_route.dart';
-import '../../../../Utils/ToastMessage/toast_message.dart';
 
 class SignUpController extends GetxController {
   final TextEditingController fullNameController = TextEditingController();
@@ -79,28 +78,6 @@ class SignUpController extends GetxController {
   }
 
   void signUp() {
-    if (fullNameController.text.trim().isEmpty) {
-      ToastMessage.showErrorToast('Please enter your full name');
-      return;
-    }
-    if (emailController.text.trim().isEmpty) {
-      ToastMessage.showErrorToast('Please enter your email');
-      return;
-    }
-    if (passwordController.text.trim().isEmpty) {
-      ToastMessage.showErrorToast('Please enter your password');
-      return;
-    }
-    if (passwordController.text != confirmPasswordController.text) {
-      ToastMessage.showErrorToast('Passwords do not match');
-      return;
-    }
-    if (!isAgreeTerms.value) {
-      ToastMessage.showErrorToast('Please agree to terms and privacy policy');
-      return;
-    }
-
-    ToastMessage.showSuccessToast('Account created successfully!');
     Get.toNamed(AppRoute.otpScreen);
   }
 

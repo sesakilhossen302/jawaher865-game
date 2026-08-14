@@ -18,7 +18,7 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
       backgroundColor: const Color(0xFF00C9A7),
       body: Stack(
         children: [
-          // Global Background Image
+          // Full-Screen Seamless Background Image
           Positioned.fill(
             child: Image.asset(
               AppImg.globalBackground,

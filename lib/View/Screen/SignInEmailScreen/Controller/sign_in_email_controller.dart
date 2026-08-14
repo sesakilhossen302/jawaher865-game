@@ -19,20 +19,7 @@ class SignInEmailController extends GetxController {
   }
 
   void signIn() {
-    final String email = emailController.text.trim();
-    final String password = passwordController.text.trim();
-
-    if (email.isEmpty) {
-      ToastMessage.showErrorToast('Please enter your email');
-      return;
-    }
-
-    if (password.isEmpty) {
-      ToastMessage.showErrorToast('Please enter your password');
-      return;
-    }
-
-    ToastMessage.showSuccessToast('Signing in...');
+    Get.toNamed(AppRoute.otpScreen);
   }
 
   void continueAsGuest() {

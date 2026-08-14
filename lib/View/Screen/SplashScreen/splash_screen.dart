@@ -22,23 +22,29 @@ class SplashScreen extends StatelessWidget {
         children: [
           // Background Image
           Positioned.fill(
-            child: Image.asset(
-              AppImg.welcomeBackground,
-              fit: BoxFit.fill,
-              width: double.infinity,
-              height: double.infinity,
-              errorBuilder: (context, error, stackTrace) {
-                // Fallback gradient if background image fails to load
-                return Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xFF00C9A7), Color(0xFF008080)],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                  ),
-                );
-              },
+            child: ClipRect(
+              child: Transform.scale(
+                scale: 1.4,
+                alignment: Alignment.topCenter,
+                child: Image.asset(
+                  AppImg.welcomeBackground,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
+                  errorBuilder: (context, error, stackTrace) {
+                    // Fallback gradient if background image fails to load
+                    return Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Color(0xFF00C9A7), Color(0xFF008080)],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
             ),
           ),
 

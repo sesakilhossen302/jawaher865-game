@@ -41,10 +41,10 @@ class OtpScreen extends GetView<OtpController> {
     final submittedPinTheme = defaultPinTheme;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF00C9A7),
+      // backgroundColor: const Color(0xFF00C9A7),
       body: Stack(
         children: [
-          // Global Background Image
+          // Global Background Image (AppImg.globalBackground with BoxFit.fill)
           Positioned.fill(
             child: Image.asset(
               AppImg.globalBackground,
@@ -67,141 +67,152 @@ class OtpScreen extends GetView<OtpController> {
 
           // Main Screen Content
           SafeArea(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 24.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 12.h),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(horizontal: 24.w),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
+                    ),
+                    child: IntrinsicHeight(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 12.h),
 
-                  // Top Navigation Bar / Back Button
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: GestureDetector(
-                      onTap: () => Get.back(),
-                      child: Container(
-                        padding: EdgeInsets.all(10.r),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white.withValues(alpha: 0.25),
-                        ),
-                        child: SvgPicture.asset(
-                          AppIcons.backIcon,
-                          width: 16.w,
-                          height: 16.h,
-                          colorFilter: const ColorFilter.mode(
-                            Colors.white,
-                            BlendMode.srcIn,
+                          // Top Navigation Bar / Back Button
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: GestureDetector(
+                              onTap: () => Get.back(),
+                              child: Container(
+                                padding: EdgeInsets.all(10.r),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white.withValues(alpha: 0.25),
+                                ),
+                                child: SvgPicture.asset(
+                                  AppIcons.backIcon,
+                                  width: 16.w,
+                                  height: 16.h,
+                                  colorFilter: const ColorFilter.mode(
+                                    Colors.white,
+                                    BlendMode.srcIn,
+                                  ),
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Icon(
+                                      Icons.arrow_back_ios_new,
+                                      size: 16.sp,
+                                      color: Colors.white,
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
                           ),
-                          errorBuilder: (context, error, stackTrace) {
-                            return Icon(
-                              Icons.arrow_back_ios_new,
-                              size: 16.sp,
-                              color: Colors.white,
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
 
-                  SizedBox(height: 30.h),
+                          SizedBox(height: 20.h),
 
-                  // Character & Logo Illustration Image
-                  Center(
-                    child: Image.asset(
-                      AppImg.welcomeSplashImg,
-                      width: 200.w,
-                      fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) {
-                        return SizedBox(height: 100.h);
-                      },
-                    ),
-                  ),
-
-                  SizedBox(height: 36.h),
-
-                  // Title Text: Verify Your Email
-                  Center(
-                    child: Text(
-                      StaticString.verifyYourEmail,
-                      style: TextStyle(
-                        fontFamily: segoeFont,
-                        fontSize: 22.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: 32.h),
-
-                  // Pinput 6-Digit OTP Field
-                  Center(
-                    child: Pinput(
-                      length: 6,
-                      controller: controller.pinController,
-                      defaultPinTheme: defaultPinTheme,
-                      focusedPinTheme: focusedPinTheme,
-                      submittedPinTheme: submittedPinTheme,
-                      separatorBuilder: (index) => SizedBox(width: 8.w),
-                      showCursor: true,
-                      onCompleted: (pin) => controller.verifyOtp(),
-                    ),
-                  ),
-
-                  SizedBox(height: 40.h),
-
-                  // Verify and Continue Button
-                  SizedBox(
-                    width: double.infinity,
-                    height: 54.h,
-                    child: ElevatedButton(
-                      onPressed: controller.verifyOtp,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF3358FE),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.r),
-                          side: BorderSide(
-                            color: const Color(0xFF38E5D8),
-                            width: 1.5.w,
+                          // Character & Logo Illustration Image
+                          Center(
+                            child: Image.asset(
+                              AppImg.welcomeSplashImg,
+                              width: 200.w,
+                              fit: BoxFit.contain,
+                              errorBuilder: (context, error, stackTrace) {
+                                return SizedBox(height: 100.h);
+                              },
+                            ),
                           ),
-                        ),
-                      ),
-                      child: Text(
-                        StaticString.verifyAndContinue,
-                        style: TextStyle(
-                          fontFamily: segoeFont,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+
+                          SizedBox(height: 24.h),
+
+                          // Title Text: Verify Your Email
+                          Center(
+                            child: Text(
+                              StaticString.verifyYourEmail,
+                              style: TextStyle(
+                                fontFamily: segoeFont,
+                                fontSize: 22.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+
+                          SizedBox(height: 28.h),
+
+                          // Pinput 6-Digit OTP Field
+                          Center(
+                            child: Pinput(
+                              length: 6,
+                              controller: controller.pinController,
+                              defaultPinTheme: defaultPinTheme,
+                              focusedPinTheme: focusedPinTheme,
+                              submittedPinTheme: submittedPinTheme,
+                              separatorBuilder: (index) => SizedBox(width: 8.w),
+                              showCursor: true,
+                              onCompleted: (pin) => controller.verifyOtp(),
+                            ),
+                          ),
+
+                          const Spacer(),
+
+                          // Verify and Continue Button
+                          SizedBox(
+                            width: double.infinity,
+                            height: 54.h,
+                            child: ElevatedButton(
+                              onPressed: controller.verifyOtp,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF3358FE),
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.r),
+                                  side: BorderSide(
+                                    color: const Color(0xFF38E5D8),
+                                    width: 1.5.w,
+                                  ),
+                                ),
+                              ),
+                              child: Text(
+                                StaticString.verifyAndContinue,
+                                style: TextStyle(
+                                  fontFamily: segoeFont,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          SizedBox(height: 20.h),
+
+                          // Resend Code Option
+                          Center(
+                            child: GestureDetector(
+                              onTap: controller.resendCode,
+                              child: Text(
+                                StaticString.resendCode,
+                                style: TextStyle(
+                                  fontFamily: segoeFont,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: const Color(0xFFB4ECE7),
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          SizedBox(height: 32.h),
+                        ],
                       ),
                     ),
                   ),
-
-                  SizedBox(height: 30.h),
-
-                  // Resend Code Option
-                  Center(
-                    child: GestureDetector(
-                      onTap: controller.resendCode,
-                      child: Text(
-                        StaticString.resendCode,
-                        style: TextStyle(
-                          fontFamily: segoeFont,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xFFB4ECE7),
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: 40.h),
-                ],
-              ),
+                );
+              },
             ),
           ),
         ],
