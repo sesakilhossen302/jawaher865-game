@@ -196,17 +196,18 @@ class SignScreen extends GetView<SignController> {
   }) {
     return SizedBox(
       width: double.infinity,
-      height: 52.h,
+      height: 54.h,
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.r),
-            side: borderColor != null
-                ? BorderSide(color: borderColor, width: 1.w)
-                : BorderSide.none,
+            borderRadius: BorderRadius.circular(18.r),
+            side: BorderSide(
+              color: borderColor ?? const Color(0xFF38E5D8),
+              width: 1.5.w,
+            ),
           ),
           padding: EdgeInsets.symmetric(horizontal: 20.w),
         ),
@@ -246,14 +247,18 @@ class SignScreen extends GetView<SignController> {
   }) {
     return SizedBox(
       width: double.infinity,
-      height: 52.h,
+      height: 54.h,
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.r),
+            borderRadius: BorderRadius.circular(18.r),
+            side: BorderSide(
+              color: const Color(0xFF38E5D8),
+              width: 1.5.w,
+            ),
           ),
         ),
         child: Text(

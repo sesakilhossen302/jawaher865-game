@@ -239,14 +239,18 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
                   // Sign In Button
                   SizedBox(
                     width: double.infinity,
-                    height: 52.h,
+                    height: 54.h,
                     child: ElevatedButton(
                       onPressed: controller.signIn,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF3358FE),
                         elevation: 0,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.r),
+                          borderRadius: BorderRadius.circular(18.r),
+                          side: BorderSide(
+                            color: const Color(0xFF38E5D8),
+                            width: 1.5.w,
+                          ),
                         ),
                       ),
                       child: Text(
@@ -299,17 +303,17 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
                   // Continue as Guest Button
                   SizedBox(
                     width: double.infinity,
-                    height: 52.h,
+                    height: 54.h,
                     child: ElevatedButton(
                       onPressed: controller.continueAsGuest,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF1E464C).withValues(alpha: 0.7),
+                        backgroundColor: const Color(0xFF065967).withValues(alpha: 0.85),
                         elevation: 0,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.r),
+                          borderRadius: BorderRadius.circular(18.r),
                           side: BorderSide(
-                            color: const Color(0xFF5CA2A6).withValues(alpha: 0.4),
-                            width: 1.w,
+                            color: const Color(0xFF38E5D8),
+                            width: 1.5.w,
                           ),
                         ),
                       ),
