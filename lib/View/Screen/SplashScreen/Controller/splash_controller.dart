@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import '../../../../Core/AppRoute/app_route.dart';
 
 class SplashController extends GetxController {
   @override
@@ -9,7 +10,6 @@ class SplashController extends GetxController {
 
   void _navigateToNext() async {
     await Future.delayed(const Duration(seconds: 3));
-    // Navigate to initial/home route
-    // Get.offNamed(AppRoute.homeScreen);
+    Get.offNamed(AppRoute.signScreen);
   }
 }

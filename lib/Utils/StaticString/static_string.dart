@@ -9,4 +9,11 @@ class StaticString {
   static const String retry = 'Retry';
   static const String errorOccurred = 'An unexpected error occurred. Please try again.';
   static const String noInternet = 'No internet connection available.';
+
+  // Sign Screen Strings
+  static const String continueWithGoogle = 'Continue with Google';
+  static const String continueWithApple = 'Continue with Apple';
+  static const String or = 'OR';
+  static const String signInWithEmail = 'Sign in with Email';
+  static const String continueAsGuest = 'Continue as Guest';
 }
