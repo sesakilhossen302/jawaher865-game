@@ -75,7 +75,7 @@ class SignScreen extends GetView<SignController> {
                     ),
                   ),
 
-                  const Spacer(flex: 3),
+                  const Spacer(flex: 1),
 
                   // Character & Logo Illustration Image
                   Image.asset(
@@ -87,7 +87,7 @@ class SignScreen extends GetView<SignController> {
                     },
                   ),
 
-                  const Spacer(flex: 2),
+                  SizedBox(height: 24.h),
 
                   // Buttons Section
                   Column(
@@ -97,8 +97,12 @@ class SignScreen extends GetView<SignController> {
                         onTap: () => controller.signInWithGoogle(),
                         iconPath: AppIcons.googleIcon,
                         label: StaticString.continueWithGoogle,
-                        backgroundColor: const Color(0xFF1E464C).withValues(alpha: 0.7),
-                        borderColor: const Color(0xFF5CA2A6).withValues(alpha: 0.4),
+                        backgroundColor: const Color(
+                          0xFF1E464C,
+                        ).withValues(alpha: 0.7),
+                        borderColor: const Color(
+                          0xFF5CA2A6,
+                        ).withValues(alpha: 0.4),
                         textColor: Colors.white,
                       ),
 
@@ -169,7 +173,7 @@ class SignScreen extends GetView<SignController> {
                     ],
                   ),
 
-                  SizedBox(height: 36.h),
+                  SizedBox(height: 75.h),
                 ],
               ),
             ),
