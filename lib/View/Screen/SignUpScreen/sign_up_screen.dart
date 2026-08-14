@@ -46,7 +46,7 @@ class SignUpScreen extends GetView<SignUpController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 10.h),
+                  // SizedBox(height: 10.h),
 
                   // Top Navigation Bar / Back Button
                   Align(
@@ -79,13 +79,13 @@ class SignUpScreen extends GetView<SignUpController> {
                     ),
                   ),
 
-                  SizedBox(height: 10.h),
+                  // SizedBox(height: 10.h),
 
                   // Character & Logo Illustration Image
                   Center(
                     child: Image.asset(
-                      AppImg.signPageImg,
-                      width: 175.w,
+                      AppImg.welcomeSplashImg,
+                      width: 200.w,
                       fit: BoxFit.contain,
                       errorBuilder: (context, error, stackTrace) {
                         return SizedBox(height: 100.h);
@@ -359,10 +359,7 @@ class SignUpScreen extends GetView<SignUpController> {
       decoration: BoxDecoration(
         color: const Color(0xFF065967).withValues(alpha: 0.85),
         borderRadius: BorderRadius.circular(18.r),
-        border: Border.all(
-          color: const Color(0xFF38E5D8),
-          width: 1.5.w,
-        ),
+        border: Border.all(color: const Color(0xFF38E5D8), width: 1.5.w),
       ),
       child: TextField(
         controller: controller,
@@ -393,11 +390,7 @@ class SignUpScreen extends GetView<SignUpController> {
                 BlendMode.srcIn,
               ),
               errorBuilder: (context, error, stackTrace) {
-                return Icon(
-                  Icons.input,
-                  color: Colors.white,
-                  size: 20.sp,
-                );
+                return Icon(Icons.input, color: Colors.white, size: 20.sp);
               },
             ),
           ),

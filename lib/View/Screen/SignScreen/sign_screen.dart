@@ -83,7 +83,7 @@ class SignScreen extends GetView<SignController> {
                   // Character & Logo Illustration Image
                   Image.asset(
                     AppImg.welcomeSplashImg,
-                    width: 220.w,
+                    width: 250.w,
                     fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) {
                       return SizedBox(height: 120.h);

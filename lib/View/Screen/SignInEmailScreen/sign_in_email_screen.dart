@@ -46,7 +46,7 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 12.h),
+                  SizedBox(height: 10.h),
 
                   // Top Navigation Bar / Back Button
                   Align(
@@ -79,13 +79,13 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
                     ),
                   ),
 
-                  SizedBox(height: 10.h),
+                  // SizedBox(height: 10.h),
 
                   // Character & Logo Illustration Image
                   Center(
                     child: Image.asset(
-                      AppImg.signPageImg,
-                      width: 180.w,
+                      AppImg.welcomeSplashImg,
+                      width: 200.w,
                       fit: BoxFit.contain,
                       errorBuilder: (context, error, stackTrace) {
                         return SizedBox(height: 100.h);
@@ -307,7 +307,9 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
                     child: ElevatedButton(
                       onPressed: controller.continueAsGuest,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF065967).withValues(alpha: 0.85),
+                        backgroundColor: const Color(
+                          0xFF065967,
+                        ).withValues(alpha: 0.85),
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.r),
@@ -380,10 +382,7 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
       decoration: BoxDecoration(
         color: const Color(0xFF065967).withValues(alpha: 0.85),
         borderRadius: BorderRadius.circular(18.r),
-        border: Border.all(
-          color: const Color(0xFF38E5D8),
-          width: 1.5.w,
-        ),
+        border: Border.all(color: const Color(0xFF38E5D8), width: 1.5.w),
       ),
       child: TextField(
         controller: controller,
@@ -412,11 +411,7 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
                 BlendMode.srcIn,
               ),
               errorBuilder: (context, error, stackTrace) {
-                return Icon(
-                  Icons.input,
-                  color: Colors.white,
-                  size: 20.sp,
-                );
+                return Icon(Icons.input, color: Colors.white, size: 20.sp);
               },
             ),
           ),
