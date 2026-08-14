@@ -15,13 +15,16 @@ class SignScreen extends GetView<SignController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF00C9A7),
       body: Stack(
         children: [
           // Global Background Image
           Positioned.fill(
             child: Image.asset(
               AppImg.globalBackground,
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
+              width: double.infinity,
+              height: double.infinity,
               errorBuilder: (context, error, stackTrace) {
                 return Container(
                   decoration: const BoxDecoration(

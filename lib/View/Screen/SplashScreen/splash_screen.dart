@@ -17,13 +17,16 @@ class SplashScreen extends StatelessWidget {
     }
 
     return Scaffold(
+      backgroundColor: const Color(0xFF00C9A7),
       body: Stack(
         children: [
           // Background Image
           Positioned.fill(
             child: Image.asset(
               AppImg.welcomeBackground,
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
+              width: double.infinity,
+              height: double.infinity,
               errorBuilder: (context, error, stackTrace) {
                 // Fallback gradient if background image fails to load
                 return Container(
