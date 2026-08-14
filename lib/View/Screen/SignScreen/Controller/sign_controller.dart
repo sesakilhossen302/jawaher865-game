@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import '../../../../Core/AppRoute/app_route.dart';
 import '../../../../Utils/ToastMessage/toast_message.dart';
 
 class SignController extends GetxController {
@@ -11,7 +12,7 @@ class SignController extends GetxController {
   }
 
   void signInWithEmail() {
-    ToastMessage.showSuccessToast('Email sign in clicked');
+    Get.toNamed(AppRoute.signInEmailScreen);
   }
 
   void continueAsGuest() {
