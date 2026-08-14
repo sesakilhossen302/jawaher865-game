@@ -27,5 +27,20 @@ class StaticString {
   static const String forgotPassword = 'Forgot password?';
   static const String signIn = 'Sign In';
   static const String dontHaveAccount = "Don't have an account? ";
-  static const String signUp = 'Sign up';
+  static const String signUpBtn = 'Sign up';
+
+  // Sign Up Screen Strings
+  static const String createNewAccount = 'Create a new account';
+  static const String fullName = 'Full Name';
+  static const String dateOfBirth = 'Date of birth';
+  static const String gender = 'Gender';
+  static const String contactNo = 'Contact No.';
+  static const String confirmPassword = 'Confirm Password';
+  static const String iAgreeWith = 'I agree with ';
+  static const String termsOfService = 'terms of service';
+  static const String and = ' and ';
+  static const String privacyPolicy = 'privacy policy';
+  static const String signUp = 'Sign Up';
+  static const String haveAnAccount = 'have an account? ';
+  static const String logIn = 'Log in';
 }

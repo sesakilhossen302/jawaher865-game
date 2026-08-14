@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../Core/AppRoute/app_route.dart';
 import '../../../../Utils/ToastMessage/toast_message.dart';
 
 class SignInEmailController extends GetxController {
@@ -39,7 +40,7 @@ class SignInEmailController extends GetxController {
   }
 
   void goToSignUp() {
-    ToastMessage.showSuccessToast('Navigate to Sign Up');
+    Get.toNamed(AppRoute.signUpScreen);
   }
 
   void goToForgotPassword() {

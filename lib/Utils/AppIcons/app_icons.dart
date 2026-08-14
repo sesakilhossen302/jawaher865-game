@@ -7,6 +7,14 @@ class AppIcons {
   static const String emailIcon = '$basePath/email-icons.svg';
   static const String passwordIcon = '$basePath/Password-icons.svg';
 
+  // Sign Up Icons
+  static const String fullNameIcon = '$basePath/Full Name-icons.svg';
+  static const String dateOfBirthIcon = '$basePath/Date of birth-Icons.svg';
+  static const String genderIcon = '$basePath/Gender-icons.svg';
+  static const String contactNoIcon = '$basePath/Contact No-icons.svg';
+  static const String emailUpIcon = '$basePath/Email-up.svg';
+  static const String passwordUpIcon = '$basePath/Password-up.svg';
+
   static const String home = '$basePath/home.svg';
   static const String profile = '$basePath/profile.svg';
   static const String settings = '$basePath/settings.svg';
