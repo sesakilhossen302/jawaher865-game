@@ -165,7 +165,7 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
                           controller.isObscure.value
                               ? Icons.visibility_off_outlined
                               : Icons.visibility_outlined,
-                          color: const Color(0xFF88C9CC),
+                          color: Colors.white.withValues(alpha: 0.9),
                           size: 20.sp,
                         ),
                         onPressed: controller.togglePasswordVisibility,
@@ -372,13 +372,13 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
     TextInputType keyboardType = TextInputType.text,
   }) {
     return Container(
-      height: 52.h,
+      height: 54.h,
       decoration: BoxDecoration(
-        color: const Color(0xFF1E464C).withValues(alpha: 0.7),
-        borderRadius: BorderRadius.circular(16.r),
+        color: const Color(0xFF065967).withValues(alpha: 0.85),
+        borderRadius: BorderRadius.circular(18.r),
         border: Border.all(
-          color: const Color(0xFF5CA2A6).withValues(alpha: 0.4),
-          width: 1.w,
+          color: const Color(0xFF38E5D8),
+          width: 1.5.w,
         ),
       ),
       child: TextField(
@@ -387,30 +387,30 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
         keyboardType: keyboardType,
         style: TextStyle(
           fontFamily: segoeFont,
-          fontSize: 14.sp,
+          fontSize: 15.sp,
           color: Colors.white,
         ),
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: TextStyle(
             fontFamily: segoeFont,
-            fontSize: 14.sp,
-            color: const Color(0xFF88C9CC),
+            fontSize: 15.sp,
+            color: Colors.white.withValues(alpha: 0.9),
           ),
           prefixIcon: Padding(
             padding: EdgeInsets.all(14.r),
             child: SvgPicture.asset(
               svgPrefixIcon,
-              width: 18.w,
-              height: 18.h,
+              width: 20.w,
+              height: 20.h,
               colorFilter: const ColorFilter.mode(
-                Color(0xFF88C9CC),
+                Colors.white,
                 BlendMode.srcIn,
               ),
               errorBuilder: (context, error, stackTrace) {
                 return Icon(
                   Icons.input,
-                  color: const Color(0xFF88C9CC),
+                  color: Colors.white,
                   size: 20.sp,
                 );
               },
