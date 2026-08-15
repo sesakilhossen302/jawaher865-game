@@ -74,4 +74,12 @@ class StaticString {
   static const String challengeOtherMelases = 'Challenge Other\nMelases';
   static const String challengePlayersOnline = 'Challenge players online';
   static const String playOnline = 'Play Online →';
+
+  // Team Select / Versus Screen Strings
+  static const String blueTeamCaps = 'BLUE TEAM';
+  static const String blueTeam = 'Blue Team';
+  static const String redTeamCaps = 'RED TEAM';
+  static const String redTeam = 'Red Team';
+  static const String vsText = 'VS';
+  static const String next = 'Next';
 }

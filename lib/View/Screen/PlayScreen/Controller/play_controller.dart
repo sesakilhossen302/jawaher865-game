@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import '../../../../Core/AppRoute/app_route.dart';
 
 class PlayController extends GetxController {
   final RxInt selectedNavIndex = 1.obs;
@@ -8,10 +9,10 @@ class PlayController extends GetxController {
   }
 
   void onStartNowTap() {
-    // Action for Challenge Your Melas
+    Get.toNamed(AppRoute.teamSelectScreen);
   }
 
   void onPlayOnlineTap() {
-    // Action for Challenge Other Melases
+    Get.toNamed(AppRoute.teamSelectScreen);
   }
 }

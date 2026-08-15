@@ -17,6 +17,8 @@ import '../../View/Screen/SignScreen/Controller/sign_controller.dart';
 import '../../View/Screen/SignScreen/sign_screen.dart';
 import '../../View/Screen/SplashScreen/Controller/splash_controller.dart';
 import '../../View/Screen/SplashScreen/splash_screen.dart';
+import '../../View/Screen/TeamSelectScreen/Controller/team_select_controller.dart';
+import '../../View/Screen/TeamSelectScreen/team_select_screen.dart';
 
 class AppRoute {
   static const String splashScreen = '/splash_screen';
@@ -28,6 +30,7 @@ class AppRoute {
   static const String resetPasswordScreen = '/reset_password_screen';
   static const String homeScreen = '/home_screen';
   static const String mainScreen = '/main_screen';
+  static const String teamSelectScreen = '/team_select_screen';
 
   static List<GetPage> routes = [
     GetPage(
@@ -95,6 +98,13 @@ class AppRoute {
         Get.lazyPut<MainController>(() => MainController());
         Get.lazyPut<HomeController>(() => HomeController());
         Get.lazyPut<PlayController>(() => PlayController());
+      }),
+    ),
+    GetPage(
+      name: teamSelectScreen,
+      page: () => const TeamSelectScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<TeamSelectController>(() => TeamSelectController());
       }),
     ),
   ];
