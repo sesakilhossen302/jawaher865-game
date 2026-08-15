@@ -25,6 +25,10 @@ class AppIcons {
   static const String singleMaleImg = '$basePath/Single-male-img-homepage.svg';
   static const String nameIconsInHomePage = '$basePath/Name-icons-in-homePage.svg';
 
+  // Play Screen SVGs
+  static const String challengeYourMelasImg = '$basePath/Challenge Your Melas-img.svg';
+  static const String challengeOtherMelasesImg = '$basePath/Challenge Other Melases-img.svg';
+
   static const String home = '$basePath/home.svg';
   static const String profile = '$basePath/profile.svg';
   static const String settings = '$basePath/settings.svg';

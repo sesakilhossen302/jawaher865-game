@@ -65,4 +65,13 @@ class StaticString {
   static const String profile = 'Profile';
   static const String viewAll = 'View All';
   static const String aofText = 'AOF';
+
+  // Play Screen Strings
+  static const String challengeYourMelas = 'Challenge Your\nMelas';
+  static const String playTogetherOnOneDevice = 'Play together on one device';
+  static const String startNow = 'Start Now →';
+
+  static const String challengeOtherMelases = 'Challenge Other\nMelases';
+  static const String challengePlayersOnline = 'Challenge players online';
+  static const String playOnline = 'Play Online →';
 }

@@ -2,9 +2,11 @@ import 'package:get/get.dart';
 import '../../View/Screen/ForgotPasswordScreen/Controller/forgot_password_controller.dart';
 import '../../View/Screen/ForgotPasswordScreen/forgot_password_screen.dart';
 import '../../View/Screen/HomeScreen/Controller/home_controller.dart';
-import '../../View/Screen/HomeScreen/home_screen.dart';
+import '../../View/Screen/MainScreen/Controller/main_controller.dart';
+import '../../View/Screen/MainScreen/main_screen.dart';
 import '../../View/Screen/OtpScreen/Controller/otp_controller.dart';
 import '../../View/Screen/OtpScreen/otp_screen.dart';
+import '../../View/Screen/PlayScreen/Controller/play_controller.dart';
 import '../../View/Screen/ResetPasswordScreen/Controller/reset_password_controller.dart';
 import '../../View/Screen/ResetPasswordScreen/reset_password_screen.dart';
 import '../../View/Screen/SignInEmailScreen/Controller/sign_in_email_controller.dart';
@@ -25,6 +27,7 @@ class AppRoute {
   static const String forgotPasswordScreen = '/forgot_password_screen';
   static const String resetPasswordScreen = '/reset_password_screen';
   static const String homeScreen = '/home_screen';
+  static const String mainScreen = '/main_screen';
 
   static List<GetPage> routes = [
     GetPage(
@@ -78,9 +81,20 @@ class AppRoute {
     ),
     GetPage(
       name: homeScreen,
-      page: () => const HomeScreen(),
+      page: () => const MainScreen(),
       binding: BindingsBuilder(() {
+        Get.lazyPut<MainController>(() => MainController());
         Get.lazyPut<HomeController>(() => HomeController());
+        Get.lazyPut<PlayController>(() => PlayController());
+      }),
+    ),
+    GetPage(
+      name: mainScreen,
+      page: () => const MainScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<MainController>(() => MainController());
+        Get.lazyPut<HomeController>(() => HomeController());
+        Get.lazyPut<PlayController>(() => PlayController());
       }),
     ),
   ];
