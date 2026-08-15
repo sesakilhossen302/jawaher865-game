@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import '../../View/Screen/ChooseCategoryScreen/Controller/choose_category_controller.dart';
+import '../../View/Screen/ChooseCategoryScreen/choose_category_screen.dart';
 import '../../View/Screen/ForgotPasswordScreen/Controller/forgot_password_controller.dart';
 import '../../View/Screen/ForgotPasswordScreen/forgot_password_screen.dart';
 import '../../View/Screen/HomeScreen/Controller/home_controller.dart';
@@ -31,6 +33,7 @@ class AppRoute {
   static const String homeScreen = '/home_screen';
   static const String mainScreen = '/main_screen';
   static const String teamSelectScreen = '/team_select_screen';
+  static const String chooseCategoryScreen = '/choose_category_screen';
 
   static List<GetPage> routes = [
     GetPage(
@@ -105,6 +108,13 @@ class AppRoute {
       page: () => const TeamSelectScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut<TeamSelectController>(() => TeamSelectController());
+      }),
+    ),
+    GetPage(
+      name: chooseCategoryScreen,
+      page: () => const ChooseCategoryScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<ChooseCategoryController>(() => ChooseCategoryController());
       }),
     ),
   ];

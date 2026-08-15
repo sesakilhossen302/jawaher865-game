@@ -82,4 +82,10 @@ class StaticString {
   static const String redTeam = 'Red Team';
   static const String vsText = 'VS';
   static const String next = 'Next';
+
+  // Choose Category Screen Strings
+  static const String localGame = 'Local Game';
+  static const String choose3Categories = 'Choose 3 Categories';
+  static const String searchCategoriesHint = 'Search categories...';
+  static const String allCategories = 'All Categories';
 }
