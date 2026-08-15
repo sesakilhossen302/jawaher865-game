@@ -18,7 +18,7 @@ class ResetPasswordController extends GetxController {
   }
 
   void updateAndContinue() {
-    Get.offAllNamed(AppRoute.signInEmailScreen);
+    Get.offAllNamed(AppRoute.homeScreen);
   }
 
   @override

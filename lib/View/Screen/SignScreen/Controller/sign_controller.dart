@@ -1,14 +1,13 @@
 import 'package:get/get.dart';
 import '../../../../Core/AppRoute/app_route.dart';
-import '../../../../Utils/ToastMessage/toast_message.dart';
 
 class SignController extends GetxController {
   void signInWithGoogle() {
-    ToastMessage.showSuccessToast('Google sign in clicked');
+    Get.offAllNamed(AppRoute.homeScreen);
   }
 
   void signInWithApple() {
-    ToastMessage.showSuccessToast('Apple sign in clicked');
+    Get.offAllNamed(AppRoute.homeScreen);
   }
 
   void signInWithEmail() {
@@ -16,6 +15,6 @@ class SignController extends GetxController {
   }
 
   void continueAsGuest() {
-    ToastMessage.showSuccessToast('Continue as guest clicked');
+    Get.offAllNamed(AppRoute.homeScreen);
   }
 }

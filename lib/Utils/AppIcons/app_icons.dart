@@ -15,6 +15,16 @@ class AppIcons {
   static const String emailUpIcon = '$basePath/Email-up.svg';
   static const String passwordUpIcon = '$basePath/Password-up.svg';
 
+  // Navbar Icons & Homepage SVGs
+  static const String homeNavbarIcon = '$basePath/Home-navbaricons.svg';
+  static const String playNavbarIcon = '$basePath/Play-navbar-icons.svg';
+  static const String leaderboardNavbarIcon = '$basePath/Leaderboard-navbar-icons.svg';
+  static const String profileNavbarIcon = '$basePath/Profile-navbar-icons.svg';
+  static const String leaderboardCupIcon = '$basePath/Leaderboard-cupicons.svg';
+  static const String singleFemaleImg = '$basePath/Single-Female-img-to homepage.svg';
+  static const String singleMaleImg = '$basePath/Single-male-img-homepage.svg';
+  static const String nameIconsInHomePage = '$basePath/Name-icons-in-homePage.svg';
+
   static const String home = '$basePath/home.svg';
   static const String profile = '$basePath/profile.svg';
   static const String settings = '$basePath/settings.svg';

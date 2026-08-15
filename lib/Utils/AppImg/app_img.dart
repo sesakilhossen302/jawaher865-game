@@ -6,4 +6,5 @@ class AppImg {
   static const String globalBackground = '$basePath/Global-background-img.png';
   static const String signPageImg = '$basePath/sign-page-img.png';
   static const String routeitBackground = '$basePath/routeit-Background-image .png';
+  static const String middleMedalImg = '$basePath/Middle-img🏅.png';
 }

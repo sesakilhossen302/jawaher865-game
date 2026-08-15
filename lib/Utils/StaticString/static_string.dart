@@ -57,4 +57,12 @@ class StaticString {
   // Reset Password Strings
   static const String resetPasswordTitle = 'Reset Password';
   static const String updateAndContinue = 'Update and Continue';
+
+  // Home Screen Strings
+  static const String home = 'Home';
+  static const String play = 'Play';
+  static const String leaderboard = 'Leaderboard';
+  static const String profile = 'Profile';
+  static const String viewAll = 'View All';
+  static const String aofText = 'AOF';
 }

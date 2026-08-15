@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import '../../View/Screen/ForgotPasswordScreen/Controller/forgot_password_controller.dart';
 import '../../View/Screen/ForgotPasswordScreen/forgot_password_screen.dart';
+import '../../View/Screen/HomeScreen/Controller/home_controller.dart';
+import '../../View/Screen/HomeScreen/home_screen.dart';
 import '../../View/Screen/OtpScreen/Controller/otp_controller.dart';
 import '../../View/Screen/OtpScreen/otp_screen.dart';
 import '../../View/Screen/ResetPasswordScreen/Controller/reset_password_controller.dart';
@@ -22,6 +24,7 @@ class AppRoute {
   static const String otpScreen = '/otp_screen';
   static const String forgotPasswordScreen = '/forgot_password_screen';
   static const String resetPasswordScreen = '/reset_password_screen';
+  static const String homeScreen = '/home_screen';
 
   static List<GetPage> routes = [
     GetPage(
@@ -71,6 +74,13 @@ class AppRoute {
       page: () => const ResetPasswordScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut<ResetPasswordController>(() => ResetPasswordController());
+      }),
+    ),
+    GetPage(
+      name: homeScreen,
+      page: () => const HomeScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<HomeController>(() => HomeController());
       }),
     ),
   ];
