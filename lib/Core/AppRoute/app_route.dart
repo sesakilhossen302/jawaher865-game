@@ -3,6 +3,8 @@ import '../../View/Screen/ChooseCategoryScreen/Controller/choose_category_contro
 import '../../View/Screen/ChooseCategoryScreen/choose_category_screen.dart';
 import '../../View/Screen/ForgotPasswordScreen/Controller/forgot_password_controller.dart';
 import '../../View/Screen/ForgotPasswordScreen/forgot_password_screen.dart';
+import '../../View/Screen/GameBoardScreen/Controller/game_board_controller.dart';
+import '../../View/Screen/GameBoardScreen/game_board_screen.dart';
 import '../../View/Screen/HomeScreen/Controller/home_controller.dart';
 import '../../View/Screen/MainScreen/Controller/main_controller.dart';
 import '../../View/Screen/MainScreen/main_screen.dart';
@@ -34,6 +36,7 @@ class AppRoute {
   static const String mainScreen = '/main_screen';
   static const String teamSelectScreen = '/team_select_screen';
   static const String chooseCategoryScreen = '/choose_category_screen';
+  static const String gameBoardScreen = '/game_board_screen';
 
   static List<GetPage> routes = [
     GetPage(
@@ -115,6 +118,13 @@ class AppRoute {
       page: () => const ChooseCategoryScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut<ChooseCategoryController>(() => ChooseCategoryController());
+      }),
+    ),
+    GetPage(
+      name: gameBoardScreen,
+      page: () => const GameBoardScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<GameBoardController>(() => GameBoardController());
       }),
     ),
   ];

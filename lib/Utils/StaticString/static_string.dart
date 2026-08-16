@@ -88,4 +88,10 @@ class StaticString {
   static const String choose3Categories = 'Choose 3 Categories';
   static const String searchCategoriesHint = 'Search categories...';
   static const String allCategories = 'All Categories';
+
+  // Game Board Screen Strings
+  static const String exit = 'Exit';
+  static const String restart = 'Restart';
+  static const String gameOver = 'Game Over';
+  static const String yourTurn = 'Your Turn';
 }

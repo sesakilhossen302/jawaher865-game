@@ -1,22 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../Core/AppRoute/app_route.dart';
+import '../../../../Model/category_model.dart';
 import '../../../../Utils/AppImg/app_img.dart';
-
-class CategoryModel {
-  final int id;
-  final String title;
-  final String? imagePath;
-  final IconData? iconData;
-  final Color? iconColor;
-
-  CategoryModel({
-    required this.id,
-    required this.title,
-    this.imagePath,
-    this.iconData,
-    this.iconColor,
-  });
-}
 
 class ChooseCategoryController extends GetxController {
   final TextEditingController searchController = TextEditingController();
@@ -25,6 +11,8 @@ class ChooseCategoryController extends GetxController {
   final RxString activeTeamName = 'Blue Team'.obs;
   final RxString blueTeamName = 'Blue Team'.obs;
   final RxString redTeamName = 'Red Team'.obs;
+
+  final RxBool isLoading = false.obs;
 
   final RxList<CategoryModel> categories = <CategoryModel>[
     CategoryModel(
@@ -82,6 +70,20 @@ class ChooseCategoryController extends GetxController {
     }
   }
 
+  // Ready for Backend API Call
+  Future<void> fetchCategoriesFromApi() async {
+    try {
+      isLoading.value = true;
+      // TODO: Replace with real API service call when backend endpoint is ready
+      // final response = await ApiService.getCategories();
+      // categories.value = response.map((data) => CategoryModel.fromJson(data)).toList();
+    } catch (e) {
+      // Handle error
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   List<CategoryModel> get filteredCategories {
     if (searchQuery.isEmpty) {
       return categories;
@@ -131,12 +133,13 @@ class ChooseCategoryController extends GetxController {
 
   void onActionTap() {
     if (selectedCategoryIds.length == 3) {
-      Get.snackbar(
-        'Offline Game Ready',
-        'Starting game for ${blueTeamName.value} VS ${redTeamName.value}!',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: const Color(0xFF22C55E),
-        colorText: Colors.white,
+      Get.toNamed(
+        AppRoute.gameBoardScreen,
+        arguments: {
+          'player1': blueTeamName.value,
+          'player2': redTeamName.value,
+          'selectedCategories': selectedCategoryModels,
+        },
       );
     } else {
       Get.snackbar(
