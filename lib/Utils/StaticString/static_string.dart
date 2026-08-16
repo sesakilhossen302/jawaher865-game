@@ -94,4 +94,19 @@ class StaticString {
   static const String restart = 'Restart';
   static const String gameOver = 'Game Over';
   static const String yourTurn = 'Your Turn';
+
+  // Question Screen Strings
+  static const String showAnswer = 'Show Answer';
+  static const String hideAnswer = 'Hide Answer';
+  static const String returnToAnswer = 'Return to the answer';
+  static const String resultDistribution = 'Result Distribution';
+  static const String whichTeamAnsweredCorrectly = 'Which team answered correctly';
+  static const String noOne = 'No-one';
+  static const String typeYourAnswer = 'Type your answer here...';
+  static const String submitAnswer = 'Submit Answer';
+  static const String correctAnswer = 'Correct Answer!';
+
+  // Winning Screen Strings
+  static const String congratulationsOnTheWin = 'Congratulations on the win';
+  static const String playAgain = 'Play Again';
 }

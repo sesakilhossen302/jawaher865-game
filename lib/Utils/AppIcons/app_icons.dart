@@ -31,6 +31,10 @@ class AppIcons {
   static const String blueTeamImg = '$basePath/Blue Team-img.svg';
   static const String redTeamImg = '$basePath/Red Team-img.svg';
 
+  // Winning / Celebration SVGs
+  static const String normalWinningImg = '$basePath/Normal winning  img.svg';
+  static const String rautetWinningImg = '$basePath/rautet winning  img.svg';
+
   static const String home = '$basePath/home.svg';
   static const String profile = '$basePath/profile.svg';
   static const String settings = '$basePath/settings.svg';

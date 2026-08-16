@@ -11,6 +11,8 @@ import '../../View/Screen/MainScreen/main_screen.dart';
 import '../../View/Screen/OtpScreen/Controller/otp_controller.dart';
 import '../../View/Screen/OtpScreen/otp_screen.dart';
 import '../../View/Screen/PlayScreen/Controller/play_controller.dart';
+import '../../View/Screen/QuestionScreen/Controller/question_controller.dart';
+import '../../View/Screen/QuestionScreen/question_screen.dart';
 import '../../View/Screen/ResetPasswordScreen/Controller/reset_password_controller.dart';
 import '../../View/Screen/ResetPasswordScreen/reset_password_screen.dart';
 import '../../View/Screen/SignInEmailScreen/Controller/sign_in_email_controller.dart';
@@ -23,6 +25,8 @@ import '../../View/Screen/SplashScreen/Controller/splash_controller.dart';
 import '../../View/Screen/SplashScreen/splash_screen.dart';
 import '../../View/Screen/TeamSelectScreen/Controller/team_select_controller.dart';
 import '../../View/Screen/TeamSelectScreen/team_select_screen.dart';
+import '../../View/Screen/WinningScreen/Controller/winning_controller.dart';
+import '../../View/Screen/WinningScreen/winning_screen.dart';
 
 class AppRoute {
   static const String splashScreen = '/splash_screen';
@@ -37,6 +41,8 @@ class AppRoute {
   static const String teamSelectScreen = '/team_select_screen';
   static const String chooseCategoryScreen = '/choose_category_screen';
   static const String gameBoardScreen = '/game_board_screen';
+  static const String questionScreen = '/question_screen';
+  static const String winningScreen = '/winning_screen';
 
   static List<GetPage> routes = [
     GetPage(
@@ -125,6 +131,20 @@ class AppRoute {
       page: () => const GameBoardScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut<GameBoardController>(() => GameBoardController());
+      }),
+    ),
+    GetPage(
+      name: questionScreen,
+      page: () => const QuestionScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<QuestionController>(() => QuestionController());
+      }),
+    ),
+    GetPage(
+      name: winningScreen,
+      page: () => const WinningScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<WinningController>(() => WinningController());
       }),
     ),
   ];

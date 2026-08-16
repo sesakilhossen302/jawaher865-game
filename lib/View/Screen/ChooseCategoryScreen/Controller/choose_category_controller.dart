@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../../../Core/AppRoute/app_route.dart';
 import '../../../../Model/category_model.dart';
@@ -133,6 +134,11 @@ class ChooseCategoryController extends GetxController {
 
   void onActionTap() {
     if (selectedCategoryIds.length == 3) {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight,
+        DeviceOrientation.portraitUp,
+      ]);
       Get.toNamed(
         AppRoute.gameBoardScreen,
         arguments: {

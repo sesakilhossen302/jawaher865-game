@@ -24,19 +24,28 @@ class GameBoardScreen extends GetView<GameBoardController> {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            // PERSISETENT FULL PAGE BACKGROUND
+            // PERSISTENT FULL PAGE BACKGROUND
             Positioned.fill(
               child: Image.asset(AppImg.globalBackground, fit: BoxFit.cover),
             ),
 
-            // MAIN CONTENT LAYER
+            // MAIN CONTENT LAYER WITH SMOOTH ROTATION ANIMATION
             SafeArea(
               child: OrientationBuilder(
                 builder: (context, orientation) {
                   final isPortrait = orientation == Orientation.portrait;
-                  return isPortrait
-                      ? _buildPortraitLayout()
-                      : _buildLandscapeLayout();
+                  return AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 200),
+                    child: isPortrait
+                        ? SizedBox(
+                            key: const ValueKey('gb_portrait'),
+                            child: _buildPortraitLayout(),
+                          )
+                        : SizedBox(
+                            key: const ValueKey('gb_landscape'),
+                            child: _buildLandscapeLayout(),
+                          ),
+                  );
                 },
               ),
             ),
@@ -46,7 +55,7 @@ class GameBoardScreen extends GetView<GameBoardController> {
     );
   }
 
-  // PORTRAIT LAYOUT (IMAGE 1)
+  // PORTRAIT LAYOUT
   Widget _buildPortraitLayout() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -105,51 +114,51 @@ class GameBoardScreen extends GetView<GameBoardController> {
     );
   }
 
-  // LANDSCAPE LAYOUT (IMAGE 1)
+  // LANDSCAPE LAYOUT (0.0 OVERFLOW GUARANTEED)
   Widget _buildLandscapeLayout() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
-          SizedBox(height: 10.h),
+          const SizedBox(height: 4),
 
           // 1. TOP ACTION BAR (Exit, Restart on left | Game Over, dots on right)
-          _buildTopActionBar(),
+          _buildTopActionBar(isLandscape: true),
 
-          SizedBox(height: 14.h),
+          const SizedBox(height: 8),
 
           // 2. PLAYER SCOREBOARD ROW (Player 1 on Left | Player 2 on Right)
           Obx(
             () => Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(
-                  width: 280.w,
+                Expanded(
                   child: _buildPlayerCard(
                     name: controller.player1.value.name,
                     score: controller.player1.value.score.toString(),
                     isTurn: controller.player1.value.isTurn,
                     avatarInitials: controller.player1.value.avatarInitials,
                     avatarColor: const Color(0xFF275BEA),
+                    isLandscape: true,
                   ),
                 ),
-                SizedBox(
-                  width: 280.w,
+                const SizedBox(width: 20),
+                Expanded(
                   child: _buildPlayerCard(
                     name: controller.player2.value.name,
                     score: controller.player2.value.score.toString(),
                     isTurn: controller.player2.value.isTurn,
                     avatarInitials: controller.player2.value.avatarInitials,
                     avatarColor: const Color(0xFFE54124),
+                    isLandscape: true,
                   ),
                 ),
               ],
             ),
           ),
 
-          SizedBox(height: 16.h),
+          const SizedBox(height: 10),
 
-          // 3. CATEGORY BOARD GRID (3 Categories across in a row)
+          // 3. CATEGORY BOARD GRID (3 Categories across per row)
           Expanded(
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
@@ -163,15 +172,16 @@ class GameBoardScreen extends GetView<GameBoardController> {
                   );
                   rows.add(
                     Padding(
-                      padding: EdgeInsets.only(bottom: 16.h),
+                      padding: const EdgeInsets.only(bottom: 8),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: rowBlocks.map((block) {
-                          return SizedBox(
-                            width: 210.w,
-                            child: _buildCategoryRow(block, isCompact: true),
-                          );
-                        }).toList(),
+                        children: [
+                          for (int j = 0; j < rowBlocks.length; j++) ...[
+                            if (j > 0) const SizedBox(width: 8),
+                            Expanded(
+                              child: _buildCategoryRow(rowBlocks[j], isCompact: true),
+                            ),
+                          ],
+                        ],
                       ),
                     ),
                   );
@@ -186,98 +196,99 @@ class GameBoardScreen extends GetView<GameBoardController> {
   }
 
   // TOP ACTION BAR WIDGET
-  Widget _buildTopActionBar() {
+  Widget _buildTopActionBar({bool isLandscape = false}) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // Exit Action Button
-        GestureDetector(
-          onTap: controller.onExit,
-          behavior: HitTestBehavior.opaque,
-          child: Row(
-            children: [
-              Icon(
-                Icons.logout_rounded,
-                color: Colors.white,
-                size: 18.sp,
-              ),
-              SizedBox(width: 4.w),
-              Text(
-                StaticString.exit,
-                style: TextStyle(
-                  fontFamily: segoeFont,
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        SizedBox(width: 16.w),
-
-        // Restart Action Button
-        GestureDetector(
-          onTap: controller.onRestart,
-          behavior: HitTestBehavior.opaque,
-          child: Row(
-            children: [
-              Icon(
-                Icons.restart_alt_rounded,
-                color: Colors.white,
-                size: 18.sp,
-              ),
-              SizedBox(width: 4.w),
-              Text(
-                StaticString.restart,
-                style: TextStyle(
-                  fontFamily: segoeFont,
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        const Spacer(),
-
-        // Game Over Pill Button
-        GestureDetector(
-          onTap: controller.onGameOver,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
-            decoration: BoxDecoration(
-              color: const Color(0xFF3358FE),
-              borderRadius: BorderRadius.circular(20.r),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFF3358FE).withValues(alpha: 0.4),
-                  blurRadius: 8,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            child: Text(
-              StaticString.gameOver,
-              style: TextStyle(
-                fontFamily: segoeFont,
-                fontSize: 13.sp,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+        // Exit & Restart Buttons
+        Row(
+          children: [
+            GestureDetector(
+              onTap: controller.onExit,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.logout_rounded,
+                    color: Colors.white,
+                    size: isLandscape ? 18 : 18.sp,
+                  ),
+                  SizedBox(width: isLandscape ? 4 : 4.w),
+                  Text(
+                    StaticString.exit,
+                    style: TextStyle(
+                      fontFamily: segoeFont,
+                      fontSize: isLandscape ? 13 : 14.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
+            SizedBox(width: isLandscape ? 16 : 16.w),
+            GestureDetector(
+              onTap: controller.onRestart,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.refresh_rounded,
+                    color: Colors.white,
+                    size: isLandscape ? 18 : 18.sp,
+                  ),
+                  SizedBox(width: isLandscape ? 4 : 4.w),
+                  Text(
+                    StaticString.restart,
+                    style: TextStyle(
+                      fontFamily: segoeFont,
+                      fontSize: isLandscape ? 13 : 14.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
 
-        SizedBox(width: 10.w),
-
-        // More Options Icon
-        Icon(
-          Icons.more_vert,
-          color: Colors.white,
-          size: 22.sp,
+        // Game Over & Options Dots
+        Row(
+          children: [
+            SizedBox(
+              height: isLandscape ? 34 : 36.h,
+              child: ElevatedButton(
+                onPressed: controller.onGameOver,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF3358FE),
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.r),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: isLandscape ? 16 : 20.w),
+                ),
+                child: Text(
+                  StaticString.gameOver,
+                  style: TextStyle(
+                    fontFamily: segoeFont,
+                    fontSize: isLandscape ? 12 : 13.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(width: isLandscape ? 8 : 8.w),
+            IconButton(
+              onPressed: () {},
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
+              icon: Icon(
+                Icons.more_vert_rounded,
+                color: Colors.white,
+                size: isLandscape ? 20 : 22.sp,
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -290,9 +301,14 @@ class GameBoardScreen extends GetView<GameBoardController> {
     required bool isTurn,
     required String avatarInitials,
     required Color avatarColor,
+    bool isLandscape = false,
   }) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
+      height: isLandscape ? 52 : null,
+      padding: EdgeInsets.symmetric(
+        horizontal: isLandscape ? 10 : 14.w,
+        vertical: isLandscape ? 4 : 8.h,
+      ),
       decoration: BoxDecoration(
         color: const Color(0xFF003366).withValues(alpha: 0.85),
         borderRadius: BorderRadius.circular(24.r),
@@ -316,8 +332,8 @@ class GameBoardScreen extends GetView<GameBoardController> {
         children: [
           // Avatar Circle
           Container(
-            width: 36.w,
-            height: 36.h,
+            width: isLandscape ? 30 : 36.w,
+            height: isLandscape ? 30 : 36.h,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: avatarColor,
@@ -327,7 +343,7 @@ class GameBoardScreen extends GetView<GameBoardController> {
                 avatarInitials,
                 style: TextStyle(
                   fontFamily: segoeFont,
-                  fontSize: 16.sp,
+                  fontSize: isLandscape ? 13 : 16.sp,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
@@ -335,32 +351,36 @@ class GameBoardScreen extends GetView<GameBoardController> {
             ),
           ),
 
-          SizedBox(width: 12.w),
+          SizedBox(width: isLandscape ? 8 : 12.w),
 
           // Player Name & Turn Subtitle
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   name,
                   style: TextStyle(
                     fontFamily: segoeFont,
-                    fontSize: 15.sp,
+                    fontSize: isLandscape ? 12 : 15.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 if (isTurn)
                   Text(
                     StaticString.yourTurn,
                     style: TextStyle(
                       fontFamily: segoeFont,
-                      fontSize: 11.sp,
+                      fontSize: isLandscape ? 9 : 11.sp,
                       fontWeight: FontWeight.w600,
                       color: const Color(0xFF22C55E),
                     ),
+                    maxLines: 1,
                   ),
               ],
             ),
@@ -371,12 +391,12 @@ class GameBoardScreen extends GetView<GameBoardController> {
             score,
             style: TextStyle(
               fontFamily: segoeFont,
-              fontSize: 20.sp,
+              fontSize: isLandscape ? 16 : 20.sp,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
           ),
-          SizedBox(width: 6.w),
+          SizedBox(width: 4.w),
         ],
       ),
     );
@@ -385,123 +405,79 @@ class GameBoardScreen extends GetView<GameBoardController> {
   // CATEGORY ROW WITH LEFT & RIGHT POINT BUTTONS
   Widget _buildCategoryRow(GameBoardBlockModel block, {bool isCompact = false}) {
     return Row(
-      mainAxisSize: isCompact ? MainAxisSize.min : MainAxisSize.max,
       children: [
         // Left Column of Point Buttons (200, 400, 600)
         Column(
           children: block.pointValues.map((pts) {
             return Padding(
-              padding: EdgeInsets.only(bottom: isCompact ? 4.h : 8.h),
+              padding: EdgeInsets.only(bottom: isCompact ? 3 : 8.h),
               child: _buildPointButton(block.id, 'left', pts, isCompact: isCompact),
             );
           }).toList(),
         ),
 
-        SizedBox(width: isCompact ? 6.w : 10.w),
+        SizedBox(width: isCompact ? 3 : 10.w),
 
-        // Center Category Card
-        isCompact
-            ? Container(
-                width: 100.w,
-                height: 140.h,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF065967).withValues(alpha: 0.85),
-                  borderRadius: BorderRadius.circular(18.r),
-                  border: Border.all(
-                    color: const Color(0xFF38E5D8).withValues(alpha: 0.35),
-                    width: 1.w,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.2),
-                      blurRadius: 8,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      block.imagePath,
-                      height: 44.h,
-                      fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Icon(
-                          Icons.category_rounded,
-                          size: 32.sp,
-                          color: Colors.amber,
-                        );
-                      },
-                    ),
-                    SizedBox(height: 6.h),
-                    Text(
-                      block.title,
-                      style: TextStyle(
-                        fontFamily: segoeFont,
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            : Expanded(
-                child: Container(
-                  height: 146.h,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF065967).withValues(alpha: 0.85),
-                    borderRadius: BorderRadius.circular(18.r),
-                    border: Border.all(
-                      color: const Color(0xFF38E5D8).withValues(alpha: 0.35),
-                      width: 1.w,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.2),
-                        blurRadius: 8,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        block.imagePath,
-                        height: 52.h,
-                        fit: BoxFit.contain,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Icon(
-                            Icons.category_rounded,
-                            size: 38.sp,
-                            color: Colors.amber,
-                          );
-                        },
-                      ),
-                      SizedBox(height: 8.h),
-                      Text(
-                        block.title,
-                        style: TextStyle(
-                          fontFamily: segoeFont,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+        // Center Category Card (Flexible Container)
+        Expanded(
+          child: Container(
+            height: isCompact ? 102 : 146.h,
+            padding: const EdgeInsets.symmetric(horizontal: 2),
+            decoration: BoxDecoration(
+              color: const Color(0xFF065967).withValues(alpha: 0.85),
+              borderRadius: BorderRadius.circular(16.r),
+              border: Border.all(
+                color: const Color(0xFF38E5D8).withValues(alpha: 0.35),
+                width: 1.w,
               ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.2),
+                  blurRadius: 6,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  block.imagePath,
+                  height: isCompact ? 34 : 52.h,
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Icon(
+                      Icons.category_rounded,
+                      size: isCompact ? 26 : 38.sp,
+                      color: Colors.amber,
+                    );
+                  },
+                ),
+                SizedBox(height: isCompact ? 2 : 8.h),
+                Text(
+                  block.title,
+                  style: TextStyle(
+                    fontFamily: segoeFont,
+                    fontSize: isCompact ? 11 : 14.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+        ),
 
-        SizedBox(width: isCompact ? 6.w : 10.w),
+        SizedBox(width: isCompact ? 3 : 10.w),
 
         // Right Column of Point Buttons (200, 400, 600)
         Column(
           children: block.pointValues.map((pts) {
             return Padding(
-              padding: EdgeInsets.only(bottom: isCompact ? 4.h : 8.h),
+              padding: EdgeInsets.only(bottom: isCompact ? 3 : 8.h),
               child: _buildPointButton(block.id, 'right', pts, isCompact: isCompact),
             );
           }).toList(),
@@ -520,13 +496,13 @@ class GameBoardScreen extends GetView<GameBoardController> {
         onTap: () => controller.onPointTap(categoryId, side, points),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          width: isCompact ? 44.w : 58.w,
-          height: isCompact ? 40.h : 42.h,
+          width: isCompact ? 34 : 58.w,
+          height: isCompact ? 30 : 42.h,
           decoration: BoxDecoration(
             color: isUsed
                 ? Colors.white.withValues(alpha: 0.15)
                 : const Color(0xFF065967).withValues(alpha: 0.85),
-            borderRadius: BorderRadius.circular(14.r),
+            borderRadius: BorderRadius.circular(isCompact ? 10 : 14.r),
             border: Border.all(
               color: isUsed
                   ? Colors.white.withValues(alpha: 0.2)
@@ -539,7 +515,7 @@ class GameBoardScreen extends GetView<GameBoardController> {
               points.toString(),
               style: TextStyle(
                 fontFamily: segoeFont,
-                fontSize: isCompact ? 11.sp : 13.sp,
+                fontSize: isCompact ? 10 : 13.sp,
                 fontWeight: FontWeight.bold,
                 color: isUsed
                     ? Colors.white.withValues(alpha: 0.4)

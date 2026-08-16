@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'Core/AppRoute/app_route.dart';
@@ -9,6 +10,9 @@ import 'Utils/AppConst/app_const.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   DependencyInjection().dependencies();
   runApp(const MyApp());
 }
@@ -22,6 +26,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(393, 846),
       minTextAdapt: true,
       splitScreenMode: true,
+      useInheritedMediaQuery: true,
       builder: (context, child) {
         return GetMaterialApp(
           title: AppConst.appName,
