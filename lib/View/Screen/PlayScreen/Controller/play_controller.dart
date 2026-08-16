@@ -13,6 +13,6 @@ class PlayController extends GetxController {
   }
 
   void onPlayOnlineTap() {
-    Get.toNamed(AppRoute.teamSelectScreen);
+    Get.toNamed(AppRoute.matchmakingScreen);
   }
 }

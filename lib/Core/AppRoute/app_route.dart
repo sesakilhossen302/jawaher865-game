@@ -25,6 +25,8 @@ import '../../View/Screen/SplashScreen/Controller/splash_controller.dart';
 import '../../View/Screen/SplashScreen/splash_screen.dart';
 import '../../View/Screen/TeamSelectScreen/Controller/team_select_controller.dart';
 import '../../View/Screen/TeamSelectScreen/team_select_screen.dart';
+import '../../View/Screen/MatchmakingScreen/Controller/matchmaking_controller.dart';
+import '../../View/Screen/MatchmakingScreen/matchmaking_screen.dart';
 import '../../View/Screen/WinningScreen/Controller/winning_controller.dart';
 import '../../View/Screen/WinningScreen/winning_screen.dart';
 
@@ -43,6 +45,7 @@ class AppRoute {
   static const String gameBoardScreen = '/game_board_screen';
   static const String questionScreen = '/question_screen';
   static const String winningScreen = '/winning_screen';
+  static const String matchmakingScreen = '/matchmaking_screen';
 
   static List<GetPage> routes = [
     GetPage(
@@ -145,6 +148,13 @@ class AppRoute {
       page: () => const WinningScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut<WinningController>(() => WinningController());
+      }),
+    ),
+    GetPage(
+      name: matchmakingScreen,
+      page: () => const MatchmakingScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<MatchmakingController>(() => MatchmakingController());
       }),
     ),
   ];
