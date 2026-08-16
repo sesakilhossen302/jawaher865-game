@@ -33,7 +33,9 @@ class GameBoardScreen extends GetView<GameBoardController> {
             SafeArea(
               child: OrientationBuilder(
                 builder: (context, orientation) {
-                  final isPortrait = orientation == Orientation.portrait;
+                  final mediaSize = MediaQuery.of(context).size;
+                  final isPortrait = orientation == Orientation.portrait &&
+                      mediaSize.height >= mediaSize.width;
                   return AnimatedSwitcher(
                     duration: const Duration(milliseconds: 200),
                     child: isPortrait

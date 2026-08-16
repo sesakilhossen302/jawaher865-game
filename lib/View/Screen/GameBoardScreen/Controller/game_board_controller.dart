@@ -39,6 +39,8 @@ class GameBoardController extends GetxController {
     GameBoardBlockModel(id: 6, title: 'AI', imagePath: AppImg.aiImg),
   ].obs;
 
+  final RxBool isOnlineMatch = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -51,6 +53,7 @@ class GameBoardController extends GetxController {
 
     if (Get.arguments != null && Get.arguments is Map) {
       final args = Get.arguments as Map;
+      isOnlineMatch.value = args['isOnlineMatch'] ?? false;
       if (args['player1'] != null) {
         player1.value = player1.value.copyWith(name: args['player1']);
       }
@@ -108,6 +111,7 @@ class GameBoardController extends GetxController {
     Get.toNamed(
       AppRoute.questionScreen,
       arguments: {
+        'isOnlineMatch': isOnlineMatch.value,
         'categoryTitle': block.title,
         'points': points,
         'questionText': questionData['question'],
@@ -252,6 +256,7 @@ class GameBoardController extends GetxController {
     Get.toNamed(
       AppRoute.winningScreen,
       arguments: {
+        'isOnlineMatch': isOnlineMatch.value,
         'winnerName': winnerName,
         'winnerScore': winnerScore,
         'winnerAvatar': winnerAvatar,

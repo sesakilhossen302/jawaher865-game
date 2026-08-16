@@ -23,15 +23,9 @@ class MatchmakingController extends GetxController {
       statusText.value = 'Opponent found!';
       subText.value = 'Connecting you now';
 
-      // 2. Auto-navigate to Game Board after 2 seconds
-      _navigateTimer = Timer(const Duration(milliseconds: 2000), () {
-        Get.offNamed(
-          AppRoute.gameBoardScreen,
-          arguments: {
-            'player1': 'You (Blue)',
-            'player2': 'Online Rival (Red)',
-          },
-        );
+      // 2. Auto-navigate to 2 vs 2 VS Match screen after 1.8 seconds
+      _navigateTimer = Timer(const Duration(milliseconds: 1800), () {
+        Get.offNamed(AppRoute.vsMatchScreen);
       });
     });
   }

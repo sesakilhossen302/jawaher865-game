@@ -60,13 +60,22 @@ class ChooseCategoryController extends GetxController {
 
   final RxList<int> selectedCategoryIds = <int>[].obs;
 
+  final RxBool isOnlineMatch = false.obs;
+
   @override
   void onInit() {
     super.onInit();
+
+    // Lock ChooseCategoryScreen strictly to Portrait Mode ONLY
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+
     if (Get.arguments != null && Get.arguments is Map) {
       final args = Get.arguments as Map;
-      blueTeamName.value = args['blueTeam'] ?? 'Blue Team';
-      redTeamName.value = args['redTeam'] ?? 'Red Team';
+      isOnlineMatch.value = args['isOnlineMatch'] ?? false;
+      blueTeamName.value = args['blueTeam'] ?? args['player1'] ?? 'Blue Team';
+      redTeamName.value = args['redTeam'] ?? args['player2'] ?? 'Red Team';
       activeTeamName.value = blueTeamName.value;
     }
   }
@@ -142,6 +151,7 @@ class ChooseCategoryController extends GetxController {
       Get.toNamed(
         AppRoute.gameBoardScreen,
         arguments: {
+          'isOnlineMatch': isOnlineMatch.value,
           'player1': blueTeamName.value,
           'player2': redTeamName.value,
           'selectedCategories': selectedCategoryModels,

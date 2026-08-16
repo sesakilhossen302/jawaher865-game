@@ -3,9 +3,10 @@ import 'package:get/get.dart';
 import '../../../../Core/AppRoute/app_route.dart';
 
 class WinningController extends GetxController {
-  final RxString winnerName = 'Asadujjaman'.obs;
+  final RxString winnerName = 'Asaduzzaman'.obs;
   final RxInt winnerScore = 1000.obs;
   final RxString winnerAvatarInitials = 'ش'.obs;
+  final RxBool isOnlineMatch = false.obs;
 
   @override
   void onInit() {
@@ -19,6 +20,9 @@ class WinningController extends GetxController {
 
     if (Get.arguments != null && Get.arguments is Map) {
       final args = Get.arguments as Map;
+      if (args['isOnlineMatch'] != null) {
+        isOnlineMatch.value = args['isOnlineMatch'];
+      }
       if (args['winnerName'] != null) winnerName.value = args['winnerName'];
       if (args['winnerScore'] != null) winnerScore.value = args['winnerScore'];
       if (args['winnerAvatar'] != null) winnerAvatarInitials.value = args['winnerAvatar'];
@@ -26,18 +30,15 @@ class WinningController extends GetxController {
   }
 
   void onPlayAgain() {
-    // Lock orientation back to Portrait when returning to Team Select
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
-    Get.offNamedUntil(AppRoute.teamSelectScreen, (route) => route.isFirst);
-  }
-
-  @override
-  void onClose() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
-    super.onClose();
+    if (isOnlineMatch.value) {
+      // ONLINE PLAY: Tapping Try/Play Again redirects to MatchmakingScreen to find next online opponent
+      Get.offAllNamed(AppRoute.matchmakingScreen);
+    } else {
+      // OFFLINE LOCAL PLAY: Tapping Play Again returns to TeamSelectScreen
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+      ]);
+      Get.offNamedUntil(AppRoute.teamSelectScreen, (route) => route.isFirst);
+    }
   }
 }
