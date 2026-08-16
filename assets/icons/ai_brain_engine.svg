@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <rect width="600" height="400" rx="20" fill="#0A192F"/>
+  <!-- Neural Nodes & Connections -->
+  <line x1="150" y1="120" x2="300" y2="70" stroke="#38E5D8" stroke-width="4"/>
+  <line x1="150" y1="120" x2="300" y2="200" stroke="#38E5D8" stroke-width="4"/>
+  <line x1="150" y1="280" x2="300" y2="200" stroke="#38E5D8" stroke-width="4"/>
+  <line x1="150" y1="280" x2="300" y2="330" stroke="#38E5D8" stroke-width="4"/>
+  <line x1="300" y1="70" x2="450" y2="200" stroke="#3358FE" stroke-width="4"/>
+  <line x1="300" y1="200" x2="450" y2="200" stroke="#3358FE" stroke-width="4"/>
+  <line x1="300" y1="330" x2="450" y2="200" stroke="#3358FE" stroke-width="4"/>
+  <circle cx="150" cy="120" r="22" fill="#38E5D8"/>
+  <circle cx="150" cy="280" r="22" fill="#38E5D8"/>
+  <circle cx="300" cy="70" r="26" fill="#3358FE"/>
+  <circle cx="300" cy="200" r="32" fill="#38E5D8"/>
+  <circle cx="300" cy="330" r="26" fill="#3358FE"/>
+  <circle cx="450" cy="200" r="35" fill="#FBBF24"/>
+  <text x="450" y="208" font-family="sans-serif" font-size="20" font-weight="bold" fill="#0A192F" text-anchor="middle">AI</text>
+  <text x="300" y="380" font-family="sans-serif" font-size="22" font-weight="bold" fill="#38E5D8" text-anchor="middle">Artificial Intelligence Neural Engine</text>
+</svg>

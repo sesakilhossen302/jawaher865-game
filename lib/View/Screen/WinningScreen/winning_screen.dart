@@ -48,14 +48,23 @@ class WinningScreen extends GetView<WinningController> {
               ),
             ),
 
-            // 3. MAIN WINNER CONTENT LAYER
+            // 3. MAIN WINNER CONTENT LAYER WITH SMOOTH ROTATION
             SafeArea(
               child: OrientationBuilder(
                 builder: (context, orientation) {
                   final isPortrait = orientation == Orientation.portrait;
-                  return isPortrait
-                      ? _buildPortraitLayout()
-                      : _buildLandscapeLayout();
+                  return AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 200),
+                    child: isPortrait
+                        ? SizedBox(
+                            key: const ValueKey('win_portrait'),
+                            child: _buildPortraitLayout(),
+                          )
+                        : SizedBox(
+                            key: const ValueKey('win_landscape'),
+                            child: _buildLandscapeLayout(),
+                          ),
+                  );
                 },
               ),
             ),

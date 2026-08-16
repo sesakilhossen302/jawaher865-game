@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <rect width="600" height="400" rx="20" fill="#003875"/>
+  <!-- Golden Crescent Moon -->
+  <path d="M 320 80 A 110 110 0 1 0 320 300 A 85 85 0 1 1 320 80 Z" fill="#FBBF24"/>
+  <!-- Star -->
+  <polygon points="340,140 348,165 375,165 353,180 361,205 340,190 319,205 327,180 305,165 332,165" fill="#FFFFFF"/>
+  <text x="300" y="350" font-family="sans-serif" font-size="32" font-weight="bold" fill="#FBBF24" text-anchor="middle">رمضان مبارك</text>
+</svg>

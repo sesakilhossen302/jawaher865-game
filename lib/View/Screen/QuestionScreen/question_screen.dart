@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../Utils/AppImg/app_img.dart';
 import '../../../Utils/StaticString/static_string.dart';
 import 'Controller/question_controller.dart';
@@ -543,37 +544,51 @@ class QuestionScreen extends GetView<QuestionController> {
 
           SizedBox(height: isLandscape ? 8 : 14.h),
 
-          // Question Image Graphic (Network CDN or Local Asset)
+          // Question Image Graphic (Supports SVG, PNG, and Network)
           Obx(() {
             final imgPath = controller.questionImage.value;
             final isNetwork =
                 imgPath.startsWith('http://') || imgPath.startsWith('https://');
+            final isSvg = imgPath.endsWith('.svg');
 
-            return isNetwork
-                ? Image.network(
-                    imgPath,
+            if (isSvg) {
+              return SvgPicture.asset(
+                imgPath,
+                height: isLandscape ? 85 : 135.h,
+                fit: BoxFit.contain,
+                placeholderBuilder: (context) => Icon(
+                  Icons.image_rounded,
+                  size: isLandscape ? 45 : 60.sp,
+                  color: Colors.white70,
+                ),
+              );
+            } else if (isNetwork) {
+              return Image.network(
+                imgPath,
+                height: isLandscape ? 85 : 135.h,
+                fit: BoxFit.contain,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    AppImg.flagsImg,
                     height: isLandscape ? 85 : 135.h,
                     fit: BoxFit.contain,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Image.asset(
-                        AppImg.flagsImg,
-                        height: isLandscape ? 85 : 135.h,
-                        fit: BoxFit.contain,
-                      );
-                    },
-                  )
-                : Image.asset(
-                    imgPath,
-                    height: isLandscape ? 85 : 135.h,
-                    fit: BoxFit.contain,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Icon(
-                        Icons.help_outline_rounded,
-                        size: isLandscape ? 45 : 60.sp,
-                        color: Colors.white70,
-                      );
-                    },
                   );
+                },
+              );
+            } else {
+              return Image.asset(
+                imgPath,
+                height: isLandscape ? 85 : 135.h,
+                fit: BoxFit.contain,
+                errorBuilder: (context, error, stackTrace) {
+                  return Icon(
+                    Icons.help_outline_rounded,
+                    size: isLandscape ? 45 : 60.sp,
+                    color: Colors.white70,
+                  );
+                },
+              );
+            }
           }),
 
           // Revealed Answer Text inside Question Box

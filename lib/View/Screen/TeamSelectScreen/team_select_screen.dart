@@ -14,6 +14,12 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
 
   @override
   Widget build(BuildContext context) {
+    if (!Get.isRegistered<TeamSelectController>()) {
+      Get.put(TeamSelectController());
+    } else {
+      Get.find<TeamSelectController>().ensureControllersInitialized();
+    }
+
     return Scaffold(
       body: SizedBox(
         width: double.infinity,

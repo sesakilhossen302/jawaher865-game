@@ -3,10 +3,32 @@ import 'package:get/get.dart';
 import '../../../../Core/AppRoute/app_route.dart';
 
 class TeamSelectController extends GetxController {
-  final TextEditingController blueTeamController = TextEditingController(text: 'Blue Team');
-  final TextEditingController redTeamController = TextEditingController(text: 'Red Team');
+  late TextEditingController blueTeamController;
+  late TextEditingController redTeamController;
+
+  @override
+  void onInit() {
+    super.onInit();
+    blueTeamController = TextEditingController(text: 'Blue Team');
+    redTeamController = TextEditingController(text: 'Red Team');
+  }
+
+  void ensureControllersInitialized() {
+    try {
+      final _ = blueTeamController.text;
+    } catch (_) {
+      blueTeamController = TextEditingController(text: 'Blue Team');
+    }
+
+    try {
+      final _ = redTeamController.text;
+    } catch (_) {
+      redTeamController = TextEditingController(text: 'Red Team');
+    }
+  }
 
   void onNextTap() {
+    ensureControllersInitialized();
     Get.toNamed(
       AppRoute.chooseCategoryScreen,
       arguments: {
@@ -22,8 +44,12 @@ class TeamSelectController extends GetxController {
 
   @override
   void onClose() {
-    blueTeamController.dispose();
-    redTeamController.dispose();
+    try {
+      blueTeamController.dispose();
+    } catch (_) {}
+    try {
+      redTeamController.dispose();
+    } catch (_) {}
     super.onClose();
   }
 }

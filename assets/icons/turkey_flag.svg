@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <rect width="600" height="400" rx="20" fill="#E30A17"/>
+  <!-- White Crescent -->
+  <path d="M 270 90 A 110 110 0 1 0 270 310 A 88 88 0 1 1 270 90 Z" fill="#FFFFFF"/>
+  <!-- White Star -->
+  <polygon points="310,175 319,195 342,195 324,208 331,230 310,217 289,230 296,208 278,195 301,195" fill="#FFFFFF"/>
+  <text x="300" y="370" font-family="sans-serif" font-size="22" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Republic of Türkiye</text>
+</svg>

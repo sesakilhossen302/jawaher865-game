@@ -35,6 +35,16 @@ class AppIcons {
   static const String normalWinningImg = '$basePath/Normal winning  img.svg';
   static const String rautetWinningImg = '$basePath/rautet winning  img.svg';
 
+  // Specific Question SVGs
+  static const String saudiFlagSvg = '$basePath/saudi_flag.svg';
+  static const String palestineFlagSvg = '$basePath/palestine_flag.svg';
+  static const String turkeyFlagSvg = '$basePath/turkey_flag.svg';
+  static const String usaFlagSvg = '$basePath/usa_flag.svg';
+  static const String bangladeshFlagSvg = '$basePath/bangladesh_flag.svg';
+  static const String quranBookSvg = '$basePath/quran_book.svg';
+  static const String ramadanMoonSvg = '$basePath/ramadan_moon.svg';
+  static const String aiBrainEngineSvg = '$basePath/ai_brain_engine.svg';
+
   static const String home = '$basePath/home.svg';
   static const String profile = '$basePath/profile.svg';
   static const String settings = '$basePath/settings.svg';

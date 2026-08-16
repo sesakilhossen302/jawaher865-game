@@ -10,8 +10,10 @@ class WinningController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // Enforce strict Portrait mode on Winning Screen & Play Again return flow
+    // Allow rotation on Congratulations / Winning Screen (Landscape + Portrait)
     SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
       DeviceOrientation.portraitUp,
     ]);
 
@@ -24,9 +26,18 @@ class WinningController extends GetxController {
   }
 
   void onPlayAgain() {
+    // Lock orientation back to Portrait when returning to Team Select
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
     Get.offNamedUntil(AppRoute.teamSelectScreen, (route) => route.isFirst);
+  }
+
+  @override
+  void onClose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+    super.onClose();
   }
 }

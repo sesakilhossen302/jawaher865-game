@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <rect width="600" height="400" rx="20" fill="#000000"/>
+  <rect y="0" width="600" height="133.3" fill="#000000"/>
+  <rect y="133.3" width="600" height="133.3" fill="#FFFFFF"/>
+  <rect y="266.6" width="600" height="133.4" fill="#007A3D"/>
+  <polygon points="0,0 240,200 0,400" fill="#E4312B"/>
+  <text x="360" y="370" font-family="sans-serif" font-size="22" font-weight="bold" fill="#FFFFFF" text-anchor="middle">State of Palestine</text>
+</svg>

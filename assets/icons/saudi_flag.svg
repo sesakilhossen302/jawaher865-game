@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <rect width="600" height="400" rx="20" fill="#007A3D"/>
+  <path d="M120 280 L480 280 L460 295 L140 295 Z M440 270 L480 280 L440 290 Z" fill="#FFFFFF"/>
+  <circle cx="160" cy="280" r="15" fill="#FFFFFF"/>
+  <text x="300" y="190" font-family="sans-serif" font-size="42" font-weight="bold" fill="#FFFFFF" text-anchor="middle">لا إله إلا الله محمد رسول الله</text>
+  <text x="300" y="240" font-family="sans-serif" font-size="24" font-weight="bold" fill="#38E5D8" text-anchor="middle">Kingdom of Saudi Arabia</text>
+</svg>

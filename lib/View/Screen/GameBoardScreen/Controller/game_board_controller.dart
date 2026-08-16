@@ -5,6 +5,7 @@ import '../../../../Core/AppRoute/app_route.dart';
 import '../../../../Model/category_model.dart';
 import '../../../../Model/game_board_model.dart';
 import '../../../../Model/team_model.dart';
+import '../../../../Utils/AppIcons/app_icons.dart';
 import '../../../../Utils/AppImg/app_img.dart';
 
 class GameBoardController extends GetxController {
@@ -126,24 +127,21 @@ class GameBoardController extends GetxController {
         return {
           'question': 'How many Surahs are in the Holy Quran shown here?',
           'answer': '114 Surahs',
-          'image':
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Quran_and_rehal.jpg/640px-Quran_and_rehal.jpg',
+          'image': AppIcons.quranBookSvg,
         };
       } else if (points == 400) {
         return {
           'question':
               'Which sacred book of Islam is placed on the Rehal stand?',
           'answer': 'Holy Quran',
-          'image':
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Quran_Open.png/640px-Quran_Open.png',
+          'image': AppIcons.quranBookSvg,
         };
       } else {
         return {
           'question':
               'In which Holy Islamic month was the Quran revealed to Prophet Muhammad (PBUH)?',
           'answer': 'Ramadan',
-          'image':
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Crescent_moon_Ramadan.jpg/640px-Crescent_moon_Ramadan.jpg',
+          'image': AppIcons.ramadanMoonSvg,
         };
       }
     } else if (cleanTitle.contains('flag')) {
@@ -152,24 +150,21 @@ class GameBoardController extends GetxController {
           'question':
               'What is the country name of this green national flag with Arabic script & sword?',
           'answer': 'Saudi Arabia Flag',
-          'image':
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Flag_of_Saudi_Arabia.svg/640px-Flag_of_Saudi_Arabia.svg.png',
+          'image': AppIcons.saudiFlagSvg,
         };
       } else if (points == 400) {
         return {
           'question':
-              'Which country\'s national flag features 50 white stars and 13 red and white stripes?',
-          'answer': 'United States (USA) Flag',
-          'image':
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/640px-Flag_of_the_United_States.svg.png',
+              'Which Muslim country\'s flag features black, white, and green stripes with a red triangle?',
+          'answer': 'Palestine Flag',
+          'image': AppIcons.palestineFlagSvg,
         };
       } else {
         return {
           'question':
-              'Which country\'s national flag features a green field with a red circle in the center?',
-          'answer': 'Bangladesh Flag',
-          'image':
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Flag_of_Bangladesh.svg/640px-Flag_of_Bangladesh.svg.png',
+              'Which Muslim country\'s flag features a white crescent moon and star on a red field?',
+          'answer': 'Turkey Flag',
+          'image': AppIcons.turkeyFlagSvg,
         };
       }
     } else if (cleanTitle.contains('ai')) {
@@ -177,24 +172,21 @@ class GameBoardController extends GetxController {
         return {
           'question': 'What does AI stand for in modern computer technology?',
           'answer': 'Artificial Intelligence',
-          'image':
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/HONOR_AI_Icon.png/640px-HONOR_AI_Icon.png',
+          'image': AppIcons.aiBrainEngineSvg,
         };
       } else if (points == 400) {
         return {
           'question':
               'What mechanical gear & neural brain graphic represents machine processing?',
           'answer': 'Neural Processing Engine',
-          'image':
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Artificial_intelligence_prompt.png/640px-Artificial_intelligence_prompt.png',
+          'image': AppIcons.aiBrainEngineSvg,
         };
       } else {
         return {
           'question':
               'Which neural network architecture powers modern Large Language Models?',
           'answer': 'Transformer Architecture',
-          'image':
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Artificial_human_neural_network.svg/640px-Artificial_human_neural_network.svg.png',
+          'image': AppIcons.aiBrainEngineSvg,
         };
       }
     }
