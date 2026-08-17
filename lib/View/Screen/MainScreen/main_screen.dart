@@ -8,6 +8,7 @@ import '../../../Utils/StaticString/static_string.dart';
 import '../HomeScreen/home_screen.dart';
 import '../LeaderboardScreen/leaderboard_screen.dart';
 import '../PlayScreen/play_screen.dart';
+import '../ProfileScreen/profile_screen.dart';
 import 'Controller/main_controller.dart';
 
 class MainScreen extends GetView<MainController> {
@@ -25,7 +26,7 @@ class MainScreen extends GetView<MainController> {
       const HomeScreen(),
       const PlayScreen(),
       const LeaderboardScreen(),
-      const _PlaceholderTab(title: StaticString.profile),
+      const ProfileScreen(),
     ];
 
     return Scaffold(
@@ -73,25 +74,25 @@ class MainScreen extends GetView<MainController> {
                         children: [
                           _buildNavItem(
                             index: 0,
-                            label: StaticString.home,
+                            label: StaticString.home.tr,
                             iconPath: AppIcons.homeNavbarIcon,
                             fallbackIcon: Icons.home_filled,
                           ),
                           _buildNavItem(
                             index: 1,
-                            label: StaticString.play,
+                            label: StaticString.play.tr,
                             iconPath: AppIcons.playNavbarIcon,
                             fallbackIcon: Icons.sports_esports,
                           ),
                           _buildNavItem(
                             index: 2,
-                            label: StaticString.leaderboard,
+                            label: StaticString.leaderboard.tr,
                             iconPath: AppIcons.leaderboardNavbarIcon,
                             fallbackIcon: Icons.leaderboard,
                           ),
                           _buildNavItem(
                             index: 3,
-                            label: StaticString.profile,
+                            label: StaticString.profile.tr,
                             iconPath: AppIcons.profileNavbarIcon,
                             fallbackIcon: Icons.person,
                           ),
@@ -153,26 +154,6 @@ class MainScreen extends GetView<MainController> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _PlaceholderTab extends StatelessWidget {
-  final String title;
-  const _PlaceholderTab({required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        title,
-        style: TextStyle(
-          fontFamily: 'Segoe UI',
-          fontSize: 22.sp,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
         ),
       ),
     );
