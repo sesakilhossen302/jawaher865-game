@@ -34,6 +34,31 @@ import '../../View/Screen/OnlineGameScreen/online_game_screen.dart';
 import '../../View/Screen/WinningScreen/Controller/winning_controller.dart';
 import '../../View/Screen/WinningScreen/winning_screen.dart';
 
+import '../../View/Screen/SettingsScreen/Controller/settings_controller.dart';
+import '../../View/Screen/SettingsScreen/settings_screen.dart';
+import '../../View/Screen/ChangePasswordScreen/Controller/change_password_controller.dart';
+import '../../View/Screen/ChangePasswordScreen/change_password_screen.dart';
+
+import '../../View/Screen/SupportContactScreen/Controller/support_contact_controller.dart';
+import '../../View/Screen/SupportContactScreen/support_contact_screen.dart';
+
+import '../../View/Screen/TermsConditionsScreen/Controller/terms_conditions_controller.dart';
+import '../../View/Screen/TermsConditionsScreen/terms_conditions_screen.dart';
+import '../../View/Screen/PrivacyPolicyScreen/Controller/privacy_policy_controller.dart';
+import '../../View/Screen/PrivacyPolicyScreen/privacy_policy_screen.dart';
+
+import '../../View/Screen/DeleteAccountScreen/Controller/delete_account_controller.dart';
+import '../../View/Screen/DeleteAccountScreen/delete_account_screen.dart';
+
+import '../../View/Screen/MyCommunityScreen/Controller/my_community_controller.dart';
+import '../../View/Screen/MyCommunityScreen/my_community_screen.dart';
+
+import '../../View/Screen/RoomNameScreen/Controller/room_name_controller.dart';
+import '../../View/Screen/RoomNameScreen/room_name_screen.dart';
+
+import '../../View/Screen/ShareMeelasScreen/Controller/share_meelas_controller.dart';
+import '../../View/Screen/ShareMeelasScreen/share_meelas_screen.dart';
+
 class AppRoute {
   static const String splashScreen = '/splash_screen';
   static const String signScreen = '/sign_screen';
@@ -52,6 +77,15 @@ class AppRoute {
   static const String matchmakingScreen = '/matchmaking_screen';
   static const String vsMatchScreen = '/vs_match_screen';
   static const String onlineGameScreen = '/online_game_screen';
+  static const String settingsScreen = '/settings_screen';
+  static const String changePasswordScreen = '/change_password_screen';
+  static const String supportContactScreen = '/support_contact_screen';
+  static const String termsConditionsScreen = '/terms_conditions_screen';
+  static const String privacyPolicyScreen = '/privacy_policy_screen';
+  static const String deleteAccountScreen = '/delete_account_screen';
+  static const String myCommunityScreen = '/my_community_screen';
+  static const String roomNameScreen = '/room_name_screen';
+  static const String shareMeelasScreen = '/share_meelas_screen';
 
   static List<GetPage> routes = [
     GetPage(
@@ -175,6 +209,77 @@ class AppRoute {
       page: () => const OnlineGameScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut<OnlineGameController>(() => OnlineGameController());
+      }),
+    ),
+    GetPage(
+      name: settingsScreen,
+      page: () => const SettingsScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<SettingsController>(() => SettingsController());
+      }),
+    ),
+    GetPage(
+      name: changePasswordScreen,
+      page: () => const ChangePasswordScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<ChangePasswordController>(
+            () => ChangePasswordController());
+      }),
+    ),
+    GetPage(
+      name: supportContactScreen,
+      page: () => const SupportContactScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<SupportContactController>(
+            () => SupportContactController());
+      }),
+    ),
+    GetPage(
+      name: termsConditionsScreen,
+      page: () => const TermsConditionsScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<TermsConditionsController>(
+            () => TermsConditionsController());
+      }),
+    ),
+    GetPage(
+      name: privacyPolicyScreen,
+      page: () => const PrivacyPolicyScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<PrivacyPolicyController>(
+            () => PrivacyPolicyController());
+      }),
+    ),
+    GetPage(
+      name: deleteAccountScreen,
+      page: () => const DeleteAccountScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<DeleteAccountController>(
+            () => DeleteAccountController());
+      }),
+    ),
+    GetPage(
+      name: myCommunityScreen,
+      page: () => const MyCommunityScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<MyCommunityController>(
+            () => MyCommunityController());
+      }),
+    ),
+    GetPage(
+      name: roomNameScreen,
+      page: () => const RoomNameScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<RoomNameController>(
+            () => RoomNameController());
+      }),
+    ),
+    GetPage(
+      name: shareMeelasScreen,
+      page: () => const ShareMeelasScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<ShareMeelasController>(
+            () => ShareMeelasController());
       }),
     ),
   ];
