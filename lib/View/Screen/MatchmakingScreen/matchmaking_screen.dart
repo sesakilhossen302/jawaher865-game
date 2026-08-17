@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../Utils/AppImg/app_img.dart';
+import '../../../Utils/StaticString/static_string.dart';
 import 'Controller/matchmaking_controller.dart';
 
 class MatchmakingScreen extends StatefulWidget {
@@ -81,7 +82,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                           ),
                         ),
                         Text(
-                          'Play',
+                          StaticString.play.tr,
                           style: TextStyle(
                             fontFamily: segoeFont,
                             fontSize: 22.sp,
