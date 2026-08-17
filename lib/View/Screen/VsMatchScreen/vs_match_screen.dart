@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../Utils/AppImg/app_img.dart';
+import '../../../Utils/StaticString/static_string.dart';
 import '../OnlineGameScreen/Model/online_game_model.dart';
 import 'Controller/vs_match_controller.dart';
 
@@ -71,7 +72,7 @@ class VsMatchScreen extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: Text(
-            "Create your own championship and challenge them; it's time for a challenge with Freej Trivia.",
+            StaticString.createChampionshipTagline,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: segoeFont,
@@ -148,7 +149,7 @@ class VsMatchScreen extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40),
           child: Text(
-            "Create your own championship and challenge them; it's time for a challenge with Freej Trivia.",
+            StaticString.createChampionshipTagline,
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontFamily: segoeFont,
@@ -232,7 +233,7 @@ class VsMatchScreen extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
       child: Center(
         child: Text(
-          'Online Game',
+          StaticString.onlineGame.tr,
           style: TextStyle(
             fontFamily: segoeFont,
             fontSize: 22.sp,
@@ -351,7 +352,7 @@ class VsMatchScreen extends StatelessWidget {
                 ),
                 if (player.isYourTeam) ...[
                   Text(
-                    'Your',
+                    StaticString.your.tr,
                     style: TextStyle(
                       fontFamily: segoeFont,
                       fontSize: isLandscape ? 9.5 : 10.5.sp,
@@ -382,7 +383,7 @@ class VsMatchScreen extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Text(
-            'VS',
+            StaticString.vsText,
             style: TextStyle(
               fontFamily: segoeFont,
               fontSize: 28.sp,
@@ -417,7 +418,7 @@ class VsMatchScreen extends StatelessWidget {
         const Padding(
           padding: EdgeInsets.symmetric(vertical: 8),
           child: Text(
-            'VS',
+            StaticString.vsText,
             style: TextStyle(
               fontFamily: segoeFont,
               fontSize: 24,
