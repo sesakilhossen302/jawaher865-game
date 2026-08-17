@@ -85,7 +85,7 @@ class WinningScreen extends GetView<WinningController> {
 
           // Congratulations Text
           Text(
-            StaticString.congratulationsOnTheWin,
+            StaticString.congratulationsOnTheWin.tr,
             style: TextStyle(
               fontFamily: segoeFont,
               fontSize: 22.sp,
@@ -138,7 +138,7 @@ class WinningScreen extends GetView<WinningController> {
 
           // Congratulations Text
           Text(
-            StaticString.congratulationsOnTheWin,
+            StaticString.congratulationsOnTheWin.tr,
             style: const TextStyle(
               fontFamily: segoeFont,
               fontSize: 18,
@@ -299,7 +299,7 @@ class WinningScreen extends GetView<WinningController> {
           ),
         ),
         child: Text(
-          StaticString.playAgain,
+          StaticString.playAgain.tr,
           style: TextStyle(
             fontFamily: segoeFont,
             fontSize: isLandscape ? 14 : 16.sp,
