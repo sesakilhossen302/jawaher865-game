@@ -42,35 +42,37 @@ class MainScreen extends GetView<MainController> {
             ),
 
             // TAB CONTENT + PERSISTENT BOTTOM NAVBAR
-            SafeArea(
-              child: Column(
-                children: [
-                  // INDEXED STACK PRESERVES TAB STATE & ELIMINATES ROUTE TRANSITION FLICKER
-                  Expanded(
-                    child: Obx(
-                      () => IndexedStack(
-                        index: controller.selectedIndex.value,
-                        children: pages,
-                      ),
+            Column(
+              children: [
+                // INDEXED STACK PRESERVES TAB STATE & ELIMINATES ROUTE TRANSITION FLICKER
+                Expanded(
+                  child: Obx(
+                    () => IndexedStack(
+                      index: controller.selectedIndex.value,
+                      children: pages,
                     ),
                   ),
+                ),
 
-                  // UNIFIED PERSISTENT BOTTOM NAVIGATION BAR
-                  Obx(
-                    () {
-                      controller.currentLang.value;
-                      return Container(
-                        height: 70.h,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF065967).withValues(alpha: 0.95),
-                          border: Border(
-                            top: BorderSide(
-                              color: const Color(0xFF38E5D8),
-                              width: 1.5.w,
-                            ),
+                // UNIFIED PERSISTENT BOTTOM NAVIGATION BAR (EXTENDS FLUSH TO BOTTOM EDGE)
+                Obx(
+                  () {
+                    controller.currentLang.value;
+                    final bottomPadding = MediaQuery.of(context).padding.bottom;
+                    return Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.only(bottom: bottomPadding),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF065967).withValues(alpha: 0.95),
+                        border: Border(
+                          top: BorderSide(
+                            color: const Color(0xFF38E5D8),
+                            width: 1.5.w,
                           ),
                         ),
+                      ),
+                      child: SizedBox(
+                        height: 64.h,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -100,11 +102,11 @@ class MainScreen extends GetView<MainController> {
                             ),
                           ],
                         ),
-                      );
-                    },
-                  ),
-                ],
-              ),
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
           ],
         ),
