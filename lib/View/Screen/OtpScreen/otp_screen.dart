@@ -118,7 +118,7 @@ class OtpScreen extends GetView<OtpController> {
                       // Title Text: Verify Your Email
                       Center(
                         child: Text(
-                          StaticString.verifyYourEmail,
+                          StaticString.verifyYourEmail.tr,
                           style: TextStyle(
                             fontFamily: segoeFont,
                             fontSize: 22.sp,
@@ -164,7 +164,7 @@ class OtpScreen extends GetView<OtpController> {
                             ),
                           ),
                           child: Text(
-                            StaticString.verifyAndContinue,
+                            StaticString.verifyAndContinue.tr,
                             style: TextStyle(
                               fontFamily: segoeFont,
                               fontSize: 16.sp,
@@ -182,7 +182,7 @@ class OtpScreen extends GetView<OtpController> {
                         child: GestureDetector(
                           onTap: controller.resendCode,
                           child: Text(
-                            StaticString.resendCode,
+                            StaticString.resendCode.tr,
                             style: TextStyle(
                               fontFamily: segoeFont,
                               fontSize: 14.sp,
