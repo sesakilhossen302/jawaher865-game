@@ -92,7 +92,7 @@ class SignScreen extends GetView<SignController> {
                           _buildSocialButton(
                             onTap: () => controller.signInWithGoogle(),
                             iconPath: AppIcons.googleIcon,
-                            label: StaticString.continueWithGoogle,
+                            label: StaticString.continueWithGoogle.tr,
                             backgroundColor: const Color(
                               0xFF065967,
                             ).withValues(alpha: 0.85),
@@ -104,7 +104,7 @@ class SignScreen extends GetView<SignController> {
                           _buildSocialButton(
                             onTap: () => controller.signInWithApple(),
                             iconPath: AppIcons.appleIcon,
-                            label: StaticString.continueWithApple,
+                            label: StaticString.continueWithApple.tr,
                             backgroundColor: const Color(
                               0xFF065967,
                             ).withValues(alpha: 0.85),
@@ -127,7 +127,7 @@ class SignScreen extends GetView<SignController> {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 16.w),
                             child: Text(
-                              StaticString.or,
+                              StaticString.or.tr,
                               style: TextStyle(
                                 fontFamily: segoeFont,
                                 fontSize: 14.sp,
@@ -150,7 +150,7 @@ class SignScreen extends GetView<SignController> {
                       // Sign in with Email Button
                       _buildActionButton(
                         onTap: () => controller.signInWithEmail(),
-                        label: StaticString.signInWithEmail,
+                        label: StaticString.signInWithEmail.tr,
                         backgroundColor: Colors.white,
                         textColor: const Color(0xFF222222),
                       ),
@@ -160,7 +160,7 @@ class SignScreen extends GetView<SignController> {
                       // Continue as Guest Button
                       _buildActionButton(
                         onTap: () => controller.continueAsGuest(),
-                        label: StaticString.continueAsGuest,
+                        label: StaticString.continueAsGuest.tr,
                         backgroundColor: const Color(0xFF3358FE),
                         textColor: Colors.white,
                         isBold: true,
