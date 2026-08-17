@@ -112,7 +112,7 @@ class HomeScreen extends GetView<HomeController> {
                 ),
                 child: Center(
                   child: Text(
-                    'EN',
+                    Get.locale?.languageCode == 'ar' ? 'AR' : 'EN',
                     style: TextStyle(
                       fontFamily: segoeFont,
                       fontSize: 13.sp,
@@ -141,7 +141,7 @@ class HomeScreen extends GetView<HomeController> {
                 ),
                 SizedBox(height: 6.h),
                 Text(
-                  StaticString.aofText,
+                  StaticString.aofText.tr,
                   style: TextStyle(
                     fontFamily: segoeFont,
                     fontSize: 18.sp,
@@ -157,7 +157,7 @@ class HomeScreen extends GetView<HomeController> {
 
           // 3. REUSABLE CUSTOM PLAY GAME CARD BANNER
           CustomPlayCard(
-            title: StaticString.play,
+            title: StaticString.play.tr,
             onTap: controller.onPlayTap,
             leftSvgPath: AppIcons.singleMaleImg,
             rightSvgPath: AppIcons.singleFemaleImg,
@@ -185,7 +185,7 @@ class HomeScreen extends GetView<HomeController> {
                   ),
                   SizedBox(width: 10.w),
                   Text(
-                    StaticString.leaderboard,
+                    StaticString.leaderboard.tr,
                     style: TextStyle(
                       fontFamily: segoeFont,
                       fontSize: 18.sp,
@@ -215,7 +215,7 @@ class HomeScreen extends GetView<HomeController> {
                   child: Row(
                     children: [
                       Text(
-                        StaticString.viewAll,
+                        StaticString.viewAll.tr,
                         style: TextStyle(
                           fontFamily: segoeFont,
                           fontSize: 13.sp,
