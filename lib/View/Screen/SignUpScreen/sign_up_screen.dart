@@ -92,7 +92,7 @@ class SignUpScreen extends GetView<SignUpController> {
                     // Title Text: Create a new account
                     Center(
                       child: Text(
-                        StaticString.createNewAccount,
+                        StaticString.createNewAccount.tr,
                         style: TextStyle(
                           fontFamily: segoeFont,
                           fontSize: 21.sp,
@@ -107,7 +107,7 @@ class SignUpScreen extends GetView<SignUpController> {
                     // 1. Full Name Field
                     _buildFormInputField(
                       controller: controller.fullNameController,
-                      hintText: StaticString.fullName,
+                      hintText: StaticString.fullName.tr,
                       svgIconPath: AppIcons.fullNameIcon,
                     ),
 
@@ -116,7 +116,7 @@ class SignUpScreen extends GetView<SignUpController> {
                     // 2. Date of Birth Field
                     _buildFormInputField(
                       controller: controller.dateOfBirthController,
-                      hintText: StaticString.dateOfBirth,
+                      hintText: StaticString.dateOfBirth.tr,
                       svgIconPath: AppIcons.dateOfBirthIcon,
                       readOnly: true,
                       onTap: () => controller.selectDateOfBirth(context),
@@ -132,7 +132,7 @@ class SignUpScreen extends GetView<SignUpController> {
                     // 3. Gender Field
                     _buildFormInputField(
                       controller: controller.genderController,
-                      hintText: StaticString.gender,
+                      hintText: StaticString.gender.tr,
                       svgIconPath: AppIcons.genderIcon,
                       readOnly: true,
                       onTap: () => controller.selectGender(context),
@@ -148,7 +148,7 @@ class SignUpScreen extends GetView<SignUpController> {
                     // 4. Contact No Field
                     _buildFormInputField(
                       controller: controller.contactNoController,
-                      hintText: StaticString.contactNo,
+                      hintText: StaticString.contactNo.tr,
                       svgIconPath: AppIcons.contactNoIcon,
                       keyboardType: TextInputType.phone,
                     ),
@@ -158,7 +158,7 @@ class SignUpScreen extends GetView<SignUpController> {
                     // 5. Email Field
                     _buildFormInputField(
                       controller: controller.emailController,
-                      hintText: StaticString.email,
+                      hintText: StaticString.email.tr,
                       svgIconPath: AppIcons.emailUpIcon,
                       keyboardType: TextInputType.emailAddress,
                     ),
@@ -169,7 +169,7 @@ class SignUpScreen extends GetView<SignUpController> {
                     Obx(
                       () => _buildFormInputField(
                         controller: controller.passwordController,
-                        hintText: StaticString.password,
+                        hintText: StaticString.password.tr,
                         svgIconPath: AppIcons.passwordUpIcon,
                         isObscure: controller.isPasswordObscure.value,
                         suffixIcon: IconButton(
@@ -191,7 +191,7 @@ class SignUpScreen extends GetView<SignUpController> {
                     Obx(
                       () => _buildFormInputField(
                         controller: controller.confirmPasswordController,
-                        hintText: StaticString.confirmPassword,
+                        hintText: StaticString.confirmPassword.tr,
                         svgIconPath: AppIcons.passwordUpIcon,
                         isObscure: controller.isConfirmPasswordObscure.value,
                         suffixIcon: IconButton(
@@ -245,17 +245,17 @@ class SignUpScreen extends GetView<SignUpController> {
                                   color: const Color(0xFFB4ECE7),
                                 ),
                                 children: [
-                                  const TextSpan(text: StaticString.iAgreeWith),
+                                  TextSpan(text: StaticString.iAgreeWith.tr),
                                   TextSpan(
-                                    text: StaticString.termsOfService,
+                                    text: StaticString.termsOfService.tr,
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
                                     ),
                                   ),
-                                  const TextSpan(text: StaticString.and),
+                                  TextSpan(text: StaticString.and.tr),
                                   TextSpan(
-                                    text: StaticString.privacyPolicy,
+                                    text: StaticString.privacyPolicy.tr,
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
@@ -289,7 +289,7 @@ class SignUpScreen extends GetView<SignUpController> {
                           ),
                         ),
                         child: Text(
-                          StaticString.signUp,
+                          StaticString.signUp.tr,
                           style: TextStyle(
                             fontFamily: segoeFont,
                             fontSize: 16.sp,
@@ -314,9 +314,9 @@ class SignUpScreen extends GetView<SignUpController> {
                               color: const Color(0xFFB4ECE7),
                             ),
                             children: [
-                              const TextSpan(text: StaticString.haveAnAccount),
+                              TextSpan(text: StaticString.haveAnAccount.tr),
                               TextSpan(
-                                text: StaticString.logIn,
+                                text: StaticString.logIn.tr,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
