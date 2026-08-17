@@ -38,7 +38,7 @@ class ProfileScreen extends StatelessWidget {
                     SizedBox(height: 12.h),
 
                     // HEADER (Title + Settings Gear Icon)
-                    _buildHeader(),
+                    _buildHeader(controller),
 
                     SizedBox(height: 16.h),
 
@@ -59,20 +59,25 @@ class ProfileScreen extends StatelessWidget {
                             SizedBox(height: 18.h),
 
                             // RECENT GAMES SECTION HEADER
-                            Text(
-                              StaticString.recentGames.tr,
-                              style: TextStyle(
-                                fontFamily: segoeFont,
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
+                            Obx(
+                              () {
+                                controller.currentLanguage.value;
+                                return Text(
+                                  StaticString.recentGames.tr,
+                                  style: TextStyle(
+                                    fontFamily: segoeFont,
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                );
+                              },
                             ),
 
                             SizedBox(height: 10.h),
 
                             // RECENT GAMES EMPTY CARD
-                            _buildRecentGamesCard(),
+                            _buildRecentGamesCard(controller),
 
                             SizedBox(height: 16.h),
 
@@ -100,19 +105,24 @@ class ProfileScreen extends StatelessWidget {
   }
 
   // ==================== HEADER ====================
-  Widget _buildHeader() {
+  Widget _buildHeader(ProfileController controller) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SizedBox(width: 24.w), // Spacer to balance gear icon
-        Text(
-          StaticString.profile.tr,
-          style: TextStyle(
-            fontFamily: segoeFont,
-            fontSize: 22.sp,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+        Obx(
+          () {
+            controller.currentLanguage.value;
+            return Text(
+              StaticString.profile.tr,
+              style: TextStyle(
+                fontFamily: segoeFont,
+                fontSize: 22.sp,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            );
+          },
         ),
         IconButton(
           onPressed: () => Get.toNamed(AppRoute.settingsScreen),
@@ -403,7 +413,7 @@ class ProfileScreen extends StatelessWidget {
   }
 
   // ==================== RECENT GAMES CARD ====================
-  Widget _buildRecentGamesCard() {
+  Widget _buildRecentGamesCard(ProfileController controller) {
     return Container(
       width: double.infinity,
       height: 140.h,
@@ -438,14 +448,19 @@ class ProfileScreen extends StatelessWidget {
             },
           ),
           SizedBox(height: 8.h),
-          Text(
-            StaticString.noGamesYetHitPlay.tr,
-            style: TextStyle(
-              fontFamily: segoeFont,
-              fontSize: 13.sp,
-              fontWeight: FontWeight.w500,
-              color: Colors.white.withValues(alpha: 0.9),
-            ),
+          Obx(
+            () {
+              controller.currentLanguage.value;
+              return Text(
+                StaticString.noGamesYetHitPlay.tr,
+                style: TextStyle(
+                  fontFamily: segoeFont,
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white.withValues(alpha: 0.9),
+                ),
+              );
+            },
           ),
         ],
       ),

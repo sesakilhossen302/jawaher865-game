@@ -57,48 +57,51 @@ class MainScreen extends GetView<MainController> {
 
                   // UNIFIED PERSISTENT BOTTOM NAVIGATION BAR
                   Obx(
-                    () => Container(
-                      height: 70.h,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF065967).withValues(alpha: 0.95),
-                        border: Border(
-                          top: BorderSide(
-                            color: const Color(0xFF38E5D8),
-                            width: 1.5.w,
+                    () {
+                      controller.currentLang.value;
+                      return Container(
+                        height: 70.h,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF065967).withValues(alpha: 0.95),
+                          border: Border(
+                            top: BorderSide(
+                              color: const Color(0xFF38E5D8),
+                              width: 1.5.w,
+                            ),
                           ),
                         ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          _buildNavItem(
-                            index: 0,
-                            label: StaticString.home.tr,
-                            iconPath: AppIcons.homeNavbarIcon,
-                            fallbackIcon: Icons.home_filled,
-                          ),
-                          _buildNavItem(
-                            index: 1,
-                            label: StaticString.play.tr,
-                            iconPath: AppIcons.playNavbarIcon,
-                            fallbackIcon: Icons.sports_esports,
-                          ),
-                          _buildNavItem(
-                            index: 2,
-                            label: StaticString.leaderboard.tr,
-                            iconPath: AppIcons.leaderboardNavbarIcon,
-                            fallbackIcon: Icons.leaderboard,
-                          ),
-                          _buildNavItem(
-                            index: 3,
-                            label: StaticString.profile.tr,
-                            iconPath: AppIcons.profileNavbarIcon,
-                            fallbackIcon: Icons.person,
-                          ),
-                        ],
-                      ),
-                    ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            _buildNavItem(
+                              index: 0,
+                              label: StaticString.home.tr,
+                              iconPath: AppIcons.homeNavbarIcon,
+                              fallbackIcon: Icons.home_filled,
+                            ),
+                            _buildNavItem(
+                              index: 1,
+                              label: StaticString.play.tr,
+                              iconPath: AppIcons.playNavbarIcon,
+                              fallbackIcon: Icons.sports_esports,
+                            ),
+                            _buildNavItem(
+                              index: 2,
+                              label: StaticString.leaderboard.tr,
+                              iconPath: AppIcons.leaderboardNavbarIcon,
+                              fallbackIcon: Icons.leaderboard,
+                            ),
+                            _buildNavItem(
+                              index: 3,
+                              label: StaticString.profile.tr,
+                              iconPath: AppIcons.profileNavbarIcon,
+                              fallbackIcon: Icons.person,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),

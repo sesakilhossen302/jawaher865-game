@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../../../Core/AppRoute/app_route.dart';
 import '../../../../Utils/AppIcons/app_icons.dart';
 import '../../../../Utils/StaticString/static_string.dart';
+import '../../MainScreen/Controller/main_controller.dart';
 
 class ProfileController extends GetxController {
   final RxString name = 'demo_user'.obs;
@@ -21,13 +22,14 @@ class ProfileController extends GetxController {
   void onInit() {
     super.onInit();
     // Lock Profile Screen to Portrait mode ONLY
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   }
 
   void toggleLanguage(String lang) {
     currentLanguage.value = lang;
+    if (Get.isRegistered<MainController>()) {
+      Get.find<MainController>().currentLang.value = lang;
+    }
     if (lang == 'عربي') {
       Get.updateLocale(const Locale('ar', 'SA'));
     } else {
@@ -80,7 +82,10 @@ class ProfileController extends GetxController {
                 AppIcons.logoutIcon,
                 height: 64.h,
                 fit: BoxFit.contain,
-                colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                colorFilter: const ColorFilter.mode(
+                  Colors.white,
+                  BlendMode.srcIn,
+                ),
                 errorBuilder: (context, error, stackTrace) {
                   return Icon(
                     Icons.exit_to_app_rounded,
@@ -146,7 +151,9 @@ class ProfileController extends GetxController {
                 child: ElevatedButton(
                   onPressed: () => Get.back(),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF076372).withValues(alpha: 0.5),
+                    backgroundColor: const Color(
+                      0xFF076372,
+                    ).withValues(alpha: 0.5),
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24.r),
