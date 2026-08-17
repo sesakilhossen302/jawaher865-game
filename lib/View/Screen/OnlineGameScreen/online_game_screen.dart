@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../Utils/AppImg/app_img.dart';
+import '../../../Utils/StaticString/static_string.dart';
 import 'Controller/online_game_controller.dart';
 import 'Model/online_game_model.dart';
 
@@ -72,7 +73,7 @@ class OnlineGameScreen extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: Text(
-            "Create your own championship and challenge them; it's time for a challenge with Freej Trivia.",
+            StaticString.createChampionshipTagline,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: segoeFont,
@@ -101,7 +102,7 @@ class OnlineGameScreen extends StatelessWidget {
                 children: [
                   // TEAM 1 CARD CONTAINER
                   _buildTeamBoxContainer(
-                    teamTitle: 'Team 1',
+                    teamTitle: StaticString.team1,
                     players: team1,
                     showActionRow: true,
                     controller: controller,
@@ -111,7 +112,7 @@ class OnlineGameScreen extends StatelessWidget {
 
                   // TEAM 2 CARD CONTAINER
                   _buildTeamBoxContainer(
-                    teamTitle: 'Team 2',
+                    teamTitle: StaticString.team2,
                     players: team2,
                     showActionRow: false,
                     controller: controller,
@@ -147,7 +148,7 @@ class OnlineGameScreen extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 50),
           child: Text(
-            "Create your own championship and challenge them; it's time for a challenge with Freej Trivia.",
+            StaticString.createChampionshipTagline,
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontFamily: segoeFont,
@@ -185,7 +186,7 @@ class OnlineGameScreen extends StatelessWidget {
                         // LEFT TEAM CONTAINER (TEAM 1)
                         Expanded(
                           child: _buildTeamBoxContainer(
-                            teamTitle: 'Team 1',
+                            teamTitle: StaticString.team1,
                             players: team1,
                             showActionRow: true,
                             controller: controller,
@@ -198,7 +199,7 @@ class OnlineGameScreen extends StatelessWidget {
                         // RIGHT TEAM CONTAINER (TEAM 2)
                         Expanded(
                           child: _buildTeamBoxContainer(
-                            teamTitle: 'Team 2',
+                            teamTitle: StaticString.team2,
                             players: team2,
                             showActionRow: false,
                             controller: controller,
@@ -233,7 +234,7 @@ class OnlineGameScreen extends StatelessWidget {
       ),
       child: Center(
         child: Text(
-          'Online Game',
+          StaticString.onlineGame.tr,
           style: TextStyle(
             fontFamily: segoeFont,
             fontSize: isLandscape ? 16.0 : 22.sp,
@@ -342,7 +343,9 @@ class OnlineGameScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              controller.isMicOn.value ? 'On' : 'Off',
+                              controller.isMicOn.value
+                                  ? StaticString.on.tr
+                                  : StaticString.off.tr,
                               style: TextStyle(
                                 fontFamily: segoeFont,
                                 fontSize: isLandscape ? 11.0 : 13.sp,
@@ -384,7 +387,7 @@ class OnlineGameScreen extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          'Chat',
+                          StaticString.chat.tr,
                           style: TextStyle(
                             fontFamily: segoeFont,
                             fontSize: isLandscape ? 11.0 : 13.sp,
@@ -503,7 +506,7 @@ class OnlineGameScreen extends StatelessWidget {
                 ),
                 if (player.isYourTeam) ...[
                   Text(
-                    'Your',
+                    StaticString.your.tr,
                     style: TextStyle(
                       fontFamily: segoeFont,
                       fontSize: isLandscape ? 8.0 : 10.sp,
@@ -553,7 +556,7 @@ class OnlineGameScreen extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            'Continue',
+            StaticString.continueBtn.tr,
             style: TextStyle(
               fontFamily: segoeFont,
               fontSize: isLandscape ? 13.5 : 17.sp,
