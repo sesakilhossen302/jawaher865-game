@@ -6,6 +6,7 @@ import '../../../Utils/AppIcons/app_icons.dart';
 import '../../../Utils/AppImg/app_img.dart';
 import '../../../Utils/StaticString/static_string.dart';
 import '../HomeScreen/home_screen.dart';
+import '../LeaderboardScreen/leaderboard_screen.dart';
 import '../PlayScreen/play_screen.dart';
 import 'Controller/main_controller.dart';
 
@@ -23,7 +24,7 @@ class MainScreen extends GetView<MainController> {
     final List<Widget> pages = [
       const HomeScreen(),
       const PlayScreen(),
-      const _PlaceholderTab(title: StaticString.leaderboard),
+      const LeaderboardScreen(),
       const _PlaceholderTab(title: StaticString.profile),
     ];
 
