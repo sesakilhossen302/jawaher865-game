@@ -14,36 +14,40 @@ class OnlineGameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(OnlineGameController());
 
-    return Scaffold(
-      body: SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            // 1. GLOBAL BACKGROUND IMAGE
-            Positioned.fill(
-              child: Image.asset(AppImg.globalBackground, fit: BoxFit.cover),
-            ),
-
-            // 2. MAIN CONTENT WITH ORIENTATION SWITCHER
-            SafeArea(
-              child: OrientationBuilder(
-                builder: (context, orientation) {
-                  final mediaSize = MediaQuery.of(context).size;
-                  final isLandscape = orientation == Orientation.landscape ||
-                      mediaSize.width > mediaSize.height;
-
-                  return AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 200),
-                    child: isLandscape
-                        ? _buildLandscapeLayout(context, controller)
-                        : _buildPortraitLayout(context, controller),
-                  );
-                },
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        body: SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              // 1. GLOBAL BACKGROUND IMAGE
+              Positioned.fill(
+                child: Image.asset(AppImg.globalBackground, fit: BoxFit.cover),
               ),
-            ),
-          ],
+
+              // 2. MAIN CONTENT WITH ORIENTATION SWITCHER
+              SafeArea(
+                child: OrientationBuilder(
+                  builder: (context, orientation) {
+                    final mediaSize = MediaQuery.of(context).size;
+                    final isLandscape =
+                        orientation == Orientation.landscape ||
+                        mediaSize.width > mediaSize.height;
+
+                    return AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 200),
+                      child: isLandscape
+                          ? _buildLandscapeLayout(context, controller)
+                          : _buildPortraitLayout(context, controller),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -227,38 +231,16 @@ class OnlineGameScreen extends StatelessWidget {
         horizontal: isLandscape ? 20.0 : 16.w,
         vertical: isLandscape ? 2.0 : 4.h,
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          GestureDetector(
-            onTap: () => Get.back(),
-            child: Container(
-              width: isLandscape ? 28.0 : 36.w,
-              height: isLandscape ? 28.0 : 36.h,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: const Color(0xFF38E5D8).withValues(alpha: 0.25),
-              ),
-              child: Center(
-                child: Icon(
-                  Icons.arrow_back_ios_new_rounded,
-                  color: Colors.white,
-                  size: isLandscape ? 13.0 : 16.sp,
-                ),
-              ),
-            ),
+      child: Center(
+        child: Text(
+          'Online Game',
+          style: TextStyle(
+            fontFamily: segoeFont,
+            fontSize: isLandscape ? 16.0 : 22.sp,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
-          Text(
-            'Online Game',
-            style: TextStyle(
-              fontFamily: segoeFont,
-              fontSize: isLandscape ? 16.0 : 22.sp,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          SizedBox(width: isLandscape ? 28.0 : 36.w),
-        ],
+        ),
       ),
     );
   }
@@ -319,13 +301,15 @@ class OnlineGameScreen extends StatelessWidget {
           SizedBox(height: isLandscape ? 6.0 : 12.h),
 
           // PLAYER CARDS LIST
-          ...players.map((player) => Padding(
-                padding: EdgeInsets.only(bottom: isLandscape ? 5.0 : 10.h),
-                child: _buildInnerPlayerCard(
-                  player: player,
-                  isLandscape: isLandscape,
-                ),
-              )),
+          ...players.map(
+            (player) => Padding(
+              padding: EdgeInsets.only(bottom: isLandscape ? 5.0 : 10.h),
+              child: _buildInnerPlayerCard(
+                player: player,
+                isLandscape: isLandscape,
+              ),
+            ),
+          ),
 
           // ACTION ROW (Off & Chat buttons)
           if (showActionRow) ...[
@@ -342,10 +326,7 @@ class OnlineGameScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: const Color(0xFF1E2837),
                           borderRadius: BorderRadius.circular(16),
-                          border: Border.all(
-                            color: Colors.white24,
-                            width: 1,
-                          ),
+                          border: Border.all(color: Colors.white24, width: 1),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -428,7 +409,7 @@ class OnlineGameScreen extends StatelessWidget {
     required OnlinePlayerModel player,
     bool isLandscape = false,
   }) {
-    final double cardHeight = isLandscape ? 35.0 : 48.h;
+    final double cardHeight = isLandscape ? 37.0 : 48.h;
 
     return Container(
       width: double.infinity,
@@ -447,8 +428,9 @@ class OnlineGameScreen extends StatelessWidget {
           // Circular Avatar (Network Image or First Letter)
           Builder(
             builder: (context) {
-              final firstLetter =
-                  player.name.isNotEmpty ? player.name[0].toUpperCase() : '?';
+              final firstLetter = player.name.isNotEmpty
+                  ? player.name[0].toUpperCase()
+                  : '?';
 
               Widget buildLetterAvatar() {
                 return Container(
@@ -474,8 +456,8 @@ class OnlineGameScreen extends StatelessWidget {
               }
 
               return Container(
-                width: isLandscape ? 27.0 : 36.w,
-                height: isLandscape ? 27.0 : 36.w,
+                width: isLandscape ? 26.0 : 36.w,
+                height: isLandscape ? 26.0 : 36.w,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
@@ -505,15 +487,18 @@ class OnlineGameScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   player.name,
                   style: TextStyle(
                     fontFamily: segoeFont,
-                    fontSize: isLandscape ? 11.5 : 14.sp,
+                    fontSize: isLandscape ? 11.0 : 14.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
+                    height: 1.1,
                   ),
+                  maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 if (player.isYourTeam) ...[
@@ -521,9 +506,10 @@ class OnlineGameScreen extends StatelessWidget {
                     'Your',
                     style: TextStyle(
                       fontFamily: segoeFont,
-                      fontSize: isLandscape ? 8.5 : 10.sp,
+                      fontSize: isLandscape ? 8.0 : 10.sp,
                       fontWeight: FontWeight.w600,
                       color: const Color(0xFF38E5D8),
+                      height: 1.0,
                     ),
                   ),
                 ],

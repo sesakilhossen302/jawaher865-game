@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../../Model/category_model.dart';
-import '../../../Utils/AppIcons/app_icons.dart';
 import '../../../Utils/AppImg/app_img.dart';
 import '../../../Utils/StaticString/static_string.dart';
 import 'Controller/choose_category_controller.dart';
@@ -19,73 +17,41 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
       Get.put(ChooseCategoryController());
     }
 
-    return Scaffold(
-      body: SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            // PERSISETENT FULL PAGE BACKGROUND
-            Positioned.fill(
-              child: Image.asset(AppImg.globalBackground, fit: BoxFit.cover),
-            ),
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        body: SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              // PERSISETENT FULL PAGE BACKGROUND
+              Positioned.fill(
+                child: Image.asset(AppImg.globalBackground, fit: BoxFit.cover),
+              ),
 
-            // MAIN CONTENT LAYER
-            SafeArea(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 12.h),
+              // MAIN CONTENT LAYER
+              SafeArea(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 12.h),
 
-                    // 1. TOP HEADER BAR (Back Button + Centered Title)
-                    Stack(
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: GestureDetector(
-                            onTap: () => Get.back(),
-                            child: Container(
-                              padding: EdgeInsets.all(10.r),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white.withValues(alpha: 0.25),
-                              ),
-                              child: SvgPicture.asset(
-                                AppIcons.backIcon,
-                                width: 16.w,
-                                height: 16.h,
-                                colorFilter: const ColorFilter.mode(
-                                  Colors.white,
-                                  BlendMode.srcIn,
-                                ),
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Icon(
-                                    Icons.arrow_back_ios_new,
-                                    size: 16.sp,
-                                    color: Colors.white,
-                                  );
-                                },
-                              ),
-                            ),
+                      // 1. TOP HEADER BAR (Centered Title)
+                      Center(
+                        child: Text(
+                          StaticString.localGame,
+                          style: TextStyle(
+                            fontFamily: segoeFont,
+                            fontSize: 22.sp,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
                         ),
-
-                        Center(
-                          child: Text(
-                            StaticString.localGame,
-                            style: TextStyle(
-                              fontFamily: segoeFont,
-                              fontSize: 22.sp,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
 
                     SizedBox(height: 14.h),
 
@@ -387,8 +353,9 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildCategoryCard({
     required CategoryModel category,

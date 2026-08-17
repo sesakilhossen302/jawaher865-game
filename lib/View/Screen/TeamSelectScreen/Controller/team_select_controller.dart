@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../../../Core/AppRoute/app_route.dart';
 
@@ -9,6 +10,10 @@ class TeamSelectController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    // Enforce portrait mode for TeamSelectScreen
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     blueTeamController = TextEditingController(text: 'Blue Team');
     redTeamController = TextEditingController(text: 'Red Team');
   }

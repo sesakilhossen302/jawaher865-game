@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import '../../../Utils/AppImg/app_img.dart';
@@ -27,28 +28,41 @@ class SplashScreen extends StatelessWidget {
               child: Image.asset(AppImg.globalBackground, fit: BoxFit.cover),
             ),
 
-            // Center Splash Content
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Welcome Splash Illustration & Logo Image
-                  Image.asset(
-                    AppImg.welcomeSplashImg,
-                    width: Get.width * 0.7,
-                    fit: BoxFit.contain,
-                    errorBuilder: (context, error, stackTrace) {
-                      return const SizedBox();
-                    },
-                  ),
-                  const SizedBox(height: 24.0),
+            // Center Splash Content (Scrollable & Non-overflowing)
+            SafeArea(
+              child: Center(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Welcome Splash Illustration & Logo Image
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxWidth: Get.width * 0.75,
+                          maxHeight: Get.height * 0.5,
+                        ),
+                        child: Image.asset(
+                          AppImg.welcomeSplashImg,
+                          fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) {
+                            return const SizedBox();
+                          },
+                        ),
+                      ),
 
-                  // Animated Glowing Loading Dots
-                  const SpinKitThreeBounce(
-                    color: Color(0xFF70E7DE),
-                    size: 20.0,
+                      SizedBox(height: 24.h),
+
+                      // Animated Glowing Loading Dots
+                      const SpinKitThreeBounce(
+                        color: Color(0xFF70E7DE),
+                        size: 20.0,
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ],

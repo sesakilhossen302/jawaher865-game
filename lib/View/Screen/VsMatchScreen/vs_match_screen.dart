@@ -14,36 +14,39 @@ class VsMatchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(VsMatchController());
 
-    return Scaffold(
-      body: SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            // 1. GLOBAL BACKGROUND IMAGE
-            Positioned.fill(
-              child: Image.asset(AppImg.globalBackground, fit: BoxFit.cover),
-            ),
-
-            // 2. MAIN CONTENT LAYER WITH ORIENTATION SWITCHER
-            SafeArea(
-              child: OrientationBuilder(
-                builder: (context, orientation) {
-                  final mediaSize = MediaQuery.of(context).size;
-                  final isLandscape = orientation == Orientation.landscape ||
-                      mediaSize.width > mediaSize.height;
-
-                  return AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 200),
-                    child: isLandscape
-                        ? _buildLandscapeLayout(context, controller)
-                        : _buildPortraitLayout(context, controller),
-                  );
-                },
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        body: SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              // 1. GLOBAL BACKGROUND IMAGE
+              Positioned.fill(
+                child: Image.asset(AppImg.globalBackground, fit: BoxFit.cover),
               ),
-            ),
-          ],
+
+              // 2. MAIN CONTENT LAYER WITH ORIENTATION SWITCHER
+              SafeArea(
+                child: OrientationBuilder(
+                  builder: (context, orientation) {
+                    final mediaSize = MediaQuery.of(context).size;
+                    final isLandscape = orientation == Orientation.landscape ||
+                        mediaSize.width > mediaSize.height;
+
+                    return AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 200),
+                      child: isLandscape
+                          ? _buildLandscapeLayout(context, controller)
+                          : _buildPortraitLayout(context, controller),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -227,38 +230,16 @@ class VsMatchScreen extends StatelessWidget {
   Widget _buildHeader(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          GestureDetector(
-            onTap: () => Get.back(),
-            child: Container(
-              width: 36.w,
-              height: 36.h,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: const Color(0xFF38E5D8).withValues(alpha: 0.25),
-              ),
-              child: const Center(
-                child: Icon(
-                  Icons.arrow_back_ios_new_rounded,
-                  color: Colors.white,
-                  size: 16,
-                ),
-              ),
-            ),
+      child: Center(
+        child: Text(
+          'Online Game',
+          style: TextStyle(
+            fontFamily: segoeFont,
+            fontSize: 22.sp,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
-          Text(
-            'Online Game',
-            style: TextStyle(
-              fontFamily: segoeFont,
-              fontSize: 22.sp,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          SizedBox(width: 36.w),
-        ],
+        ),
       ),
     );
   }
@@ -268,12 +249,15 @@ class VsMatchScreen extends StatelessWidget {
     required OnlinePlayerModel player,
     bool isLandscape = false,
   }) {
-    final double cardHeight = isLandscape ? 52.0 : 58.h;
+    final double cardHeight = isLandscape ? 56.0 : 60.h;
 
     return Container(
       width: double.infinity,
       height: cardHeight,
-      padding: EdgeInsets.symmetric(horizontal: 10.w),
+      padding: EdgeInsets.symmetric(
+        horizontal: isLandscape ? 8.0 : 10.w,
+        vertical: isLandscape ? 2.0 : 4.h,
+      ),
       decoration: BoxDecoration(
         color: const Color(0xFF0C3058),
         borderRadius: BorderRadius.circular(30.r),
@@ -311,7 +295,7 @@ class VsMatchScreen extends StatelessWidget {
                       firstLetter,
                       style: TextStyle(
                         fontFamily: segoeFont,
-                        fontSize: isLandscape ? 16.0 : 18.sp,
+                        fontSize: isLandscape ? 14.0 : 18.sp,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
@@ -321,8 +305,8 @@ class VsMatchScreen extends StatelessWidget {
               }
 
               return Container(
-                width: isLandscape ? 40.0 : 44.w,
-                height: isLandscape ? 40.0 : 44.w,
+                width: isLandscape ? 34.0 : 44.w,
+                height: isLandscape ? 34.0 : 44.w,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
@@ -344,34 +328,41 @@ class VsMatchScreen extends StatelessWidget {
               );
             },
           ),
-          SizedBox(width: 14.w),
+          SizedBox(width: isLandscape ? 8.0 : 14.w),
 
           // Name and Subtitle
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                player.name,
-                style: TextStyle(
-                  fontFamily: segoeFont,
-                  fontSize: isLandscape ? 15.0 : 16.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              if (player.isYourTeam) ...[
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
                 Text(
-                  'Your',
+                  player.name,
                   style: TextStyle(
                     fontFamily: segoeFont,
-                    fontSize: isLandscape ? 11.0 : 11.sp,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xFF38E5D8),
+                    fontSize: isLandscape ? 12.5 : 15.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    height: 1.1,
                   ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
+                if (player.isYourTeam) ...[
+                  Text(
+                    'Your',
+                    style: TextStyle(
+                      fontFamily: segoeFont,
+                      fontSize: isLandscape ? 9.5 : 10.5.sp,
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xFF38E5D8),
+                      height: 1.0,
+                    ),
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
         ],
       ),

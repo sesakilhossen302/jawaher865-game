@@ -34,10 +34,11 @@ class PlayScreen extends GetView<PlayController> {
           ),
         ),
 
-        SizedBox(height: 20.h),
+        SizedBox(height: 16.h),
 
         Expanded(
           child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Column(
               children: [
@@ -48,7 +49,7 @@ class PlayScreen extends GetView<PlayController> {
                   buttonText: StaticString.startNow,
                   badgeIcon: Icons.people_outline_rounded,
                   illustrationSvgPath: AppIcons.challengeYourMelasImg,
-                  illustrationHeight: 95.h,
+                  illustrationHeight: 90.h,
                   gradientColors: const [
                     Color(0xFF275BEA),
                     Color(0xFF3B72FE),
@@ -61,7 +62,7 @@ class PlayScreen extends GetView<PlayController> {
                   onTap: controller.onStartNowTap,
                 ),
 
-                SizedBox(height: 20.h),
+                SizedBox(height: 16.h),
 
                 // 2. CARD 2: Challenge Other Melases (Orange-Red Card)
                 _buildChallengeCard(
@@ -109,7 +110,7 @@ class PlayScreen extends GetView<PlayController> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 220.h,
+        height: 190.h,
         width: double.infinity,
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
@@ -159,7 +160,7 @@ class PlayScreen extends GetView<PlayController> {
 
             // Card Foreground Content
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 14.h),
+              padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -171,30 +172,32 @@ class PlayScreen extends GetView<PlayController> {
                     children: [
                       // Top Badge Icon
                       Container(
-                        padding: EdgeInsets.all(9.r),
+                        padding: EdgeInsets.all(8.r),
                         decoration: BoxDecoration(
                           color: badgeColor,
-                          borderRadius: BorderRadius.circular(16.r),
+                          borderRadius: BorderRadius.circular(14.r),
                         ),
                         child: Icon(
                           badgeIcon,
                           color: Colors.white,
-                          size: 18.sp,
+                          size: 16.sp,
                         ),
                       ),
 
-                      SizedBox(height: 10.h),
+                      SizedBox(height: 8.h),
 
                       // Title Text
                       Text(
                         title,
                         style: TextStyle(
                           fontFamily: segoeFont,
-                          fontSize: 21.sp,
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                           height: 1.15,
                         ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
 
                       SizedBox(height: 4.h),
@@ -207,6 +210,8 @@ class PlayScreen extends GetView<PlayController> {
                           fontSize: 11.sp,
                           color: subtitleColor,
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
@@ -214,8 +219,8 @@ class PlayScreen extends GetView<PlayController> {
                   // Action Button Pill
                   Container(
                     padding: EdgeInsets.symmetric(
-                      horizontal: 16.w,
-                      vertical: 8.h,
+                      horizontal: 14.w,
+                      vertical: 6.h,
                     ),
                     decoration: BoxDecoration(
                       color: buttonColor,
@@ -225,7 +230,7 @@ class PlayScreen extends GetView<PlayController> {
                       buttonText,
                       style: TextStyle(
                         fontFamily: segoeFont,
-                        fontSize: 13.sp,
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
@@ -241,7 +246,7 @@ class PlayScreen extends GetView<PlayController> {
               bottom: 0,
               child: SvgPicture.asset(
                 illustrationSvgPath,
-                height: illustrationHeight ?? 110.h,
+                height: illustrationHeight ?? 90.h,
                 fit: BoxFit.contain,
                 errorBuilder: (context, error, stackTrace) {
                   return const SizedBox();

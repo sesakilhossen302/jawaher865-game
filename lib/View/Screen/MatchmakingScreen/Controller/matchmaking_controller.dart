@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../../../Core/AppRoute/app_route.dart';
 
@@ -13,6 +14,10 @@ class MatchmakingController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    // Enforce portrait mode for MatchmakingScreen
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     _startMatchmaking();
   }
 

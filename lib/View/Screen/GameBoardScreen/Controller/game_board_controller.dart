@@ -235,8 +235,7 @@ class GameBoardController extends GetxController {
         SystemChrome.setPreferredOrientations([
           DeviceOrientation.portraitUp,
         ]);
-        Get.back(); // close dialog
-        Get.back(); // exit board
+        Get.offAllNamed(AppRoute.mainScreen);
       },
     );
   }

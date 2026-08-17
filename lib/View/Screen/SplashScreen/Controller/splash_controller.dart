@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../../../Core/AppRoute/app_route.dart';
 
@@ -5,6 +6,10 @@ class SplashController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    // Enforce portrait mode for SplashScreen
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     _navigateToNext();
   }
 
