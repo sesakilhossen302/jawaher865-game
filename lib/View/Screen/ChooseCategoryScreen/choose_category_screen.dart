@@ -43,7 +43,7 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
                       // 1. TOP HEADER BAR (Centered Title)
                       Center(
                         child: Text(
-                          StaticString.localGame,
+                          StaticString.localGame.tr,
                           style: TextStyle(
                             fontFamily: segoeFont,
                             fontSize: 22.sp,
@@ -92,7 +92,7 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
                     // 3. SUBTITLE
                     Center(
                       child: Text(
-                        StaticString.choose3Categories,
+                        StaticString.choose3Categories.tr,
                         style: TextStyle(
                           fontFamily: segoeFont,
                           fontSize: 13.sp,
@@ -133,7 +133,7 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
                                 color: Colors.white,
                               ),
                               decoration: InputDecoration(
-                                hintText: StaticString.searchCategoriesHint,
+                                hintText: StaticString.searchCategoriesHint.tr,
                                 hintStyle: TextStyle(
                                   fontFamily: segoeFont,
                                   fontSize: 14.sp,
@@ -163,7 +163,7 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Selected (${selectedItems.length}/3)',
+                                '${StaticString.selected.tr} (${selectedItems.length}/3)',
                                 style: TextStyle(
                                   fontFamily: segoeFont,
                                   fontSize: 14.sp,
@@ -174,7 +174,7 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
                               GestureDetector(
                                 onTap: controller.clearAll,
                                 child: Text(
-                                  'Clear All',
+                                  StaticString.clearAll.tr,
                                   style: TextStyle(
                                     fontFamily: segoeFont,
                                     fontSize: 13.sp,
@@ -241,7 +241,7 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
 
                     // 6. SECTION TITLE (All Categories)
                     Text(
-                      StaticString.allCategories,
+                      StaticString.allCategories.tr,
                       style: TextStyle(
                         fontFamily: segoeFont,
                         fontSize: 16.sp,
@@ -314,7 +314,7 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      'Start Game',
+                                      StaticString.startGame.tr,
                                       style: TextStyle(
                                         fontFamily: segoeFont,
                                         fontSize: 16.sp,
@@ -323,7 +323,7 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
                                       ),
                                     ),
                                     Text(
-                                      '3 Categories Selected',
+                                      StaticString.threeCategoriesSelected.tr,
                                       style: TextStyle(
                                         fontFamily: segoeFont,
                                         fontSize: 11.sp,
@@ -333,7 +333,7 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
                                   ],
                                 )
                               : Text(
-                                  'Choose 3 Categories ($count/3)',
+                                  '${StaticString.choose3Categories.tr} ($count/3)',
                                   style: TextStyle(
                                     fontFamily: segoeFont,
                                     fontSize: 16.sp,
