@@ -92,7 +92,7 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
                       // Reset Password Title
                       Center(
                         child: Text(
-                          StaticString.resetPasswordTitle,
+                          StaticString.resetPasswordTitle.tr,
                           style: TextStyle(
                             fontFamily: segoeFont,
                             fontSize: 22.sp,
@@ -108,7 +108,7 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
                       Obx(
                         () => _buildInputField(
                           controller: controller.passwordController,
-                          hintText: StaticString.password,
+                          hintText: StaticString.password.tr,
                           svgPrefixIcon: AppIcons.passwordUpIcon,
                           isObscure: controller.isPasswordObscure.value,
                           onSuffixTap: controller.togglePasswordVisibility,
@@ -121,7 +121,7 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
                       Obx(
                         () => _buildInputField(
                           controller: controller.confirmPasswordController,
-                          hintText: StaticString.confirmPassword,
+                          hintText: StaticString.confirmPassword.tr,
                           svgPrefixIcon: AppIcons.passwordUpIcon,
                           isObscure: controller.isConfirmPasswordObscure.value,
                           onSuffixTap: controller.toggleConfirmPasswordVisibility,
@@ -148,7 +148,7 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
                             ),
                           ),
                           child: Text(
-                            StaticString.updateAndContinue,
+                            StaticString.updateAndContinue.tr,
                             style: TextStyle(
                               fontFamily: segoeFont,
                               fontSize: 16.sp,
