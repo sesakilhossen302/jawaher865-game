@@ -218,7 +218,7 @@ class GameBoardScreen extends GetView<GameBoardController> {
                   ),
                   SizedBox(width: isLandscape ? 3 : 4.w),
                   Text(
-                    StaticString.exit,
+                    StaticString.exit.tr,
                     style: TextStyle(
                       fontFamily: segoeFont,
                       fontSize: isLandscape ? 12 : 14.sp,
@@ -241,7 +241,7 @@ class GameBoardScreen extends GetView<GameBoardController> {
                   ),
                   SizedBox(width: isLandscape ? 3 : 4.w),
                   Text(
-                    StaticString.restart,
+                    StaticString.restart.tr,
                     style: TextStyle(
                       fontFamily: segoeFont,
                       fontSize: isLandscape ? 12 : 14.sp,
@@ -271,7 +271,7 @@ class GameBoardScreen extends GetView<GameBoardController> {
                   padding: EdgeInsets.symmetric(horizontal: isLandscape ? 12 : 20.w),
                 ),
                 child: Text(
-                  StaticString.gameOver,
+                  StaticString.gameOver.tr,
                   style: TextStyle(
                     fontFamily: segoeFont,
                     fontSize: isLandscape ? 11 : 13.sp,
@@ -378,7 +378,7 @@ class GameBoardScreen extends GetView<GameBoardController> {
                 ),
                 if (isTurn)
                   Text(
-                    StaticString.yourTurn,
+                    StaticString.yourTurn.tr,
                     style: TextStyle(
                       fontFamily: segoeFont,
                       fontSize: isLandscape ? 8.0 : 11.sp,
