@@ -565,7 +565,7 @@ class QuestionScreen extends GetView<QuestionController> {
                       color: Colors.black87,
                     ),
                     decoration: InputDecoration(
-                      hintText: 'Write your answer',
+                      hintText: StaticString.writeYourAnswer.tr,
                       hintStyle: TextStyle(
                         color: Colors.grey,
                         fontSize: isLandscape ? 10.5 : 12.sp,
@@ -671,7 +671,7 @@ class QuestionScreen extends GetView<QuestionController> {
             color: Colors.white,
           ),
           decoration: InputDecoration(
-            hintText: 'Write your answer',
+            hintText: StaticString.writeYourAnswer,
             hintStyle: TextStyle(
               fontFamily: segoeFont,
               fontSize: isLandscape ? 11.0 : 13.sp,
@@ -708,7 +708,7 @@ class QuestionScreen extends GetView<QuestionController> {
         ),
         child: Center(
           child: Text(
-            'Submit Answer',
+            StaticString.submitAnswer.tr,
             style: TextStyle(
               fontFamily: segoeFont,
               fontSize: isLandscape ? 12.5 : 16.sp,
@@ -737,7 +737,7 @@ class QuestionScreen extends GetView<QuestionController> {
         ),
       ),
       child: Text(
-        'Team 2 Turn',
+        StaticString.team2Turn.tr,
         style: TextStyle(
           fontFamily: segoeFont,
           fontSize: isLandscape ? 11.0 : 13.sp,
@@ -804,7 +804,7 @@ class QuestionScreen extends GetView<QuestionController> {
                 ),
                 if (isTurn) ...[
                   Text(
-                    'Your Turn',
+                    StaticString.yourTurn.tr,
                     style: TextStyle(
                       fontFamily: segoeFont,
                       fontSize: isLandscape ? 8.5 : 10.sp,
@@ -892,7 +892,7 @@ class QuestionScreen extends GetView<QuestionController> {
                 ),
                 if (isTurn) ...[
                   Text(
-                    'Your Turn',
+                    StaticString.yourTurn.tr,
                     style: TextStyle(
                       fontFamily: segoeFont,
                       fontSize: isLandscape ? 8.5 : 11.sp,
@@ -968,7 +968,7 @@ class QuestionScreen extends GetView<QuestionController> {
                   const Icon(Icons.logout_rounded, color: Colors.white, size: 18),
                   SizedBox(width: 4.w),
                   Text(
-                    StaticString.exit,
+                    StaticString.exit.tr,
                     style: TextStyle(
                       fontFamily: segoeFont,
                       fontSize: 14.sp,
@@ -987,7 +987,7 @@ class QuestionScreen extends GetView<QuestionController> {
                   const Icon(Icons.refresh_rounded, color: Colors.white, size: 18),
                   SizedBox(width: 4.w),
                   Text(
-                    StaticString.restart,
+                    StaticString.restart.tr,
                     style: TextStyle(
                       fontFamily: segoeFont,
                       fontSize: 14.sp,
@@ -1013,7 +1013,7 @@ class QuestionScreen extends GetView<QuestionController> {
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
               ),
               child: Text(
-                StaticString.gameOver,
+                StaticString.gameOver.tr,
                 style: TextStyle(
                   fontFamily: segoeFont,
                   fontSize: 13.sp,
@@ -1140,7 +1140,7 @@ class QuestionScreen extends GetView<QuestionController> {
               ),
             ),
             child: Text(
-              StaticString.showAnswer,
+              StaticString.showAnswer.tr,
               style: TextStyle(
                 fontFamily: segoeFont,
                 fontSize: isLandscape ? 13 : 15.sp,
@@ -1167,7 +1167,7 @@ class QuestionScreen extends GetView<QuestionController> {
                   size: 15,
                 ),
                 label: Text(
-                  StaticString.returnToAnswer,
+                  StaticString.returnToAnswer.tr,
                   style: const TextStyle(
                     fontFamily: segoeFont,
                     fontSize: 12,
@@ -1198,7 +1198,7 @@ class QuestionScreen extends GetView<QuestionController> {
                   ),
                 ),
                 child: Text(
-                  StaticString.resultDistribution,
+                  StaticString.resultDistribution.tr,
                   style: const TextStyle(
                     fontFamily: segoeFont,
                     fontSize: 12,
@@ -1226,7 +1226,7 @@ class QuestionScreen extends GetView<QuestionController> {
                     size: 18.sp,
                   ),
                   label: Text(
-                    StaticString.returnToAnswer,
+                    StaticString.returnToAnswer.tr,
                     style: TextStyle(
                       fontFamily: segoeFont,
                       fontSize: 14.sp,
@@ -1257,7 +1257,7 @@ class QuestionScreen extends GetView<QuestionController> {
                     ),
                   ),
                   child: Text(
-                    StaticString.resultDistribution,
+                    StaticString.resultDistribution.tr,
                     style: TextStyle(
                       fontFamily: segoeFont,
                       fontSize: 14.sp,
@@ -1281,7 +1281,7 @@ class QuestionScreen extends GetView<QuestionController> {
         SizedBox(height: isLandscape ? 4 : 6.h),
 
         Text(
-          StaticString.whichTeamAnsweredCorrectly,
+          StaticString.whichTeamAnsweredCorrectly.tr,
           style: TextStyle(
             fontFamily: segoeFont,
             fontSize: isLandscape ? 14 : 18.sp,
@@ -1379,7 +1379,7 @@ class QuestionScreen extends GetView<QuestionController> {
             ),
             child: Center(
               child: Text(
-                StaticString.noOne,
+                StaticString.noOne.tr,
                 style: TextStyle(
                   fontFamily: segoeFont,
                   fontSize: isLandscape ? 14 : 18.sp,
@@ -1404,7 +1404,7 @@ class QuestionScreen extends GetView<QuestionController> {
               size: isLandscape ? 15 : 18.sp,
             ),
             label: Text(
-              StaticString.returnToAnswer,
+              StaticString.returnToAnswer.tr,
               style: TextStyle(
                 fontFamily: segoeFont,
                 fontSize: isLandscape ? 12 : 14.sp,
