@@ -24,7 +24,7 @@ class PlayScreen extends GetView<PlayController> {
         // TOP HEADER TITLE (Play)
         Center(
           child: Text(
-            StaticString.play,
+            StaticString.play.tr,
             style: TextStyle(
               fontFamily: segoeFont,
               fontSize: 22.sp,
@@ -44,9 +44,9 @@ class PlayScreen extends GetView<PlayController> {
               children: [
                 // 1. CARD 1: Challenge Your Melas (Blue Card)
                 _buildChallengeCard(
-                  title: StaticString.challengeYourMelas,
-                  subtitle: StaticString.playTogetherOnOneDevice,
-                  buttonText: StaticString.startNow,
+                  title: StaticString.challengeYourMelas.tr,
+                  subtitle: StaticString.playTogetherOnOneDevice.tr,
+                  buttonText: StaticString.startNow.tr,
                   badgeIcon: Icons.people_outline_rounded,
                   illustrationSvgPath: AppIcons.challengeYourMelasImg,
                   illustrationHeight: 90.h,
@@ -66,9 +66,9 @@ class PlayScreen extends GetView<PlayController> {
 
                 // 2. CARD 2: Challenge Other Melases (Orange-Red Card)
                 _buildChallengeCard(
-                  title: StaticString.challengeOtherMelases,
-                  subtitle: StaticString.challengePlayersOnline,
-                  buttonText: StaticString.playOnline,
+                  title: StaticString.challengeOtherMelases.tr,
+                  subtitle: StaticString.challengePlayersOnline.tr,
+                  buttonText: StaticString.playOnline.tr,
                   badgeIcon: Icons.language_rounded,
                   illustrationSvgPath: AppIcons.challengeOtherMelasesImg,
                   gradientColors: const [
@@ -81,6 +81,27 @@ class PlayScreen extends GetView<PlayController> {
                   circleColor: const Color(0xFFFF7256).withValues(alpha: 0.45),
                   subtitleColor: const Color(0xFFFFDCD5),
                   onTap: controller.onPlayOnlineTap,
+                ),
+
+                SizedBox(height: 16.h),
+
+                // 3. CARD 3: My Community (Teal-Cyan Card)
+                _buildChallengeCard(
+                  title: StaticString.myCommunity.tr,
+                  subtitle: StaticString.myCommunityTagline.tr,
+                  buttonText: '${StaticString.view.tr} ↗',
+                  badgeIcon: Icons.groups_rounded,
+                  illustrationSvgPath: AppIcons.challengeYourMelasImg,
+                  gradientColors: const [
+                    Color(0xFF065967),
+                    Color(0xFF09808E),
+                  ],
+                  borderColor: const Color(0xFF38E5D8).withValues(alpha: 0.6),
+                  buttonColor: const Color(0xFF0D97A3),
+                  badgeColor: const Color(0xFF00B0B9).withValues(alpha: 0.9),
+                  circleColor: const Color(0xFF0FA8B4).withValues(alpha: 0.45),
+                  subtitleColor: const Color(0xFFB4ECE7),
+                  onTap: controller.onCommunityTap,
                 ),
 
                 SizedBox(height: 20.h),
