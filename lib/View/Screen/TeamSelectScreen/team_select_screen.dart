@@ -87,7 +87,7 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
 
                               Center(
                                 child: Text(
-                                  StaticString.play,
+                                  StaticString.play.tr,
                                   style: TextStyle(
                                     fontFamily: segoeFont,
                                     fontSize: 22.sp,
@@ -109,7 +109,7 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
                                 children: [
                                   // 1. BLUE TEAM CARD
                                   _buildTeamCard(
-                                    sectionTitle: StaticString.blueTeamCaps,
+                                    sectionTitle: StaticString.blueTeamCaps.tr,
                                     controller: controller.blueTeamController,
                                     gradientColors: const [
                                       Color(0xFF275BEA),
@@ -128,7 +128,7 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
 
                                   // 2. RED TEAM CARD
                                   _buildTeamCard(
-                                    sectionTitle: StaticString.redTeamCaps,
+                                    sectionTitle: StaticString.redTeamCaps.tr,
                                     controller: controller.redTeamController,
                                     gradientColors: const [
                                       Color(0xFFE54124),
@@ -162,7 +162,7 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    StaticString.vsText,
+                                    StaticString.vsText.tr,
                                     style: TextStyle(
                                       fontFamily: segoeFont,
                                       fontSize: 14.sp,
@@ -197,7 +197,7 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
                             ),
                           ),
                           child: Text(
-                            StaticString.next,
+                            StaticString.next.tr,
                             style: TextStyle(
                               fontFamily: segoeFont,
                               fontSize: 16.sp,
