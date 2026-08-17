@@ -49,4 +49,12 @@ class AppIcons {
   static const String profile = '$basePath/profile.svg';
   static const String settings = '$basePath/settings.svg';
   static const String notification = '$basePath/notification.svg';
+
+  // Settings Screen SVGs
+  static const String contactSupportIcon = '$basePath/Contact Support.svg';
+  static const String deleteAccountIcon = '$basePath/Delete Account.svg';
+  static const String logoutIcon = '$basePath/logout.svg';
+  static const String privacyPolicyIcon = '$basePath/Privacy Policy.svg';
+  static const String termsConditionsIcon = '$basePath/Terms & Conditions.svg';
+  static const String accountDeletionRequestIcon = '$basePath/Account Deletion Request.svg';
 }
