@@ -96,7 +96,7 @@ class ForgotPasswordScreen extends GetView<ForgotPasswordController> {
                       // Forgot Password
                       Center(
                         child: Text(
-                          StaticString.forgotPasswordTitle,
+                          StaticString.forgotPasswordTitle.tr,
                           style: TextStyle(
                             fontFamily: segoeFont,
                             fontSize: 22.sp,
@@ -111,7 +111,7 @@ class ForgotPasswordScreen extends GetView<ForgotPasswordController> {
                       // Email
                       _buildInputField(
                         controller: controller.emailController,
-                        hintText: StaticString.email,
+                        hintText: StaticString.email.tr,
                         svgPrefixIcon: AppIcons.emailIcon,
                         keyboardType: TextInputType.emailAddress,
                       ),
@@ -136,7 +136,7 @@ class ForgotPasswordScreen extends GetView<ForgotPasswordController> {
                             ),
                           ),
                           child: Text(
-                            StaticString.sendVerificationCode,
+                            StaticString.sendVerificationCode.tr,
                             style: TextStyle(
                               fontFamily: segoeFont,
                               fontSize: 16.sp,
