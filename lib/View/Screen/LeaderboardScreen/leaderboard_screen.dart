@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../Utils/AppImg/app_img.dart';
+import '../../../Utils/StaticString/static_string.dart';
 import 'Controller/leaderboard_controller.dart';
 import 'Model/leaderboard_model.dart';
 
@@ -37,7 +38,7 @@ class LeaderboardScreen extends StatelessWidget {
                     // HEADER TITLE
                     Center(
                       child: Text(
-                        'Leaderboard',
+                        StaticString.leaderboard.tr,
                         style: TextStyle(
                           fontFamily: segoeFont,
                           fontSize: 22.sp,
@@ -69,7 +70,7 @@ class LeaderboardScreen extends StatelessWidget {
                         if (currentList.isEmpty) {
                           return Center(
                             child: Text(
-                              'No players found',
+                              StaticString.noPlayersFound.tr,
                               style: TextStyle(
                                 fontFamily: segoeFont,
                                 fontSize: 14.sp,
@@ -104,7 +105,11 @@ class LeaderboardScreen extends StatelessWidget {
 
   // ==================== SEGMENTED TAB SELECTOR ====================
   Widget _buildTabSelector(LeaderboardController controller) {
-    final tabs = ['Weekly', 'Monthly', 'All Time'];
+    final tabs = [
+      StaticString.weekly.tr,
+      StaticString.monthly.tr,
+      StaticString.allTime.tr,
+    ];
 
     return Container(
       height: 48.h,
@@ -247,7 +252,7 @@ class LeaderboardScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                'POINTS',
+                StaticString.pointsCaps.tr,
                 style: TextStyle(
                   fontFamily: segoeFont,
                   fontSize: 9.sp,
