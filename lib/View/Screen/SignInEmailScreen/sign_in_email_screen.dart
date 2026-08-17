@@ -94,7 +94,7 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
                     child: Column(
                       children: [
                         Text(
-                          StaticString.signInWithEmail,
+                          StaticString.signInWithEmail.tr,
                           style: TextStyle(
                             fontFamily: segoeFont,
                             fontSize: 22.sp,
@@ -104,7 +104,7 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
                         ),
                         SizedBox(height: 6.h),
                         Text(
-                          StaticString.welcomeBackSubTitle,
+                          StaticString.welcomeBackSubTitle.tr,
                           style: TextStyle(
                             fontFamily: segoeFont,
                             fontSize: 13.sp,
@@ -119,7 +119,7 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
 
                   // Email Field Section
                   Text(
-                    StaticString.email,
+                    StaticString.email.tr,
                     style: TextStyle(
                       fontFamily: segoeFont,
                       fontSize: 14.sp,
@@ -130,7 +130,7 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
                   SizedBox(height: 8.h),
                   _buildTextField(
                     controller: controller.emailController,
-                    hintText: StaticString.enterYourEmail,
+                    hintText: StaticString.enterYourEmail.tr,
                     svgPrefixIcon: AppIcons.emailIcon,
                     keyboardType: TextInputType.emailAddress,
                   ),
@@ -139,7 +139,7 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
 
                   // Password Field Section
                   Text(
-                    StaticString.password,
+                    StaticString.password.tr,
                     style: TextStyle(
                       fontFamily: segoeFont,
                       fontSize: 14.sp,
@@ -151,7 +151,7 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
                   Obx(
                     () => _buildTextField(
                       controller: controller.passwordController,
-                      hintText: StaticString.enterYourPassword,
+                      hintText: StaticString.enterYourPassword.tr,
                       svgPrefixIcon: AppIcons.passwordIcon,
                       isObscure: controller.isObscure.value,
                       suffixIcon: IconButton(
@@ -201,7 +201,7 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
                               !controller.rememberMe.value,
                             ),
                             child: Text(
-                              StaticString.rememberMe,
+                              StaticString.rememberMe.tr,
                               style: TextStyle(
                                 fontFamily: segoeFont,
                                 fontSize: 13.sp,
@@ -216,7 +216,7 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
                       GestureDetector(
                         onTap: controller.goToForgotPassword,
                         child: Text(
-                          StaticString.forgotPassword,
+                          StaticString.forgotPassword.tr,
                           style: TextStyle(
                             fontFamily: segoeFont,
                             fontSize: 13.sp,
@@ -248,7 +248,7 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
                         ),
                       ),
                       child: Text(
-                        StaticString.signIn,
+                        StaticString.signIn.tr,
                         style: TextStyle(
                           fontFamily: segoeFont,
                           fontSize: 16.sp,
@@ -273,7 +273,7 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.w),
                         child: Text(
-                          StaticString.or,
+                          StaticString.or.tr,
                           style: TextStyle(
                             fontFamily: segoeFont,
                             fontSize: 13.sp,
@@ -314,7 +314,7 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
                         ),
                       ),
                       child: Text(
-                        StaticString.continueAsGuest,
+                        StaticString.continueAsGuest.tr,
                         style: TextStyle(
                           fontFamily: segoeFont,
                           fontSize: 16.sp,
@@ -339,9 +339,9 @@ class SignInEmailScreen extends GetView<SignInEmailController> {
                             color: const Color(0xFFB4ECE7),
                           ),
                           children: [
-                            const TextSpan(text: StaticString.dontHaveAccount),
+                            TextSpan(text: StaticString.dontHaveAccount.tr),
                             TextSpan(
-                              text: StaticString.signUp,
+                              text: StaticString.signUpBtn.tr,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
