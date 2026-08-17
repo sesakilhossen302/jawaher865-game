@@ -37,6 +37,12 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
             useMaterial3: true,
           ),
+          builder: (context, child) {
+            return Directionality(
+              textDirection: TextDirection.ltr,
+              child: child ?? const SizedBox(),
+            );
+          },
           translations: Translator(),
           locale: const Locale('en', 'US'),
           fallbackLocale: const Locale('en', 'US'),
