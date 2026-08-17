@@ -12,4 +12,7 @@ class AppImg {
   static const String aiImg = '$basePath/AI-img.png';
   static const String flagsImg = '$basePath/Flags-img.png';
   static const String islamicImg = '$basePath/Islamic-img.png';
+  static const String noGamesYetImg = '$basePath/No games yet — hit Play!.png';
+  static const String changePasswordImg = '$basePath/Change Password-img.png';
+  static const String wantToDeleteAccountImg = '$basePath/Want to delete account !.png';
 }
