@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../Utils/AppIcons/app_icons.dart';
 import '../../../Utils/AppImg/app_img.dart';
 import '../../../Utils/StaticString/static_string.dart';
+import '../../Widget/CustomGradientButton/custom_gradient_button.dart';
 import 'Controller/reset_password_controller.dart';
 
 class ResetPasswordScreen extends GetView<ResetPasswordController> {
@@ -130,33 +131,12 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
 
                       SizedBox(height: 32.h),
 
-                      // Update and Continue Button
-                      SizedBox(
-                        width: double.infinity,
+                      // Continue Button (Coral-Orange Gradient)
+                      CustomGradientButton(
+                        onTap: controller.updateAndContinue,
+                        text: StaticString.continueBtn.tr,
                         height: 54.h,
-                        child: ElevatedButton(
-                          onPressed: controller.updateAndContinue,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF3358FE),
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.r),
-                              side: BorderSide(
-                                color: const Color(0xFF38E5D8),
-                                width: 1.5.w,
-                              ),
-                            ),
-                          ),
-                          child: Text(
-                            StaticString.updateAndContinue.tr,
-                            style: TextStyle(
-                              fontFamily: segoeFont,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                        borderRadius: BorderRadius.circular(25.r),
                       ),
 
                       SizedBox(height: 40.h),
@@ -181,9 +161,12 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
     return Container(
       height: 54.h,
       decoration: BoxDecoration(
-        color: const Color(0xFF065967).withValues(alpha: 0.85),
-        borderRadius: BorderRadius.circular(18.r),
-        border: Border.all(color: const Color(0xFF38E5D8), width: 1.5.w),
+        color: Colors.white.withValues(alpha: 0.22),
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.40),
+          width: 1.2.w,
+        ),
       ),
       child: TextField(
         controller: controller,
@@ -191,14 +174,14 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
         style: TextStyle(
           fontFamily: segoeFont,
           fontSize: 15.sp,
-          color: Colors.white,
+          color: const Color(0xFF222222),
         ),
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: TextStyle(
             fontFamily: segoeFont,
             fontSize: 15.sp,
-            color: Colors.white.withValues(alpha: 0.9),
+            color: const Color(0xFF5A4400).withValues(alpha: 0.65),
           ),
           prefixIcon: Padding(
             padding: EdgeInsets.all(14.r),
@@ -206,12 +189,16 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
               svgPrefixIcon,
               width: 20.w,
               height: 20.h,
-              colorFilter: const ColorFilter.mode(
-                Colors.white,
+              colorFilter: ColorFilter.mode(
+                const Color(0xFF5A4400).withValues(alpha: 0.75),
                 BlendMode.srcIn,
               ),
               errorBuilder: (context, error, stackTrace) {
-                return Icon(Icons.lock_outline, color: Colors.white, size: 20.sp);
+                return Icon(
+                  Icons.lock_outline,
+                  color: const Color(0xFF5A4400).withValues(alpha: 0.75),
+                  size: 20.sp,
+                );
               },
             ),
           ),
@@ -220,7 +207,7 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
               isObscure
                   ? Icons.visibility_off_outlined
                   : Icons.visibility_outlined,
-              color: Colors.white.withValues(alpha: 0.9),
+              color: const Color(0xFF5A4400).withValues(alpha: 0.75),
               size: 20.sp,
             ),
             onPressed: onSuffixTap,
