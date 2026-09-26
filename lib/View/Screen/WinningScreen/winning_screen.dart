@@ -88,9 +88,9 @@ class WinningScreen extends GetView<WinningController> {
             StaticString.congratulationsOnTheWin.tr,
             style: TextStyle(
               fontFamily: segoeFont,
-              fontSize: 22.sp,
+              fontSize: 16.sp,
               fontWeight: FontWeight.w700,
-              color: Colors.white,
+              color: const Color(0xFF222222),
             ),
             textAlign: TextAlign.center,
           ),
@@ -103,9 +103,16 @@ class WinningScreen extends GetView<WinningController> {
               controller.winnerName.value,
               style: TextStyle(
                 fontFamily: segoeFont,
-                fontSize: 26.sp,
+                fontSize: 28.sp,
                 fontWeight: FontWeight.w900,
                 color: Colors.white,
+                shadows: [
+                  Shadow(
+                    color: Colors.black.withValues(alpha: 0.25),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
               ),
               textAlign: TextAlign.center,
             ),
@@ -141,9 +148,9 @@ class WinningScreen extends GetView<WinningController> {
             StaticString.congratulationsOnTheWin.tr,
             style: const TextStyle(
               fontFamily: segoeFont,
-              fontSize: 18,
+              fontSize: 15,
               fontWeight: FontWeight.w700,
-              color: Colors.white,
+              color: Color(0xFF222222),
             ),
             textAlign: TextAlign.center,
           ),
@@ -195,15 +202,15 @@ class WinningScreen extends GetView<WinningController> {
         vertical: isLandscape ? 12 : 24.h,
       ),
       decoration: BoxDecoration(
-        color: const Color(0xFF065967).withValues(alpha: 0.85),
+        color: Colors.white.withValues(alpha: 0.25),
         borderRadius: BorderRadius.circular(isLandscape ? 20 : 28.r),
         border: Border.all(
-          color: const Color(0xFF38E5D8).withValues(alpha: 0.35),
-          width: 1.w,
+          color: Colors.white.withValues(alpha: 0.45),
+          width: 1.5.w,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.25),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 16,
             offset: const Offset(0, 6),
           ),
@@ -214,15 +221,22 @@ class WinningScreen extends GetView<WinningController> {
         children: [
           // Avatar Circle Container (Square logical pixels ensure PERFECT ROUND CIRCLE)
           Container(
-            width: isLandscape ? 64 : 110.w,
-            height: isLandscape ? 64 : 110.h,
+            width: isLandscape ? 64 : 100.w,
+            height: isLandscape ? 64 : 100.h,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: const Color(0xFF003875),
+              color: const Color(0xFFF5B800),
               border: Border.all(
-                color: const Color(0xFF38E5D8),
-                width: 2.w,
+                color: const Color(0xFFFFE57F),
+                width: 3.5.w,
               ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.15),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
             ),
             child: Center(
               child: Obx(
@@ -230,7 +244,7 @@ class WinningScreen extends GetView<WinningController> {
                   controller.winnerAvatarInitials.value,
                   style: TextStyle(
                     fontFamily: segoeFont,
-                    fontSize: isLandscape ? 26 : 42.sp,
+                    fontSize: isLandscape ? 26 : 40.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
@@ -239,7 +253,7 @@ class WinningScreen extends GetView<WinningController> {
             ),
           ),
 
-          SizedBox(height: isLandscape ? 10 : 20.h),
+          SizedBox(height: isLandscape ? 10 : 18.h),
 
           // Star Icon & Score Display
           Row(
@@ -272,7 +286,7 @@ class WinningScreen extends GetView<WinningController> {
                     fontFamily: segoeFont,
                     fontSize: isLandscape ? 20 : 24.sp,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: const Color(0xFF222222),
                   ),
                 ),
               ),
@@ -283,31 +297,49 @@ class WinningScreen extends GetView<WinningController> {
     );
   }
 
-  // PLAY AGAIN BUTTON PILL
+  // PLAY AGAIN BUTTON PILL (Vibrant Green matching screenshot + Back to Lobby)
   Widget _buildPlayAgainButton({bool isLandscape = false}) {
-    return SizedBox(
-      width: isLandscape ? 260 : 280.w,
-      height: isLandscape ? 42 : 50.h,
-      child: ElevatedButton(
-        onPressed: controller.onPlayAgain,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF3358FE),
-          elevation: 6,
-          shadowColor: const Color(0xFF3358FE).withValues(alpha: 0.5),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24.r),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          width: isLandscape ? 260 : 280.w,
+          height: isLandscape ? 42 : 52.h,
+          child: ElevatedButton(
+            onPressed: controller.onPlayAgain,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF00C853), // Vibrant Green matching screenshot
+              elevation: 6,
+              shadowColor: const Color(0xFF00C853).withValues(alpha: 0.45),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(26.r),
+              ),
+            ),
+            child: Text(
+              StaticString.playAgain.tr,
+              style: TextStyle(
+                fontFamily: segoeFont,
+                fontSize: isLandscape ? 14 : 16.sp,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
           ),
         ),
-        child: Text(
-          StaticString.playAgain.tr,
-          style: TextStyle(
-            fontFamily: segoeFont,
-            fontSize: isLandscape ? 14 : 16.sp,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+        SizedBox(height: 12.h),
+        GestureDetector(
+          onTap: () => Get.back(),
+          child: Text(
+            'BACK TO LOBBY',
+            style: TextStyle(
+              fontFamily: segoeFont,
+              fontSize: 13.sp,
+              fontWeight: FontWeight.bold,
+              color: const Color(0xFF222222),
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }
