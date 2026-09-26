@@ -21,179 +21,347 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
       Get.find<TeamSelectController>().ensureControllersInitialized();
     }
 
-    return Scaffold(
-      body: SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            // FULL PAGE BACKGROUND
-            Positioned.fill(
-              child: Image.asset(AppImg.globalBackground, fit: BoxFit.cover),
-            ),
+    return PopScope(
+      canPop: true,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) {
+          controller.onBackTap();
+        }
+      },
+      child: Scaffold(
+        body: SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              // FULL PAGE BACKGROUND
+              Positioned.fill(
+                child: Image.asset(AppImg.globalBackground, fit: BoxFit.cover),
+              ),
 
-            // MAIN CONTENT LAYER
-            SafeArea(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight:
-                        MediaQuery.of(context).size.height -
-                        MediaQuery.of(context).padding.top -
-                        MediaQuery.of(context).padding.bottom,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 12.h),
+              // MAIN CONTENT LAYER
+              SafeArea(
+                child: OrientationBuilder(
+                  builder: (context, orientation) {
+                    final isLandscape = orientation == Orientation.landscape;
+                    if (isLandscape) {
+                      return _buildLandscapeContent(context);
+                    }
+                    return _buildPortraitContent(context);
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
-                          // TOP HEADER BAR (Back Button + Centered Title)
-                          Stack(
-                            children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: GestureDetector(
-                                  onTap: () => Get.back(),
-                                  child: Container(
-                                    padding: EdgeInsets.all(10.r),
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.white.withValues(alpha: 0.25),
-                                    ),
-                                    child: SvgPicture.asset(
-                                      AppIcons.backIcon,
-                                      width: 16.w,
-                                      height: 16.h,
-                                      colorFilter: const ColorFilter.mode(
-                                        Colors.white,
-                                        BlendMode.srcIn,
-                                      ),
-                                      errorBuilder: (context, error, stackTrace) {
-                                        return Icon(
-                                          Icons.arrow_back_ios_new,
-                                          size: 16.sp,
-                                          color: Colors.white,
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                              Center(
-                                child: Text(
-                                  StaticString.play.tr,
-                                  style: TextStyle(
-                                    fontFamily: segoeFont,
-                                    fontSize: 22.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          SizedBox(height: 30.h),
-
-                          // TEAM CARDS WITH OVERLAPPING VS BADGE
-                          Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Column(
-                                children: [
-                                  // 1. GREEN TEAM CARD (matching screenshot)
-                                  _buildTeamCard(
-                                    sectionTitle: StaticString.blueTeamCaps.tr,
-                                    controller: controller.blueTeamController,
-                                    gradientColors: const [
-                                      Color(0xFF00C853),
-                                      Color(0xFF10B981),
-                                    ],
-                                    borderColor: const Color(0xFF69F0AE).withValues(alpha: 0.6),
-                                    inputBgColor: const Color(0xFF00C853).withValues(alpha: 0.25),
-                                    circleColor: const Color(0xFF00E676).withValues(alpha: 0.35),
-                                    labelColor: const Color(0xFFE8F5E9),
-                                    illustrationSvgPath: AppIcons.blueTeamImg,
-                                    illustrationHeight: 85.h,
-                                    illustrationRight: 10.w,
-                                    iconPreviewPath: AppImg.leaderboardRightYoungManImg,
-                                  ),
-
-                                  SizedBox(height: 16.h),
-
-                                  // 2. RED TEAM CARD (matching screenshot)
-                                  _buildTeamCard(
-                                    sectionTitle: StaticString.redTeamCaps.tr,
-                                    controller: controller.redTeamController,
-                                    gradientColors: const [
-                                      Color(0xFFFF4848),
-                                      Color(0xFFFF7A00),
-                                    ],
-                                    borderColor: const Color(0xFFFF8B74).withValues(alpha: 0.6),
-                                    inputBgColor: const Color(0xFFFF4848).withValues(alpha: 0.25),
-                                    circleColor: const Color(0xFFFF7A00).withValues(alpha: 0.35),
-                                    labelColor: const Color(0xFFFFEBE6),
-                                    illustrationSvgPath: AppIcons.redTeamImg,
-                                    illustrationHeight: 85.h,
-                                    illustrationRight: 10.w,
-                                    iconPreviewPath: AppImg.playRightFemaleImg,
-                                  ),
-                                ],
-                              ),
-
-                              // OVERLAPPING VS BADGE IN THE MIDDLE
-                              Container(
-                                width: 44.w,
-                                height: 44.h,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: const Color(0xFFFF7A00),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withValues(alpha: 0.25),
-                                      blurRadius: 8,
-                                      offset: const Offset(0, 3),
-                                    ),
-                                  ],
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    StaticString.vsText.tr,
-                                    style: TextStyle(
-                                      fontFamily: segoeFont,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+  Widget _buildLandscapeContent(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      child: Column(
+        children: [
+          // TOP HEADER BAR (Back Button + Centered Title)
+          Stack(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: GestureDetector(
+                  onTap: controller.onBackTap,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white.withValues(alpha: 0.25),
+                    ),
+                    child: SvgPicture.asset(
+                      AppIcons.backIcon,
+                      width: 16,
+                      height: 16,
+                      colorFilter: const ColorFilter.mode(
+                        Colors.white,
+                        BlendMode.srcIn,
                       ),
-
-                      SizedBox(height: 30.h),
-
-                      // BOTTOM NEXT ACTION BUTTON (CustomGradientButton)
-                      CustomGradientButton(
-                        text: StaticString.next.tr,
-                        onTap: controller.onNextTap,
-                      ),
-
-                      SizedBox(height: 24.h),
-                    ],
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(
+                          Icons.arrow_back_ios_new,
+                          size: 16,
+                          color: Colors.white,
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
+              Center(
+                child: Text(
+                  StaticString.play.tr,
+                  style: const TextStyle(
+                    fontFamily: segoeFont,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 12),
+
+          // TEAM CARDS SIDE-BY-SIDE WITH VS BADGE
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildTeamCard(
+                      sectionTitle: StaticString.blueTeamCaps.tr,
+                      controller: controller.blueTeamController,
+                      gradientColors: const [
+                        Color(0xFF00C853),
+                        Color(0xFF10B981),
+                      ],
+                      borderColor: const Color(0xFF69F0AE).withValues(alpha: 0.6),
+                      inputBgColor: const Color(0xFF00C853).withValues(alpha: 0.25),
+                      circleColor: const Color(0xFF00E676).withValues(alpha: 0.35),
+                      labelColor: const Color(0xFFE8F5E9),
+                      illustrationSvgPath: AppIcons.blueTeamImg,
+                      illustrationHeight: 70,
+                      illustrationRight: 8,
+                      iconPreviewPath: AppImg.leaderboardRightYoungManImg,
+                      isLandscape: true,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: _buildTeamCard(
+                      sectionTitle: StaticString.redTeamCaps.tr,
+                      controller: controller.redTeamController,
+                      gradientColors: const [
+                        Color(0xFFFF4848),
+                        Color(0xFFFF7A00),
+                      ],
+                      borderColor: const Color(0xFFFF8B74).withValues(alpha: 0.6),
+                      inputBgColor: const Color(0xFFFF4848).withValues(alpha: 0.25),
+                      circleColor: const Color(0xFFFF7A00).withValues(alpha: 0.35),
+                      labelColor: const Color(0xFFFFEBE6),
+                      illustrationSvgPath: AppIcons.redTeamImg,
+                      illustrationHeight: 70,
+                      illustrationRight: 8,
+                      iconPreviewPath: AppImg.playRightFemaleImg,
+                      isLandscape: true,
+                    ),
+                  ),
+                ],
+              ),
+
+              // OVERLAPPING VS BADGE IN THE MIDDLE
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: const Color(0xFFFF7A00),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.25),
+                      blurRadius: 8,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Text(
+                    StaticString.vsText.tr,
+                    style: const TextStyle(
+                      fontFamily: segoeFont,
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 14),
+
+          // BOTTOM NEXT ACTION BUTTON
+          SizedBox(
+            width: 320,
+            child: CustomGradientButton(
+              text: StaticString.next.tr,
+              onTap: controller.onNextTap,
             ),
+          ),
+          const SizedBox(height: 6),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPortraitContent(BuildContext context) {
+    return SingleChildScrollView(
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          minHeight: MediaQuery.of(context).size.height -
+              MediaQuery.of(context).padding.top -
+              MediaQuery.of(context).padding.bottom,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 12.h),
+
+                // TOP HEADER BAR (Back Button + Centered Title)
+                Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: GestureDetector(
+                        onTap: controller.onBackTap,
+                        child: Container(
+                          padding: EdgeInsets.all(10.r),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white.withValues(alpha: 0.25),
+                          ),
+                          child: SvgPicture.asset(
+                            AppIcons.backIcon,
+                            width: 16.w,
+                            height: 16.h,
+                            colorFilter: const ColorFilter.mode(
+                              Colors.white,
+                              BlendMode.srcIn,
+                            ),
+                            errorBuilder: (context, error, stackTrace) {
+                              return Icon(
+                                Icons.arrow_back_ios_new,
+                                size: 16.sp,
+                                color: Colors.white,
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    Center(
+                      child: Text(
+                        StaticString.play.tr,
+                        style: TextStyle(
+                          fontFamily: segoeFont,
+                          fontSize: 22.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 30.h),
+
+                // TEAM CARDS WITH OVERLAPPING VS BADGE
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        // 1. GREEN TEAM CARD (matching screenshot)
+                        _buildTeamCard(
+                          sectionTitle: StaticString.blueTeamCaps.tr,
+                          controller: controller.blueTeamController,
+                          gradientColors: const [
+                            Color(0xFF00C853),
+                            Color(0xFF10B981),
+                          ],
+                          borderColor: const Color(0xFF69F0AE).withValues(alpha: 0.6),
+                          inputBgColor: const Color(0xFF00C853).withValues(alpha: 0.25),
+                          circleColor: const Color(0xFF00E676).withValues(alpha: 0.35),
+                          labelColor: const Color(0xFFE8F5E9),
+                          illustrationSvgPath: AppIcons.blueTeamImg,
+                          illustrationHeight: 85.h,
+                          illustrationRight: 10.w,
+                          iconPreviewPath: AppImg.leaderboardRightYoungManImg,
+                          isLandscape: false,
+                        ),
+
+                        SizedBox(height: 16.h),
+
+                        // 2. RED TEAM CARD (matching screenshot)
+                        _buildTeamCard(
+                          sectionTitle: StaticString.redTeamCaps.tr,
+                          controller: controller.redTeamController,
+                          gradientColors: const [
+                            Color(0xFFFF4848),
+                            Color(0xFFFF7A00),
+                          ],
+                          borderColor: const Color(0xFFFF8B74).withValues(alpha: 0.6),
+                          inputBgColor: const Color(0xFFFF4848).withValues(alpha: 0.25),
+                          circleColor: const Color(0xFFFF7A00).withValues(alpha: 0.35),
+                          labelColor: const Color(0xFFFFEBE6),
+                          illustrationSvgPath: AppIcons.redTeamImg,
+                          illustrationHeight: 85.h,
+                          illustrationRight: 10.w,
+                          iconPreviewPath: AppImg.playRightFemaleImg,
+                          isLandscape: false,
+                        ),
+                      ],
+                    ),
+
+                    // OVERLAPPING VS BADGE IN THE MIDDLE
+                    Container(
+                      width: 44.w,
+                      height: 44.h,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: const Color(0xFFFF7A00),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.25),
+                            blurRadius: 8,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Text(
+                          StaticString.vsText.tr,
+                          style: TextStyle(
+                            fontFamily: segoeFont,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+
+            SizedBox(height: 30.h),
+
+            // BOTTOM NEXT ACTION BUTTON (CustomGradientButton)
+            CustomGradientButton(
+              text: StaticString.next.tr,
+              onTap: controller.onNextTap,
+            ),
+
+            SizedBox(height: 24.h),
           ],
         ),
       ),
@@ -212,13 +380,14 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
     required double illustrationHeight,
     required double illustrationRight,
     String? iconPreviewPath,
+    bool isLandscape = false,
   }) {
     return Container(
-      height: 195.h,
+      height: isLandscape ? 165 : 195.h,
       width: double.infinity,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24.r),
+        borderRadius: BorderRadius.circular(isLandscape ? 18 : 24.r),
         gradient: LinearGradient(
           colors: gradientColors,
           begin: Alignment.topLeft,
@@ -251,7 +420,10 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
 
           // Card Foreground Content
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 14.h),
+            padding: EdgeInsets.symmetric(
+              horizontal: isLandscape ? 14 : 18.w,
+              vertical: isLandscape ? 10 : 14.h,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -260,20 +432,20 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
                   sectionTitle,
                   style: TextStyle(
                     fontFamily: segoeFont,
-                    fontSize: 11.sp,
+                    fontSize: isLandscape ? 11 : 11.sp,
                     fontWeight: FontWeight.bold,
                     color: labelColor,
                     letterSpacing: 1.1,
                   ),
                 ),
 
-                SizedBox(height: 8.h),
+                SizedBox(height: isLandscape ? 6 : 8.h),
 
                 // Editable Team Name Pill Container (Full Width)
                 Container(
                   width: double.infinity,
-                  height: 42.h,
-                  padding: EdgeInsets.symmetric(horizontal: 14.w),
+                  height: isLandscape ? 36 : 42.h,
+                  padding: EdgeInsets.symmetric(horizontal: isLandscape ? 10 : 14.w),
                   decoration: BoxDecoration(
                     color: inputBgColor,
                     borderRadius: BorderRadius.circular(14.r),
@@ -285,7 +457,7 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
                           controller: controller,
                           style: TextStyle(
                             fontFamily: segoeFont,
-                            fontSize: 15.sp,
+                            fontSize: isLandscape ? 14 : 15.sp,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
@@ -299,32 +471,32 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
                       Icon(
                         Icons.edit_outlined,
                         color: Colors.white,
-                        size: 16.sp,
+                        size: isLandscape ? 15 : 16.sp,
                       ),
                     ],
                   ),
                 ),
 
-                SizedBox(height: 10.h),
+                SizedBox(height: isLandscape ? 6 : 10.h),
 
                 // CHOOSE ICON Title
                 Text(
                   'CHOOSE ICON',
                   style: TextStyle(
                     fontFamily: segoeFont,
-                    fontSize: 10.sp,
+                    fontSize: isLandscape ? 10 : 10.sp,
                     fontWeight: FontWeight.bold,
                     color: labelColor,
                     letterSpacing: 1.1,
                   ),
                 ),
 
-                SizedBox(height: 6.h),
+                SizedBox(height: isLandscape ? 4 : 6.h),
 
                 // Choose Icon Selector Pill
                 Container(
-                  width: 170.w,
-                  height: 38.h,
+                  width: isLandscape ? 150 : 170.w,
+                  height: isLandscape ? 34 : 38.h,
                   padding: EdgeInsets.symmetric(horizontal: 12.w),
                   decoration: BoxDecoration(
                     color: inputBgColor,
@@ -337,7 +509,7 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
                         'Select icon',
                         style: TextStyle(
                           fontFamily: segoeFont,
-                          fontSize: 12.sp,
+                          fontSize: isLandscape ? 11 : 12.sp,
                           color: Colors.white.withValues(alpha: 0.9),
                           fontWeight: FontWeight.w500,
                         ),
@@ -349,8 +521,8 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
                               borderRadius: BorderRadius.circular(6.r),
                               child: Image.asset(
                                 iconPreviewPath,
-                                width: 22.w,
-                                height: 22.h,
+                                width: isLandscape ? 20 : 22.w,
+                                height: isLandscape ? 20 : 22.h,
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) => const SizedBox(),
                               ),
@@ -359,7 +531,7 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
                           Icon(
                             Icons.keyboard_arrow_down,
                             color: Colors.white,
-                            size: 18.sp,
+                            size: isLandscape ? 16 : 18.sp,
                           ),
                         ],
                       ),

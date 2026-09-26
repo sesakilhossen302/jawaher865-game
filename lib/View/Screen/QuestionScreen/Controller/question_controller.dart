@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../../../Core/AppRoute/app_route.dart';
 import '../../../../Model/team_model.dart';
@@ -77,6 +78,12 @@ class QuestionController extends GetxController {
         player2.value = args['player2'];
       }
     }
+
+    // Maintain landscape mode throughout the gameplay flow
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
 
     // Start 30-second countdown timer
     startCountdownTimer();

@@ -11,11 +11,10 @@ class WinningController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // Allow rotation on Congratulations / Winning Screen (Landscape + Portrait)
+    // Maintain landscape mode on Winning Screen
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
-      DeviceOrientation.portraitUp,
     ]);
 
     if (Get.arguments != null && Get.arguments is Map) {
@@ -34,9 +33,10 @@ class WinningController extends GetxController {
       // ONLINE PLAY: Tapping Try/Play Again redirects to MatchmakingScreen to find next online opponent
       Get.offAllNamed(AppRoute.matchmakingScreen);
     } else {
-      // OFFLINE LOCAL PLAY: Tapping Play Again returns to TeamSelectScreen
+      // OFFLINE LOCAL PLAY: Tapping Play Again returns to TeamSelectScreen in landscape
       SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight,
       ]);
       Get.offNamedUntil(AppRoute.teamSelectScreen, (route) => route.isFirst);
     }

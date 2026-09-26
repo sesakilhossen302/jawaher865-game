@@ -13,12 +13,20 @@ class TeamSelectController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // Enforce portrait mode for TeamSelectScreen
+    // Maintain landscape mode throughout the gameplay flow
     SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
     ]);
     blueTeamController = TextEditingController(text: 'Green Team');
     redTeamController = TextEditingController(text: 'Red Team');
+  }
+
+  void onBackTap() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+    Get.back();
   }
 
   void ensureControllersInitialized() {

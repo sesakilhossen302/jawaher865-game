@@ -32,155 +32,164 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
 
             // MAIN CONTENT LAYER
             SafeArea(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 12.h),
+              child: OrientationBuilder(
+                builder: (context, orientation) {
+                  final isLandscape = orientation == Orientation.landscape;
 
-                    // 1. TOP HEADER BAR (Back Button + Dynamic Title)
-                    Row(
+                  return Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: isLandscape ? 20 : 20.w,
+                      vertical: isLandscape ? 8 : 0,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        GestureDetector(
-                          onTap: () => Get.back(),
-                          child: Container(
-                            padding: EdgeInsets.all(10.r),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white.withValues(alpha: 0.25),
-                            ),
-                            child: SvgPicture.asset(
-                              AppIcons.backIcon,
-                              width: 16.w,
-                              height: 16.h,
-                              colorFilter: const ColorFilter.mode(
-                                Colors.white,
-                                BlendMode.srcIn,
+                        SizedBox(height: isLandscape ? 6 : 12.h),
+
+                        // 1. TOP HEADER BAR (Back Button + Dynamic Title)
+                        Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () => Get.back(),
+                              child: Container(
+                                padding: EdgeInsets.all(isLandscape ? 8 : 10.r),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white.withValues(alpha: 0.25),
+                                ),
+                                child: SvgPicture.asset(
+                                  AppIcons.backIcon,
+                                  width: isLandscape ? 14 : 16.w,
+                                  height: isLandscape ? 14 : 16.h,
+                                  colorFilter: const ColorFilter.mode(
+                                    Colors.white,
+                                    BlendMode.srcIn,
+                                  ),
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Icon(
+                                      Icons.arrow_back_ios_new,
+                                      size: isLandscape ? 14 : 16.sp,
+                                      color: Colors.white,
+                                    );
+                                  },
+                                ),
                               ),
-                              errorBuilder: (context, error, stackTrace) {
-                                return Icon(
-                                  Icons.arrow_back_ios_new,
-                                  size: 16.sp,
-                                  color: Colors.white,
-                                );
-                              },
                             ),
-                          ),
-                        ),
-                        SizedBox(width: 14.w),
-                        Obx(
-                          () => Text(
-                            'Choose ${controller.selectedCategoryIds.isNotEmpty ? "${controller.selectedCategoryIds.length} " : "6 "}categories',
-                            style: TextStyle(
-                              fontFamily: segoeFont,
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    SizedBox(height: 16.h),
-
-                    // 2. CATEGORIES 2-COLUMN GRID (Matching Figma Screen 3 & 4)
-                    Expanded(
-                      child: Obx(() {
-                        final items = controller.categories;
-                        return GridView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 16.h,
-                            crossAxisSpacing: 16.w,
-                            childAspectRatio: 0.82,
-                          ),
-                          itemCount: items.length,
-                          itemBuilder: (context, index) {
-                            final category = items[index];
-                            return Obx(() {
-                              final isSelected = controller
-                                  .selectedCategoryIds
-                                  .contains(category.id);
-                              return _buildCategoryCard(
-                                category: category,
-                                isSelected: isSelected,
-                                onTap: () =>
-                                    controller.toggleCategory(category.id),
-                              );
-                            });
-                          },
-                        );
-                      }),
-                    ),
-
-                    SizedBox(height: 14.h),
-
-                    // 3. BOTTOM START GAME ACTION BUTTON WITH SELECTION COUNT
-                    Obx(() {
-                      final count = controller.selectedCategoryIds.length;
-                      return GestureDetector(
-                        onTap: controller.onActionTap,
-                        child: Container(
-                          width: double.infinity,
-                          height: 58.h,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(22.r),
-                            gradient: const LinearGradient(
-                              colors: [
-                                Color(0xFFFF4848),
-                                Color(0xFFFF7A00),
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: const Color(0xFFFF4848)
-                                    .withValues(alpha: 0.4),
-                                blurRadius: 12,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Start Game',
+                            SizedBox(width: isLandscape ? 10 : 14.w),
+                            Obx(
+                              () => Text(
+                                'Choose ${controller.selectedCategoryIds.isNotEmpty ? "${controller.selectedCategoryIds.length} " : "6 "}categories',
                                 style: TextStyle(
                                   fontFamily: segoeFont,
-                                  fontSize: 18.sp,
+                                  fontSize: isLandscape ? 16 : 18.sp,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
                               ),
-                              SizedBox(height: 2.h),
-                              Text(
-                                count == 0
-                                    ? 'Select Categories to Play'
-                                    : count == 1
-                                        ? '1 Category Selected'
-                                        : '$count Categories Selected',
-                                style: TextStyle(
-                                  fontFamily: segoeFont,
-                                  fontSize: 11.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white.withValues(alpha: 0.9),
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      );
-                    }),
 
-                    SizedBox(height: 20.h),
-                  ],
-                ),
+                        SizedBox(height: isLandscape ? 8 : 16.h),
+
+                        // 2. CATEGORIES GRID (4 columns in landscape, 2 in portrait)
+                        Expanded(
+                          child: Obx(() {
+                            final items = controller.categories;
+                            return GridView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: isLandscape ? 4 : 2,
+                                mainAxisSpacing: isLandscape ? 10 : 16.h,
+                                crossAxisSpacing: isLandscape ? 12 : 16.w,
+                                childAspectRatio: isLandscape ? 1.15 : 0.82,
+                              ),
+                              itemCount: items.length,
+                              itemBuilder: (context, index) {
+                                final category = items[index];
+                                return Obx(() {
+                                  final isSelected = controller
+                                      .selectedCategoryIds
+                                      .contains(category.id);
+                                  return _buildCategoryCard(
+                                    category: category,
+                                    isSelected: isSelected,
+                                    isLandscape: isLandscape,
+                                    onTap: () =>
+                                        controller.toggleCategory(category.id),
+                                  );
+                                });
+                              },
+                            );
+                          }),
+                        ),
+
+                        SizedBox(height: isLandscape ? 8 : 14.h),
+
+                        // 3. BOTTOM START GAME ACTION BUTTON WITH SELECTION COUNT
+                        Obx(() {
+                          final count = controller.selectedCategoryIds.length;
+                          return GestureDetector(
+                            onTap: controller.onActionTap,
+                            child: Container(
+                              width: double.infinity,
+                              height: isLandscape ? 44 : 58.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                    isLandscape ? 14 : 22.r),
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    Color(0xFFFF4848),
+                                    Color(0xFFFF7A00),
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: const Color(0xFFFF4848)
+                                        .withValues(alpha: 0.4),
+                                    blurRadius: isLandscape ? 8 : 12,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Start Game',
+                                    style: TextStyle(
+                                      fontFamily: segoeFont,
+                                      fontSize: isLandscape ? 15 : 18.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    count == 0
+                                        ? '(Select Categories)'
+                                        : '($count Selected)',
+                                    style: TextStyle(
+                                      fontFamily: segoeFont,
+                                      fontSize: isLandscape ? 12 : 11.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white.withValues(alpha: 0.9),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }),
+
+                        SizedBox(height: isLandscape ? 6 : 20.h),
+                      ],
+                    ),
+                  );
+                },
               ),
             ),
           ],
@@ -193,6 +202,7 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
     required CategoryModel category,
     required bool isSelected,
     required VoidCallback onTap,
+    bool isLandscape = false,
   }) {
     return GestureDetector(
       onTap: onTap,
@@ -200,21 +210,21 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
           color: const Color(0xFFFF3B30),
-          borderRadius: BorderRadius.circular(20.r),
+          borderRadius: BorderRadius.circular(isLandscape ? 14 : 20.r),
           border: Border.all(
             color: isSelected
                 ? Colors.white
                 : Colors.white.withValues(alpha: 0.25),
-            width: isSelected ? 3.w : 1.w,
+            width: isSelected ? (isLandscape ? 2.5 : 3.w) : 1.w,
           ),
           boxShadow: [
             BoxShadow(
               color: isSelected
                   ? Colors.white.withValues(alpha: 0.7)
                   : const Color(0xFFFF3B30).withValues(alpha: 0.35),
-              blurRadius: isSelected ? 12 : 6,
+              blurRadius: isSelected ? 10 : 5,
               spreadRadius: isSelected ? 1.5 : 0,
-              offset: const Offset(0, 3),
+              offset: const Offset(0, 2),
             ),
           ],
         ),
@@ -231,7 +241,7 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
 
             // Bottom Red Title Banner
             Container(
-              height: 38.h,
+              height: isLandscape ? 26 : 38.h,
               width: double.infinity,
               color: const Color(0xFFFF3B30),
               alignment: Alignment.center,
@@ -240,7 +250,7 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
                 category.title.toUpperCase(),
                 style: TextStyle(
                   fontFamily: segoeFont,
-                  fontSize: 13.sp,
+                  fontSize: isLandscape ? 11 : 13.sp,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                   letterSpacing: 0.8,

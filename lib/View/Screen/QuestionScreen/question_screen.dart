@@ -549,6 +549,402 @@ class QuestionScreen extends GetView<QuestionController> {
 
   // ==================== LANDSCAPE LAYOUT ====================
   Widget _buildLandscapeLayout() {
+    return Obx(() {
+      final isOnline = controller.isOnlineMatch.value;
+      if (!isOnline) {
+        return _buildFigmaOfflineLandscapeLayout();
+      }
+      return _buildOnlineLandscapeLayout();
+    });
+  }
+
+  // ==================== FIGMA OFFLINE LANDSCAPE FLOW ====================
+  Widget _buildFigmaOfflineLandscapeLayout() {
+    return Obx(() {
+      final state = controller.viewState.value;
+
+      if (state == QuestionViewState.resultDistribution) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+          child: Column(
+            children: [
+              // Top Bar with back button & titles
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: controller.onResultDistributionBack,
+                    child: Container(
+                      width: 36,
+                      height: 36,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                      ),
+                      child: const Center(
+                        child: Icon(Icons.arrow_back, color: Colors.black87, size: 20),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Text(
+                          '${controller.categoryTitle.value.toUpperCase()} QUESTION - ${controller.points.value} POINTS',
+                          style: const TextStyle(
+                            fontFamily: segoeFont,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF6B4A00),
+                            letterSpacing: 0.5,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 2),
+                        const Text(
+                          'WHICH TEAM ANSWER CORRECTLY?',
+                          style: TextStyle(
+                            fontFamily: segoeFont,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w800,
+                            color: Color(0xFF2C2416),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 36), // Balance
+                ],
+              ),
+
+              const SizedBox(height: 12),
+
+              // Content: Left = 3 Award Buttons, Right = Challenge Melas illustration
+              Expanded(
+                child: Row(
+                  children: [
+                    // Left Column: 3 Award Buttons
+                    Expanded(
+                      flex: 6,
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _buildFigmaAwardButtonLandscape(
+                              title: controller.player1.value.name.toUpperCase(),
+                              onTap: controller.onAwardTeam1,
+                            ),
+                            const SizedBox(height: 10),
+                            _buildFigmaAwardButtonLandscape(
+                              title: controller.player2.value.name.toUpperCase(),
+                              onTap: controller.onAwardTeam2,
+                            ),
+                            const SizedBox(height: 10),
+                            _buildFigmaAwardButtonLandscape(
+                              title: 'NO ONE',
+                              onTap: controller.onAwardNoOne,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(width: 24),
+
+                    // Right: Challenge Your Melas SVG Illustration
+                    Expanded(
+                      flex: 4,
+                      child: Center(
+                        child: SvgPicture.asset(
+                          AppIcons.challengeYourMelasImg,
+                          height: 100,
+                          fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) => const SizedBox(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      }
+
+      // Question or AnswerRevealed state
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+        child: Column(
+          children: [
+            // Top Header: Back Button + Team Turn Pill
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: controller.onExit,
+                  child: Container(
+                    width: 36,
+                    height: 36,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                    ),
+                    child: const Center(
+                      child: Icon(Icons.arrow_back, color: Colors.black87, size: 20),
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFF3B30),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Text(
+                    "${controller.activeTeamName}'s Turn",
+                    style: const TextStyle(
+                      fontFamily: segoeFont,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 8),
+
+            // Two-column layout in Landscape
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Left Side: Question Image + Subtitle + Timer
+                  Expanded(
+                    flex: 5,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Container(
+                            width: double.infinity,
+                            height: 140,
+                            color: Colors.black12,
+                            child: _buildDynamicQuestionMedia(
+                              controller.questionImage.value,
+                              width: double.infinity,
+                              height: 140,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          '${controller.categoryTitle.value} Questions - ${controller.points.value} Points',
+                          style: const TextStyle(
+                            fontFamily: segoeFont,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF5A482A),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 4),
+                        const Text(
+                          'TIME 1:42MIN',
+                          style: TextStyle(
+                            fontFamily: segoeFont,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF00B0FF),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(width: 20),
+
+                  // Right Side: Question Text + Answer Box (if revealed) + Action Button
+                  Expanded(
+                    flex: 6,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // Question Text
+                        Text(
+                          controller.questionText.value.toUpperCase(),
+                          style: const TextStyle(
+                            fontFamily: segoeFont,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w800,
+                            color: Color(0xFF2C2416),
+                            letterSpacing: 0.3,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+
+                        if (state == QuestionViewState.answerRevealed) ...[
+                          const SizedBox(height: 12),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFE8F5E9),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: const Color(0xFF00C853),
+                                width: 1.5,
+                              ),
+                            ),
+                            child: Column(
+                              children: [
+                                const Text(
+                                  'CORRECT ANSWER',
+                                  style: TextStyle(
+                                    fontFamily: segoeFont,
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF007E33),
+                                    letterSpacing: 0.5,
+                                  ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  controller.answerText.value,
+                                  style: const TextStyle(
+                                    fontFamily: segoeFont,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w800,
+                                    color: Color(0xFF2C2416),
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+
+                        const SizedBox(height: 16),
+
+                        // Action Button (Answer or Next)
+                        if (state == QuestionViewState.question)
+                          GestureDetector(
+                            onTap: controller.toggleShowAnswer,
+                            child: Container(
+                              height: 42,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                gradient: const LinearGradient(
+                                  colors: [Color(0xFFFF5252), Color(0xFFFF3B30)],
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: const Color(0xFFFF3B30).withValues(alpha: 0.35),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'Answer',
+                                  style: TextStyle(
+                                    fontFamily: segoeFont,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        else
+                          GestureDetector(
+                            onTap: controller.goToResultDistribution,
+                            child: Container(
+                              height: 42,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                gradient: const LinearGradient(
+                                  colors: [Color(0xFFFF5252), Color(0xFFFF3B30)],
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: const Color(0xFFFF3B30).withValues(alpha: 0.35),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'Next',
+                                  style: TextStyle(
+                                    fontFamily: segoeFont,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    });
+  }
+
+  Widget _buildFigmaAwardButtonLandscape({
+    required String title,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        height: 42,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          gradient: const LinearGradient(
+            colors: [Color(0xFFFF5252), Color(0xFFFF3B30)],
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFFFF3B30).withValues(alpha: 0.35),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Center(
+          child: Text(
+            title,
+            style: const TextStyle(
+              fontFamily: segoeFont,
+              fontSize: 13,
+              fontWeight: FontWeight.w800,
+              color: Colors.white,
+              letterSpacing: 0.5,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ==================== ONLINE / LEGACY LANDSCAPE LAYOUT ====================
+  Widget _buildOnlineLandscapeLayout() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(

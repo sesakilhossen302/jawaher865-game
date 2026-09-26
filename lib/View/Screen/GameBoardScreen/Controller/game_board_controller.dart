@@ -45,11 +45,10 @@ class GameBoardController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // Allow rotation on Game Board Screen
+    // Enforce landscape mode on Game Board Screen
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
-      DeviceOrientation.portraitUp,
     ]);
 
     if (Get.arguments != null && Get.arguments is Map) {
@@ -394,13 +393,5 @@ class GameBoardController extends GetxController {
         'winnerAvatar': winnerAvatar,
       },
     );
-  }
-
-  @override
-  void onClose() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
-    super.onClose();
   }
 }

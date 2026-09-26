@@ -19,6 +19,10 @@ class PlayController extends GetxController {
   }
 
   void onStartNowTap() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
     Get.toNamed(AppRoute.teamSelectScreen);
   }
 

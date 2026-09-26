@@ -66,9 +66,10 @@ class ChooseCategoryController extends GetxController {
   void onInit() {
     super.onInit();
 
-    // Lock ChooseCategoryScreen strictly to Portrait Mode ONLY
+    // Maintain landscape mode throughout the gameplay flow
     SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
     ]);
 
     if (Get.arguments != null && Get.arguments is Map) {
@@ -156,7 +157,6 @@ class ChooseCategoryController extends GetxController {
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.landscapeLeft,
         DeviceOrientation.landscapeRight,
-        DeviceOrientation.portraitUp,
       ]);
       Get.toNamed(
         AppRoute.gameBoardScreen,

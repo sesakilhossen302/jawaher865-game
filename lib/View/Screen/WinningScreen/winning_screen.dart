@@ -18,8 +18,15 @@ class WinningScreen extends GetView<WinningController> {
       Get.put(WinningController());
     }
 
-    return Scaffold(
-      body: SizedBox(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          controller.onBackToLobby();
+        }
+      },
+      child: Scaffold(
+        body: SizedBox(
         width: double.infinity,
         height: double.infinity,
         child: Stack(
@@ -71,6 +78,7 @@ class WinningScreen extends GetView<WinningController> {
           ],
         ),
       ),
+    ),
     );
   }
 
@@ -86,7 +94,7 @@ class WinningScreen extends GetView<WinningController> {
           Align(
             alignment: Alignment.centerLeft,
             child: GestureDetector(
-              onTap: () => Get.back(),
+              onTap: controller.onBackToLobby,
               child: Container(
                 width: 38.w,
                 height: 38.w,
@@ -170,163 +178,96 @@ class WinningScreen extends GetView<WinningController> {
     );
   }
 
-  // LANDSCAPE LAYOUT (PERFECT SCALING)
+  // LANDSCAPE LAYOUT (PERFECT SCALING MATCHING FIGMA)
   Widget _buildLandscapeLayout() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(height: 8),
-
-          // Congratulations Text
-          Text(
-            StaticString.congratulationsOnTheWin.tr,
-            style: const TextStyle(
-              fontFamily: segoeFont,
-              fontSize: 15,
-              fontWeight: FontWeight.w700,
-              color: Color(0xFF222222),
-            ),
-            textAlign: TextAlign.center,
-          ),
-
-          const SizedBox(height: 4),
-
-          // Winner Name
-          Obx(
-            () => Text(
-              controller.winnerName.value,
-              style: const TextStyle(
-                fontFamily: segoeFont,
-                fontSize: 22,
-                fontWeight: FontWeight.w900,
-                color: Colors.white,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-
-          const SizedBox(height: 10),
-
-          // Winner Card Box
+          // Left Side: Back button + Avatars illustration + Clapping 👏
           Expanded(
-            child: Center(
-              child: SingleChildScrollView(
-                child: _buildWinnerCard(isLandscape: true),
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 10),
-
-          // Play Again Button
-          _buildPlayAgainButton(isLandscape: true),
-
-          const SizedBox(height: 8),
-        ],
-      ),
-    );
-  }
-
-  // WINNER CARD WIDGET
-  Widget _buildWinnerCard({required bool isLandscape}) {
-    return Container(
-      width: isLandscape ? 300 : 260.w,
-      padding: EdgeInsets.symmetric(
-        horizontal: isLandscape ? 20 : 20.w,
-        vertical: isLandscape ? 12 : 24.h,
-      ),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.25),
-        borderRadius: BorderRadius.circular(isLandscape ? 20 : 28.r),
-        border: Border.all(
-          color: Colors.white.withValues(alpha: 0.45),
-          width: 1.5.w,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 16,
-            offset: const Offset(0, 6),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // Avatar Circle Container (Square logical pixels ensure PERFECT ROUND CIRCLE)
-          Container(
-            width: isLandscape ? 64 : 100.w,
-            height: isLandscape ? 64 : 100.h,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: const Color(0xFFF5B800),
-              border: Border.all(
-                color: const Color(0xFFFFE57F),
-                width: 3.5.w,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.15),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
+            flex: 4,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: GestureDetector(
+                    onTap: controller.onBackToLobby,
+                    child: Container(
+                      width: 34,
+                      height: 34,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                      ),
+                      child: const Center(
+                        child: Icon(Icons.arrow_back, color: Colors.black87, size: 18),
+                      ),
+                    ),
+                  ),
                 ),
+                const Spacer(),
+                SvgPicture.asset(
+                  AppIcons.challengeYourMelasImg,
+                  height: 56,
+                  fit: BoxFit.contain,
+                ),
+                const SizedBox(height: 8),
+                const Text('👏', style: TextStyle(fontSize: 42)),
+                const Spacer(),
               ],
             ),
-            child: Center(
-              child: Obx(
-                () => Text(
-                  controller.winnerAvatarInitials.value,
-                  style: TextStyle(
-                    fontFamily: segoeFont,
-                    fontSize: isLandscape ? 26 : 40.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
           ),
 
-          SizedBox(height: isLandscape ? 10 : 18.h),
+          const SizedBox(width: 20),
 
-          // Star Icon & Score Display
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Gold Star Badge
-              Container(
-                width: isLandscape ? 24 : 28.w,
-                height: isLandscape ? 24 : 28.h,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color(0xFFFBBF24),
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.star_rounded,
-                    color: Colors.white,
-                    size: isLandscape ? 16 : 20.sp,
-                  ),
-                ),
-              ),
-
-              SizedBox(width: isLandscape ? 8 : 8.w),
-
-              // Score Text
-              Obx(
-                () => Text(
-                  controller.winnerScore.value.toString(),
-                  style: TextStyle(
+          // Right Side: Congratulations + Winner Name + Play Again + Back to Lobby
+          Expanded(
+            flex: 5,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  StaticString.congratulationsOnTheWin.tr.toUpperCase(),
+                  style: const TextStyle(
                     fontFamily: segoeFont,
-                    fontSize: isLandscape ? 20 : 24.sp,
-                    fontWeight: FontWeight.bold,
-                    color: const Color(0xFF222222),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF222222),
+                    letterSpacing: 0.5,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 6),
+                Obx(
+                  () => Text(
+                    controller.winnerName.value.toUpperCase(),
+                    style: TextStyle(
+                      fontFamily: segoeFont,
+                      fontSize: 26,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white,
+                      letterSpacing: 1.0,
+                      shadows: [
+                        Shadow(
+                          color: Colors.black.withValues(alpha: 0.25),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 16),
+                _buildPlayAgainButton(isLandscape: true),
+              ],
+            ),
           ),
         ],
       ),
