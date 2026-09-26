@@ -1,95 +1,82 @@
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../../../Core/AppRoute/app_route.dart';
-import '../Model/online_game_model.dart';
+import '../../../../Model/game_board_model.dart';
+import '../../../../Utils/AppImg/app_img.dart';
+
+class OnlineCategoryItem {
+  final int id;
+  final String title;
+  final String imagePath;
+
+  OnlineCategoryItem({
+    required this.id,
+    required this.title,
+    required this.imagePath,
+  });
+}
 
 class OnlineGameController extends GetxController {
-  final Rx<OnlineGameMatchModel?> matchData = Rx<OnlineGameMatchModel?>(null);
-  final RxBool isLoading = true.obs;
-  final RxBool isMicOn = false.obs;
-  final bool isOnlineMatch = true;
+  final RxList<OnlineCategoryItem> categories = <OnlineCategoryItem>[
+    OnlineCategoryItem(id: 1, title: 'UAE', imagePath: AppImg.catUae),
+    OnlineCategoryItem(id: 2, title: 'SONGS', imagePath: AppImg.catSongs),
+    OnlineCategoryItem(id: 3, title: 'ABDULMAJED', imagePath: AppImg.catAbdulmajed),
+    OnlineCategoryItem(id: 4, title: 'ARABIC', imagePath: AppImg.catArabic),
+    OnlineCategoryItem(id: 5, title: 'FIFA', imagePath: AppImg.catFifa),
+    OnlineCategoryItem(id: 6, title: 'HARRY POTTER', imagePath: AppImg.catHarryPotter),
+    OnlineCategoryItem(id: 7, title: 'FRIENDS', imagePath: AppImg.catFriends),
+    OnlineCategoryItem(id: 8, title: 'SHOWS', imagePath: AppImg.catShows),
+  ].obs;
+
+  // By default, first 6 categories are pre-selected matching Figma ("Choose 6 categories")
+  final RxSet<int> selectedCategoryIds = <int>{1, 2, 3, 4, 5, 6}.obs;
 
   @override
   void onInit() {
     super.onInit();
-
-    // Allow rotation (Portrait + Landscape) for Online Game screen
+    // Maintain portrait mode while choosing categories
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
+    ]);
+  }
+
+  void toggleCategory(int id) {
+    if (selectedCategoryIds.contains(id)) {
+      if (selectedCategoryIds.length > 1) {
+        selectedCategoryIds.remove(id);
+      }
+    } else {
+      selectedCategoryIds.add(id);
+    }
+  }
+
+  bool isSelected(int id) => selectedCategoryIds.contains(id);
+
+  void onStartGame() {
+    // 1. Convert selected categories into GameBoardBlockModel list
+    final List<GameBoardBlockModel> selectedBlocks = categories
+        .where((cat) => selectedCategoryIds.contains(cat.id))
+        .map((cat) => GameBoardBlockModel(
+              id: cat.id,
+              title: cat.title,
+              imagePath: cat.imagePath,
+            ))
+        .toList();
+
+    // 2. Immediately lock and rotate orientation to landscape!
+    SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
 
-    // Load initial match model data
-    loadMatchData();
-  }
-
-  void toggleMic() {
-    isMicOn.value = !isMicOn.value;
-  }
-
-  void loadMatchData() {
-    isLoading.value = true;
-
-    // Simulated Model JSON Response with unique player names & network image URLs
-    final Map<String, dynamic> responseJson = {
-      'match_id': 'MATCH_98521',
-      'status': 'ready',
-      'team1': [
-        {
-          'id': 'P1',
-          'name': 'Asaduzzaman',
-          'avatar_url': 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150',
-          'is_your_team': true,
-          'score': 0,
-        },
-        {
-          'id': 'P2',
-          'name': 'Tariq Rahman',
-          'avatar_url': 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150',
-          'is_your_team': false,
-          'score': 0,
-        },
-      ],
-      'team2': [
-        {
-          'id': 'P3',
-          'name': 'Imran Hossain',
-          'avatar_url': 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=150',
-          'is_your_team': true,
-          'score': 0,
-        },
-        {
-          'id': 'P4',
-          'name': 'Zayed Ahmed',
-          'avatar_url': '',
-          'is_your_team': false,
-          'score': 0,
-        },
-        {
-          'id': 'P5',
-          'name': 'Selecting...',
-          'avatar_url': '',
-          'is_your_team': false,
-          'score': 0,
-        },
-      ],
-    };
-
-    // Parse model from JSON
-    matchData.value = OnlineGameMatchModel.fromJson(responseJson);
-    isLoading.value = false;
-  }
-
-  void onContinueTap() {
-    // Navigate to ChooseCategoryScreen with online match flags & model data
+    // 3. Navigate to GameBoardScreen with online match arguments
     Get.toNamed(
-      AppRoute.chooseCategoryScreen,
+      AppRoute.gameBoardScreen,
       arguments: {
         'isOnlineMatch': true,
-        'matchId': matchData.value?.matchId ?? 'MATCH_98521',
-        'player1': matchData.value?.team1.firstOrNull?.name ?? 'Player 1',
-        'player2': matchData.value?.team2.firstOrNull?.name ?? 'Player 2',
+        'player1': 'Green Team',
+        'player2': 'Red Team',
+        'selectedCategories': selectedBlocks,
       },
     );
   }

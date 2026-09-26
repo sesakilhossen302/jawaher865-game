@@ -366,6 +366,7 @@ class GameBoardController extends GetxController {
       onConfirm: () {
         SystemChrome.setPreferredOrientations([
           DeviceOrientation.portraitUp,
+          DeviceOrientation.portraitDown,
         ]);
         Get.offAllNamed(AppRoute.mainScreen);
       },

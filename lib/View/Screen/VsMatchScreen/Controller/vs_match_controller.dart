@@ -13,22 +13,16 @@ class VsMatchController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
-    // Allow rotation (Portrait + Landscape) for VS Match screen
+    // Maintain portrait orientation for VS Match screen
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
     ]);
 
-    // Load initial 2 vs 2 match data
     loadVsMatchData();
-
-    // Auto-navigate to OnlineGameScreen after 3 seconds
-    _start3SecondAutoTimer();
+    _startAutoNavigateTimer();
   }
 
-  void _start3SecondAutoTimer() {
+  void _startAutoNavigateTimer() {
     _autoVsTimer?.cancel();
     _autoVsTimer = Timer(const Duration(seconds: 3), () {
       navigateToNextScreen();
@@ -45,14 +39,14 @@ class VsMatchController extends GetxController {
         {
           'id': 'P1',
           'name': 'Asaduzzaman',
-          'avatar_url': 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150',
+          'avatar_url': '',
           'is_your_team': true,
           'score': 0,
         },
         {
           'id': 'P2',
           'name': 'Tariq Rahman',
-          'avatar_url': 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150',
+          'avatar_url': '',
           'is_your_team': false,
           'score': 0,
         },
@@ -61,8 +55,8 @@ class VsMatchController extends GetxController {
         {
           'id': 'P3',
           'name': 'Imran Hossain',
-          'avatar_url': 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=150',
-          'is_your_team': true,
+          'avatar_url': '',
+          'is_your_team': false,
           'score': 0,
         },
         {

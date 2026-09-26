@@ -27,6 +27,9 @@ class PlayController extends GetxController {
   }
 
   void onPlayOnlineTap() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     Get.toNamed(AppRoute.matchmakingScreen);
   }
 

@@ -1,7 +1,8 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import '../../../Utils/AppIcons/app_icons.dart';
 import '../../../Utils/AppImg/app_img.dart';
 import '../../../Utils/StaticString/static_string.dart';
 import 'Controller/matchmaking_controller.dart';
@@ -16,13 +17,11 @@ class MatchmakingScreen extends StatefulWidget {
 class _MatchmakingScreenState extends State<MatchmakingScreen>
     with TickerProviderStateMixin {
   late AnimationController _pulseController;
-
   static const String segoeFont = 'Segoe UI';
 
   @override
   void initState() {
     super.initState();
-    // Continuous pulse wave animation
     _pulseController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 2200),
@@ -40,37 +39,58 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     final controller = Get.put(MatchmakingController());
 
     return Scaffold(
+      backgroundColor: const Color(0xFFFBBF24),
       body: SizedBox(
         width: double.infinity,
         height: double.infinity,
         child: Stack(
           fit: StackFit.expand,
           children: [
-            // 1. GLOBAL BACKGROUND IMAGE
+            // 1. GLOBAL BACKGROUND IMAGE (Warm Yellow Theme)
             Positioned.fill(
               child: Image.asset(AppImg.globalBackground, fit: BoxFit.cover),
             ),
 
-            // 2. MAIN CONTENT LAYER
+            // 2. BOTTOM CHARACTERS ILLUSTRATION (Snowboard girl + Binocular man matching 01_radar.png)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: SafeArea(
+                top: false,
+                child: SvgPicture.asset(
+                  AppIcons.challengeOtherMelasesImg,
+                  height: 155.h,
+                  fit: BoxFit.contain,
+                  alignment: Alignment.bottomCenter,
+                ),
+              ),
+            ),
+
+            // 3. MAIN INTERACTIVE CONTENT LAYER
             SafeArea(
               child: Column(
                 children: [
-                  SizedBox(height: 8.h),
+                  SizedBox(height: 10.h),
 
-                  // TOP APP BAR (Back Button & Play Title)
+                  // TOP APP BAR (Back Button & Centered "Play" Title)
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         GestureDetector(
                           onTap: () => Get.back(),
                           child: Container(
-                            width: 36.w,
-                            height: 36.h,
+                            width: 38.w,
+                            height: 38.w,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: const Color(0xFF38E5D8).withValues(alpha: 0.25),
+                              color: Colors.white.withValues(alpha: 0.3),
+                              border: Border.all(
+                                color: Colors.white.withValues(alpha: 0.4),
+                                width: 1.2,
+                              ),
                             ),
                             child: const Center(
                               child: Icon(
@@ -88,104 +108,129 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                             fontSize: 22.sp,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
+                            letterSpacing: -0.2,
                           ),
                         ),
-                        SizedBox(width: 36.w),
+                        SizedBox(width: 38.w), // Balance back button
                       ],
                     ),
                   ),
 
-                  // 3. CENTER DYNAMIC MATCHMAKING AREA (PERFECT TARGET-CENTERED CONCENTRIC RINGS)
+                  // 4. CENTER CONCENTRIC RADAR RINGS & TARGET ICON
                   Expanded(
-                    child: Center(
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          // CONCENTRIC RADAR RINGS PAINTER
-                          AnimatedBuilder(
-                            animation: _pulseController,
-                            builder: (context, child) {
-                              return CustomPaint(
-                                size: Size(540.w, 540.w),
-                                painter: DynamicConcentricRadarPainter(
-                                  progress: _pulseController.value,
-                                ),
-                              );
-                            },
-                          ),
-
-                          // CENTER CONTENT COLUMN (TARGET ICON + STATUS TEXT)
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // Center Target Circle Container (85.w x 85.w)
-                              Container(
-                                width: 85.w,
-                                height: 85.w,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: const Color(0xFF064D5B),
-                                  border: Border.all(
-                                    color: const Color(0xFF38E5D8)
-                                        .withValues(alpha: 0.5),
-                                    width: 2.w,
+                    child: GestureDetector(
+                      onTap: controller.skipToMatch,
+                      behavior: HitTestBehavior.opaque,
+                      child: Center(
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            // RADAR CONCENTRIC RINGS
+                            AnimatedBuilder(
+                              animation: _pulseController,
+                              builder: (context, child) {
+                                return CustomPaint(
+                                  size: Size(320.w, 320.w),
+                                  painter: GoldenRadarPainter(
+                                    progress: _pulseController.value,
                                   ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: const Color(0xFF38E5D8)
-                                          .withValues(alpha: 0.35),
-                                      blurRadius: 22,
-                                      spreadRadius: 5,
+                                );
+                              },
+                            ),
+
+                            // CENTER TARGET BADGE & STATUS TEXT
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                // Golden Target Badge
+                                Container(
+                                  width: 74.w,
+                                  height: 74.w,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    gradient: const LinearGradient(
+                                      colors: [
+                                        Color(0xFFFFB300),
+                                        Color(0xFFFF8F00),
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
                                     ),
-                                  ],
-                                ),
-                                child: Center(
-                                  child: CustomPaint(
-                                    size: Size(44.w, 44.w),
-                                    painter: TargetCrosshairPainter(),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: const Color(0xFFFF8F00)
+                                            .withValues(alpha: 0.45),
+                                        blurRadius: 18,
+                                        spreadRadius: 3,
+                                        offset: const Offset(0, 4),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Center(
+                                    child: CustomPaint(
+                                      size: Size(38.w, 38.w),
+                                      painter: RadarTargetPainter(),
+                                    ),
                                   ),
                                 ),
-                              ),
 
-                              SizedBox(height: 10.h),
+                                SizedBox(height: 14.h),
 
-                              // Opponent Found / Searching Status Text
-                              Obx(
-                                () => Text(
-                                  controller.statusText.value,
-                                  style: TextStyle(
-                                    fontFamily: segoeFont,
-                                    fontSize: 21.sp,
-                                    fontWeight: FontWeight.w900,
-                                    color: Colors.white,
-                                    letterSpacing: -0.3,
+                                // Status Text
+                                Obx(
+                                  () => Text(
+                                    controller.statusText.value,
+                                    style: TextStyle(
+                                      fontFamily: segoeFont,
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.w800,
+                                      color: Colors.white,
+                                      letterSpacing: -0.2,
+                                      shadows: [
+                                        Shadow(
+                                          color: Colors.black.withValues(alpha: 0.25),
+                                          blurRadius: 4,
+                                          offset: const Offset(0, 1.5),
+                                        ),
+                                      ],
+                                    ),
+                                    textAlign: TextAlign.center,
                                   ),
-                                  textAlign: TextAlign.center,
                                 ),
-                              ),
 
-                              SizedBox(height: 3.h),
+                                SizedBox(height: 4.h),
 
-                              // Connecting Subtitle
-                              Obx(
-                                () => Text(
-                                  controller.subText.value,
-                                  style: TextStyle(
-                                    fontFamily: segoeFont,
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white.withValues(alpha: 0.85),
+                                // Subtext
+                                Obx(
+                                  () => Text(
+                                    controller.subText.value,
+                                    style: TextStyle(
+                                      fontFamily: segoeFont,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white.withValues(alpha: 0.9),
+                                      shadows: [
+                                        Shadow(
+                                          color: Colors.black.withValues(alpha: 0.2),
+                                          blurRadius: 3,
+                                          offset: const Offset(0, 1),
+                                        ),
+                                      ],
+                                    ),
+                                    textAlign: TextAlign.center,
                                   ),
-                                  textAlign: TextAlign.center,
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
+
+                  // Space for bottom illustration
+                  SizedBox(height: 120.h),
                 ],
               ),
             ),
@@ -196,136 +241,90 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   }
 }
 
-// EXACT TARGET CROSSHAIR PAINTER MATCHING SCREENSHOT DESIGN
-class TargetCrosshairPainter extends CustomPainter {
+// TARGET CROSSHAIR PAINTER MATCHING FIGMA SCREEN 1
+class RadarTargetPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
     final radius = size.width * 0.36;
 
-    final paint = Paint()
-      ..color = Colors.white
+    // Pink/Coral Ring
+    final ringPaint = Paint()
+      ..color = const Color(0xFFFF4848)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 3.0;
+      ..strokeWidth = 2.5;
+    canvas.drawCircle(center, radius, ringPaint);
 
-    // Outer Circle
-    canvas.drawCircle(center, radius, paint);
-
-    // Center Solid Dot
+    // Cyan/Blue Center Dot
     final dotPaint = Paint()
-      ..color = Colors.white
+      ..color = const Color(0xFF1E88E5)
       ..style = PaintingStyle.fill;
     canvas.drawCircle(center, 4.0, dotPaint);
 
-    // 4 Ticks at top, bottom, left, right
+    // 4 Coral Crosshair Ticks
     const tickLen = 6.0;
-    // Top tick
+    // Top
     canvas.drawLine(
       Offset(center.dx, center.dy - radius - tickLen),
       Offset(center.dx, center.dy - radius + 2),
-      paint,
+      ringPaint,
     );
-    // Bottom tick
+    // Bottom
     canvas.drawLine(
       Offset(center.dx, center.dy + radius - 2),
       Offset(center.dx, center.dy + radius + tickLen),
-      paint,
+      ringPaint,
     );
-    // Left tick
+    // Left
     canvas.drawLine(
       Offset(center.dx - radius - tickLen, center.dy),
       Offset(center.dx - radius + 2, center.dy),
-      paint,
+      ringPaint,
     );
-    // Right tick
+    // Right
     canvas.drawLine(
       Offset(center.dx + radius - 2, center.dy),
       Offset(center.dx + radius + tickLen, center.dy),
-      paint,
+      ringPaint,
     );
   }
 
   @override
-  bool shouldRepaint(covariant TargetCrosshairPainter oldDelegate) => false;
+  bool shouldRepaint(covariant RadarTargetPainter oldDelegate) => false;
 }
 
-// PERFECTLY CENTERED CONCENTRIC RADAR PAINTER
-class DynamicConcentricRadarPainter extends CustomPainter {
+// GOLDEN CONCENTRIC RADAR RINGS PAINTER
+class GoldenRadarPainter extends CustomPainter {
   final double progress;
 
-  DynamicConcentricRadarPainter({required this.progress});
+  GoldenRadarPainter({required this.progress});
 
   @override
   void paint(Canvas canvas, Size size) {
-    // Exact center point of the Target Icon Circle
-    final center = Offset(size.width / 2, size.height / 2 - 27.5.h);
+    final center = Offset(size.width / 2, size.height / 2 - 24.h);
 
     final ringPaint = Paint()
-      ..color = Colors.white.withValues(alpha: 0.22)
+      ..color = Colors.white.withValues(alpha: 0.28)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.0;
+      ..strokeWidth = 1.2;
 
-    // Ring 1 (Inner ring perfectly centered around 85.w target circle): radius = 50.w
-    canvas.drawCircle(center, 50.w, ringPaint);
+    // Fixed rings
+    canvas.drawCircle(center, 55.w, ringPaint);
+    canvas.drawCircle(center, 105.w, ringPaint);
+    canvas.drawCircle(center, 155.w, ringPaint);
 
-    // Ring 2 (Middle ring ENCLOSING target icon AND text group): radius = 140.w
-    canvas.drawCircle(center, 140.w, ringPaint);
-
-    // Ring 3 (Outer ring reaching outer screen area): radius = 240.w
-    canvas.drawCircle(center, 240.w, ringPaint);
-
-    // Animated Pulsing Ripple Wave starting from target circle outwards
-    final waveRadius = 50.w + (170.w * progress);
+    // Animated ripple wave expanding outwards
+    final waveRadius = 55.w + (105.w * progress);
     final wavePaint = Paint()
-      ..color = const Color(0xFF38E5D8).withValues(alpha: (1.0 - progress) * 0.45)
+      ..color = Colors.white.withValues(alpha: (1.0 - progress) * 0.45)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0;
 
     canvas.drawCircle(center, waveRadius, wavePaint);
-
-    // DYNAMIC FLOATING QUESTION MARKS ALONG CONCENTRIC RINGS USING TRIGONOMETRY
-    void drawQuestionMark(
-      double radius,
-      double angleDegrees,
-      double opacity,
-      double fontSize,
-    ) {
-      final rad = angleDegrees * math.pi / 180;
-      final pos = Offset(
-        center.dx + radius * math.cos(rad),
-        center.dy + radius * math.sin(rad),
-      );
-
-      final textPainter = TextPainter(
-        text: TextSpan(
-          text: '?',
-          style: TextStyle(
-            fontFamily: 'Segoe UI',
-            fontSize: fontSize,
-            fontWeight: FontWeight.bold,
-            color: Colors.white.withValues(alpha: opacity),
-          ),
-        ),
-        textDirection: TextDirection.ltr,
-      )..layout();
-
-      textPainter.paint(
-        canvas,
-        Offset(pos.dx - textPainter.width / 2, pos.dy - textPainter.height / 2),
-      );
-    }
-
-    // Draw floating question marks dynamically placed along concentric radar rings
-    drawQuestionMark(210.w, 225, 0.35, 18.sp); // Top-Left
-    drawQuestionMark(195.w, 310, 0.35, 17.sp); // Top-Right
-    drawQuestionMark(160.w, 15, 0.40, 18.sp);  // Mid-Right
-    drawQuestionMark(230.w, 125, 0.35, 17.sp); // Bottom-Right
-    drawQuestionMark(215.w, 200, 0.30, 16.sp); // Mid-Left
-    drawQuestionMark(250.w, 145, 0.25, 15.sp); // Bottom-Left
   }
 
   @override
-  bool shouldRepaint(covariant DynamicConcentricRadarPainter oldDelegate) {
+  bool shouldRepaint(covariant GoldenRadarPainter oldDelegate) {
     return oldDelegate.progress != progress;
   }
 }

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import '../../../Utils/AppImg/app_img.dart';
 import '../../../Utils/StaticString/static_string.dart';
 import 'Controller/online_game_controller.dart';
-import 'Model/online_game_model.dart';
 
 class OnlineGameScreen extends StatelessWidget {
   const OnlineGameScreen({super.key});
@@ -15,555 +14,302 @@ class OnlineGameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(OnlineGameController());
 
-    return PopScope(
-      canPop: false,
-      child: Scaffold(
-        body: SizedBox(
-          width: double.infinity,
-          height: double.infinity,
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              // 1. GLOBAL BACKGROUND IMAGE
-              Positioned.fill(
-                child: Image.asset(AppImg.globalBackground, fit: BoxFit.cover),
-              ),
-
-              // 2. MAIN CONTENT WITH ORIENTATION SWITCHER
-              SafeArea(
-                child: OrientationBuilder(
-                  builder: (context, orientation) {
-                    final mediaSize = MediaQuery.of(context).size;
-                    final isLandscape =
-                        orientation == Orientation.landscape ||
-                        mediaSize.width > mediaSize.height;
-
-                    return AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 200),
-                      child: isLandscape
-                          ? _buildLandscapeLayout(context, controller)
-                          : _buildPortraitLayout(context, controller),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  // ==================== PORTRAIT LAYOUT ====================
-  Widget _buildPortraitLayout(
-    BuildContext context,
-    OnlineGameController controller,
-  ) {
-    return Column(
-      key: const ValueKey('PortraitOnlineGameNew'),
-      children: [
-        SizedBox(height: 8.h),
-
-        // TOP APP BAR
-        _buildHeader(context),
-
-        SizedBox(height: 6.h),
-
-        // SUBTITLE
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
-          child: Text(
-            StaticString.createChampionshipTagline,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontFamily: segoeFont,
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w400,
-              color: Colors.white.withValues(alpha: 0.8),
-              height: 1.3,
+    return Scaffold(
+      backgroundColor: const Color(0xFFFBBF24),
+      body: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            // 1. GLOBAL BACKGROUND IMAGE (Warm Yellow Theme)
+            Positioned.fill(
+              child: Image.asset(AppImg.globalBackground, fit: BoxFit.cover),
             ),
-          ),
-        ),
 
-        Expanded(
-          child: Obx(() {
-            if (controller.isLoading.value) {
-              return const Center(
-                child: CircularProgressIndicator(color: Color(0xFF38E5D8)),
-              );
-            }
-
-            final team1 = controller.matchData.value?.team1 ?? [];
-            final team2 = controller.matchData.value?.team2 ?? [];
-
-            return SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
+            // 2. MAIN CONTENT LAYER
+            SafeArea(
               child: Column(
                 children: [
-                  // TEAM 1 CARD CONTAINER
-                  _buildTeamBoxContainer(
-                    teamTitle: StaticString.team1,
-                    players: team1,
-                    showActionRow: true,
-                    controller: controller,
-                  ),
-
-                  SizedBox(height: 16.h),
-
-                  // TEAM 2 CARD CONTAINER
-                  _buildTeamBoxContainer(
-                    teamTitle: StaticString.team2,
-                    players: team2,
-                    showActionRow: false,
-                    controller: controller,
-                  ),
-
-                  SizedBox(height: 24.h),
-
-                  // CONTINUE BUTTON
-                  _buildContinueButton(controller),
-
                   SizedBox(height: 10.h),
-                ],
-              ),
-            );
-          }),
-        ),
-      ],
-    );
-  }
 
-  // ==================== COMPACT LANDSCAPE LAYOUT (SINGLE PAGE FIT) ====================
-  Widget _buildLandscapeLayout(
-    BuildContext context,
-    OnlineGameController controller,
-  ) {
-    return Column(
-      key: const ValueKey('LandscapeOnlineGameCompact'),
-      children: [
-        // COMPACT HEADER
-        _buildHeader(context, isLandscape: true),
-
-        // COMPACT SUBTITLE
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 50),
-          child: Text(
-            StaticString.createChampionshipTagline,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontFamily: segoeFont,
-              fontSize: 9.5,
-              fontWeight: FontWeight.w400,
-              color: Colors.white70,
-              height: 1.1,
-            ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-
-        const SizedBox(height: 4),
-
-        Expanded(
-          child: Obx(() {
-            if (controller.isLoading.value) {
-              return const Center(
-                child: CircularProgressIndicator(color: Color(0xFF38E5D8)),
-              );
-            }
-
-            final team1 = controller.matchData.value?.team1 ?? [];
-            final team2 = controller.matchData.value?.team2 ?? [];
-
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 2),
-              child: Column(
-                children: [
-                  Expanded(
+                  // TOP APP BAR (Back Button & Centered "Online Game" Title)
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // LEFT TEAM CONTAINER (TEAM 1)
-                        Expanded(
-                          child: _buildTeamBoxContainer(
-                            teamTitle: StaticString.team1,
-                            players: team1,
-                            showActionRow: true,
-                            controller: controller,
-                            isLandscape: true,
+                        GestureDetector(
+                          onTap: () => Get.back(),
+                          child: Container(
+                            width: 38.w,
+                            height: 38.w,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white.withValues(alpha: 0.3),
+                              border: Border.all(
+                                color: Colors.white.withValues(alpha: 0.4),
+                                width: 1.2,
+                              ),
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.arrow_back_ios_new_rounded,
+                                color: Colors.white,
+                                size: 16,
+                              ),
+                            ),
                           ),
                         ),
-
-                        const SizedBox(width: 14),
-
-                        // RIGHT TEAM CONTAINER (TEAM 2)
-                        Expanded(
-                          child: _buildTeamBoxContainer(
-                            teamTitle: StaticString.team2,
-                            players: team2,
-                            showActionRow: false,
-                            controller: controller,
-                            isLandscape: true,
+                        Text(
+                          StaticString.onlineGame.tr,
+                          style: TextStyle(
+                            fontFamily: segoeFont,
+                            fontSize: 22.sp,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            letterSpacing: -0.2,
                           ),
                         ),
+                        SizedBox(width: 38.w), // Balance back button
                       ],
                     ),
                   ),
 
-                  const SizedBox(height: 6),
+                  SizedBox(height: 8.h),
 
-                  // CONTINUE BUTTON IN LANDSCAPE
-                  _buildContinueButton(controller, isLandscape: true),
-
-                  const SizedBox(height: 2),
-                ],
-              ),
-            );
-          }),
-        ),
-      ],
-    );
-  }
-
-  // ==================== HEADER ====================
-  Widget _buildHeader(BuildContext context, {bool isLandscape = false}) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: isLandscape ? 20.0 : 16.w,
-        vertical: isLandscape ? 2.0 : 4.h,
-      ),
-      child: Center(
-        child: Text(
-          StaticString.onlineGame.tr,
-          style: TextStyle(
-            fontFamily: segoeFont,
-            fontSize: isLandscape ? 16.0 : 22.sp,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-      ),
-    );
-  }
-
-  // ==================== TEAM BOX CONTAINER ====================
-  Widget _buildTeamBoxContainer({
-    required String teamTitle,
-    required List<OnlinePlayerModel> players,
-    required bool showActionRow,
-    required OnlineGameController controller,
-    bool isLandscape = false,
-  }) {
-    return Container(
-      width: double.infinity,
-      padding: isLandscape
-          ? const EdgeInsets.symmetric(horizontal: 10, vertical: 8)
-          : EdgeInsets.all(14.w),
-      decoration: BoxDecoration(
-        color: const Color(0xFF0C3848).withValues(alpha: 0.55),
-        borderRadius: BorderRadius.circular(isLandscape ? 18 : 24.r),
-        border: Border.all(
-          color: const Color(0xFF38E5D8).withValues(alpha: 0.35),
-          width: 1.2,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.2),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // HEADER ROW (Team Title & Edit Pencil)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                teamTitle,
-                style: TextStyle(
-                  fontFamily: segoeFont,
-                  fontSize: isLandscape ? 13.0 : 18.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              Icon(
-                Icons.mode_edit_outline_rounded,
-                color: Colors.white70,
-                size: isLandscape ? 13.0 : 18.sp,
-              ),
-            ],
-          ),
-
-          SizedBox(height: isLandscape ? 6.0 : 12.h),
-
-          // PLAYER CARDS LIST
-          ...players.map(
-            (player) => Padding(
-              padding: EdgeInsets.only(bottom: isLandscape ? 5.0 : 10.h),
-              child: _buildInnerPlayerCard(
-                player: player,
-                isLandscape: isLandscape,
-              ),
-            ),
-          ),
-
-          // ACTION ROW (Off & Chat buttons)
-          if (showActionRow) ...[
-            SizedBox(height: isLandscape ? 4.0 : 6.h),
-            Row(
-              children: [
-                // OFF / MIC BUTTON
-                Expanded(
-                  child: Obx(
-                    () => GestureDetector(
-                      onTap: controller.toggleMic,
-                      child: Container(
-                        height: isLandscape ? 28.0 : 38.h,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF1E2837),
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: Colors.white24, width: 1),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              controller.isMicOn.value
-                                  ? Icons.mic_rounded
-                                  : Icons.mic_off_rounded,
-                              color: controller.isMicOn.value
-                                  ? const Color(0xFF38E5D8)
-                                  : Colors.redAccent,
-                              size: isLandscape ? 13.0 : 16.sp,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              controller.isMicOn.value
-                                  ? StaticString.on.tr
-                                  : StaticString.off.tr,
-                              style: TextStyle(
-                                fontFamily: segoeFont,
-                                fontSize: isLandscape ? 11.0 : 13.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-
-                const SizedBox(width: 8),
-
-                // CHAT BUTTON
-                Expanded(
-                  child: Container(
-                    height: isLandscape ? 28.0 : 38.h,
+                  // TEAM 1 PILL BADGE (Matching Figma Screen 3)
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 6.h),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF3D5AFE),
-                      borderRadius: BorderRadius.circular(16),
+                      gradient: const LinearGradient(
+                        colors: [
+                          Color(0xFFFF5722),
+                          Color(0xFFFF7A00),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(16.r),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF3D5AFE).withValues(alpha: 0.4),
+                          color: const Color(0xFFFF5722).withValues(alpha: 0.35),
                           blurRadius: 6,
                           offset: const Offset(0, 2),
                         ),
                       ],
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.chat_bubble_outline_rounded,
-                          color: Colors.white,
-                          size: isLandscape ? 12.0 : 15.sp,
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          StaticString.chat.tr,
-                          style: TextStyle(
-                            fontFamily: segoeFont,
-                            fontSize: isLandscape ? 11.0 : 13.sp,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-
-  // ==================== INNER PLAYER CARD ====================
-  Widget _buildInnerPlayerCard({
-    required OnlinePlayerModel player,
-    bool isLandscape = false,
-  }) {
-    final double cardHeight = isLandscape ? 37.0 : 48.h;
-
-    return Container(
-      width: double.infinity,
-      height: cardHeight,
-      padding: EdgeInsets.symmetric(horizontal: isLandscape ? 8.0 : 10.w),
-      decoration: BoxDecoration(
-        color: const Color(0xFF0C2B4E),
-        borderRadius: BorderRadius.circular(isLandscape ? 18 : 24.r),
-        border: Border.all(
-          color: const Color(0xFF38E5D8).withValues(alpha: 0.3),
-          width: 1.0,
-        ),
-      ),
-      child: Row(
-        children: [
-          // Circular Avatar (Network Image or First Letter)
-          Builder(
-            builder: (context) {
-              final firstLetter = player.name.isNotEmpty
-                  ? player.name[0].toUpperCase()
-                  : '?';
-
-              Widget buildLetterAvatar() {
-                return Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xFF38E5D8), Color(0xFF0D5363)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                  ),
-                  child: Center(
                     child: Text(
-                      firstLetter,
+                      'Team 1',
                       style: TextStyle(
                         fontFamily: segoeFont,
-                        fontSize: isLandscape ? 12.0 : 16.sp,
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
+                        letterSpacing: 0.5,
                       ),
                     ),
                   ),
-                );
-              }
 
-              return Container(
-                width: isLandscape ? 26.0 : 36.w,
-                height: isLandscape ? 26.0 : 36.w,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: const Color(0xFF38E5D8),
-                    width: 1.0,
+                  SizedBox(height: 6.h),
+
+                  // SUBTITLE: "Choose X categories"
+                  Obx(
+                    () => Text(
+                      'Choose ${controller.selectedCategoryIds.length} categories',
+                      style: TextStyle(
+                        fontFamily: segoeFont,
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white.withValues(alpha: 0.95),
+                      ),
+                    ),
                   ),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: player.avatarUrl.isNotEmpty
-                      ? Image.network(
-                          player.avatarUrl,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) =>
-                              buildLetterAvatar(),
-                        )
-                      : buildLetterAvatar(),
-                ),
-              );
-            },
-          ),
 
-          SizedBox(width: isLandscape ? 8.0 : 12.w),
+                  SizedBox(height: 12.h),
 
-          // Name and Subtitle
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  player.name,
-                  style: TextStyle(
-                    fontFamily: segoeFont,
-                    fontSize: isLandscape ? 11.0 : 14.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    height: 1.1,
+                  // 2-COLUMN CATEGORIES GRID
+                  Expanded(
+                    child: Obx(() {
+                      final categories = controller.categories;
+
+                      return GridView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 4.h),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 14.w,
+                          mainAxisSpacing: 14.h,
+                          childAspectRatio: 0.95,
+                        ),
+                        itemCount: categories.length,
+                        itemBuilder: (context, index) {
+                          final item = categories[index];
+                          final isSelected = controller.isSelected(item.id);
+
+                          return GestureDetector(
+                            onTap: () => controller.toggleCategory(item.id),
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              clipBehavior: Clip.antiAlias,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFFF3B30),
+                                borderRadius: BorderRadius.circular(16.r),
+                                border: Border.all(
+                                  color: isSelected
+                                      ? Colors.white
+                                      : Colors.white.withValues(alpha: 0.35),
+                                  width: isSelected ? 2.5.w : 1.w,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: isSelected
+                                        ? Colors.white.withValues(alpha: 0.5)
+                                        : const Color(0xFFFF3B30).withValues(alpha: 0.3),
+                                    blurRadius: isSelected ? 12 : 6,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Stack(
+                                children: [
+                                  Column(
+                                    children: [
+                                      // Artwork Image
+                                      Expanded(
+                                        child: SizedBox(
+                                          width: double.infinity,
+                                          child: Image.asset(
+                                            item.imagePath,
+                                            fit: BoxFit.cover,
+                                            errorBuilder: (context, error, stackTrace) =>
+                                                Container(
+                                              color: const Color(0xFF1E293B),
+                                              child: const Center(
+                                                child: Icon(
+                                                  Icons.image_outlined,
+                                                  color: Colors.white54,
+                                                  size: 32,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+
+                                      // Red Title Banner at Bottom
+                                      Container(
+                                        height: 32.h,
+                                        width: double.infinity,
+                                        color: const Color(0xFFFF3B30),
+                                        alignment: Alignment.center,
+                                        padding: EdgeInsets.symmetric(horizontal: 4.w),
+                                        child: Text(
+                                          item.title.toUpperCase(),
+                                          style: TextStyle(
+                                            fontFamily: segoeFont,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                            letterSpacing: 0.8,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+
+                                  // Selected Checkmark Badge (Top Right)
+                                  if (isSelected)
+                                    Positioned(
+                                      top: 8.h,
+                                      right: 8.w,
+                                      child: Container(
+                                        padding: EdgeInsets.all(4.r),
+                                        decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Color(0xFF00C853),
+                                        ),
+                                        child: const Icon(
+                                          Icons.check,
+                                          color: Colors.white,
+                                          size: 14,
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }),
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                if (player.isYourTeam) ...[
-                  Text(
-                    StaticString.your.tr,
-                    style: TextStyle(
-                      fontFamily: segoeFont,
-                      fontSize: isLandscape ? 8.0 : 10.sp,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF38E5D8),
-                      height: 1.0,
+
+                  // 3. BOTTOM "START GAME" BUTTON
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
+                    child: Obx(
+                      () => GestureDetector(
+                        onTap: controller.onStartGame,
+                        child: Container(
+                          width: double.infinity,
+                          height: 54.h,
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              colors: [
+                                Color(0xFFFF4848),
+                                Color(0xFFFF7A00),
+                              ],
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                            ),
+                            borderRadius: BorderRadius.circular(27.r),
+                            border: Border.all(
+                              color: Colors.white.withValues(alpha: 0.5),
+                              width: 1.5,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0xFFFF4848).withValues(alpha: 0.45),
+                                blurRadius: 12,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                StaticString.startGame.tr,
+                                style: TextStyle(
+                                  fontFamily: segoeFont,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                              SizedBox(height: 1.h),
+                              Text(
+                                '(${controller.selectedCategoryIds.length} categories Selected)',
+                                style: TextStyle(
+                                  fontFamily: segoeFont,
+                                  fontSize: 10.5.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white.withValues(alpha: 0.85),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
-              ],
-            ),
-          ),
-
-          // Edit Pencil Icon on right side of card
-          Icon(
-            Icons.mode_edit_outline_rounded,
-            color: Colors.white54,
-            size: isLandscape ? 12.0 : 16.sp,
-          ),
-        ],
-      ),
-    );
-  }
-
-  // ==================== CONTINUE BUTTON ====================
-  Widget _buildContinueButton(
-    OnlineGameController controller, {
-    bool isLandscape = false,
-  }) {
-    return GestureDetector(
-      onTap: controller.onContinueTap,
-      child: Container(
-        width: isLandscape ? 260.0 : double.infinity,
-        height: isLandscape ? 36.0 : 48.h,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(isLandscape ? 20 : 28.r),
-          gradient: const LinearGradient(
-            colors: [Color(0xFF3D5AFE), Color(0xFF2979FF)],
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFF3D5AFE).withValues(alpha: 0.45),
-              blurRadius: 10,
-              offset: const Offset(0, 3),
+              ),
             ),
           ],
-        ),
-        child: Center(
-          child: Text(
-            StaticString.continueBtn.tr,
-            style: TextStyle(
-              fontFamily: segoeFont,
-              fontSize: isLandscape ? 13.5 : 17.sp,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
         ),
       ),
     );

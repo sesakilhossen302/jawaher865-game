@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import '../../../Utils/AppIcons/app_icons.dart';
 import '../../../Utils/AppImg/app_img.dart';
 import '../../../Utils/StaticString/static_string.dart';
 import '../OnlineGameScreen/Model/online_game_model.dart';
@@ -15,423 +17,362 @@ class VsMatchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(VsMatchController());
 
-    return PopScope(
-      canPop: false,
-      child: Scaffold(
-        body: SizedBox(
-          width: double.infinity,
-          height: double.infinity,
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              // 1. GLOBAL BACKGROUND IMAGE
-              Positioned.fill(
-                child: Image.asset(AppImg.globalBackground, fit: BoxFit.cover),
-              ),
+    return Scaffold(
+      backgroundColor: const Color(0xFFFBBF24),
+      body: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            // 1. GLOBAL BACKGROUND IMAGE (Warm Yellow Theme)
+            Positioned.fill(
+              child: Image.asset(AppImg.globalBackground, fit: BoxFit.cover),
+            ),
 
-              // 2. MAIN CONTENT LAYER WITH ORIENTATION SWITCHER
-              SafeArea(
-                child: OrientationBuilder(
-                  builder: (context, orientation) {
-                    final mediaSize = MediaQuery.of(context).size;
-                    final isLandscape = orientation == Orientation.landscape ||
-                        mediaSize.width > mediaSize.height;
-
-                    return AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 200),
-                      child: isLandscape
-                          ? _buildLandscapeLayout(context, controller)
-                          : _buildPortraitLayout(context, controller),
-                    );
-                  },
+            // 2. BOTTOM 3 CHARACTERS ILLUSTRATION (Matching Figma Screen 2)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: SafeArea(
+                top: false,
+                child: SvgPicture.asset(
+                  AppIcons.challengeYourMelasImg,
+                  height: 115.h,
+                  fit: BoxFit.contain,
+                  alignment: Alignment.bottomCenter,
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  // ==================== PORTRAIT LAYOUT ====================
-  Widget _buildPortraitLayout(
-    BuildContext context,
-    VsMatchController controller,
-  ) {
-    return Column(
-      key: const ValueKey('PortraitVsMatch'),
-      children: [
-        SizedBox(height: 10.h),
-
-        // TOP APP BAR
-        _buildHeader(context),
-
-        SizedBox(height: 8.h),
-
-        // SUBTITLE
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
-          child: Text(
-            StaticString.createChampionshipTagline,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontFamily: segoeFont,
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w400,
-              color: Colors.white.withValues(alpha: 0.8),
-              height: 1.3,
             ),
-          ),
-        ),
 
-        Expanded(
-          child: Obx(() {
-            if (controller.isLoading.value) {
-              return const Center(
-                child: CircularProgressIndicator(color: Color(0xFF38E5D8)),
-              );
-            }
-
-            final team1 = controller.matchData.value?.team1 ?? [];
-            final team2 = controller.matchData.value?.team2 ?? [];
-
-            return SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+            // 3. MAIN CONTENT LAYER
+            SafeArea(
               child: Column(
                 children: [
                   SizedBox(height: 10.h),
 
-                  // TEAM 1 PLAYER CARDS (TOP SECTION)
-                  ...team1.map((player) => Padding(
-                        padding: EdgeInsets.only(bottom: 14.h),
-                        child: _buildVsPlayerCard(player: player),
-                      )),
-
-                  SizedBox(height: 20.h),
-
-                  // HORIZONTAL VS DIVIDER
-                  _buildHorizontalVsDivider(),
-
-                  SizedBox(height: 20.h),
-
-                  // TEAM 2 PLAYER CARDS (BOTTOM SECTION)
-                  ...team2.map((player) => Padding(
-                        padding: EdgeInsets.only(bottom: 14.h),
-                        child: _buildVsPlayerCard(player: player),
-                      )),
-
-                  SizedBox(height: 20.h),
-                ],
-              ),
-            );
-          }),
-        ),
-      ],
-    );
-  }
-
-  // ==================== LANDSCAPE LAYOUT ====================
-  Widget _buildLandscapeLayout(
-    BuildContext context,
-    VsMatchController controller,
-  ) {
-    return Column(
-      key: const ValueKey('LandscapeVsMatch'),
-      children: [
-        SizedBox(height: 6),
-
-        // TOP APP BAR
-        _buildHeader(context),
-
-        SizedBox(height: 4),
-
-        // SUBTITLE
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40),
-          child: Text(
-            StaticString.createChampionshipTagline,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontFamily: segoeFont,
-              fontSize: 11,
-              fontWeight: FontWeight.w400,
-              color: Colors.white70,
-            ),
-          ),
-        ),
-
-        Expanded(
-          child: Obx(() {
-            if (controller.isLoading.value) {
-              return const Center(
-                child: CircularProgressIndicator(color: Color(0xFF38E5D8)),
-              );
-            }
-
-            final team1 = controller.matchData.value?.team1 ?? [];
-            final team2 = controller.matchData.value?.team2 ?? [];
-
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-              child: Row(
-                children: [
-                  // LEFT COLUMN (TEAM 1)
-                  Expanded(
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: team1
-                            .map((player) => Padding(
-                                  padding: const EdgeInsets.only(bottom: 12),
-                                  child: _buildVsPlayerCard(
-                                    player: player,
-                                    isLandscape: true,
-                                  ),
-                                ))
-                            .toList(),
-                      ),
-                    ),
-                  ),
-
-                  // CENTER VERTICAL VS DIVIDER
+                  // TOP APP BAR (Back Button & Centered "Online Game" Title)
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: _buildVerticalVsDivider(),
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () => Get.back(),
+                          child: Container(
+                            width: 38.w,
+                            height: 38.w,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white.withValues(alpha: 0.3),
+                              border: Border.all(
+                                color: Colors.white.withValues(alpha: 0.4),
+                                width: 1.2,
+                              ),
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.arrow_back_ios_new_rounded,
+                                color: Colors.white,
+                                size: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Text(
+                          StaticString.onlineGame.tr,
+                          style: TextStyle(
+                            fontFamily: segoeFont,
+                            fontSize: 22.sp,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            letterSpacing: -0.2,
+                          ),
+                        ),
+                        SizedBox(width: 38.w), // Balance back button
+                      ],
+                    ),
                   ),
 
-                  // RIGHT COLUMN (TEAM 2)
-                  Expanded(
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: team2
-                            .map((player) => Padding(
-                                  padding: const EdgeInsets.only(bottom: 12),
-                                  child: _buildVsPlayerCard(
-                                    player: player,
-                                    isLandscape: true,
-                                  ),
-                                ))
-                            .toList(),
+                  SizedBox(height: 10.h),
+
+                  // SUBTITLE MATCHING SCREENSHOT
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 24.w),
+                    child: Text(
+                      StaticString.createChampionshipTagline,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: segoeFont,
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white.withValues(alpha: 0.9),
+                        height: 1.35,
                       ),
                     ),
                   ),
+
+                  SizedBox(height: 20.h),
+
+                  // TEAMS & VS MATCH SECTION
+                  Expanded(
+                    child: Obx(() {
+                      final team1 = controller.matchData.value?.team1 ?? [];
+                      final team2 = controller.matchData.value?.team2 ?? [];
+
+                      return SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        padding: EdgeInsets.symmetric(horizontal: 24.w),
+                        child: Column(
+                          children: [
+                            // TEAM GREEN PLAYERS (TOP)
+                            ...team1.map(
+                              (player) => Padding(
+                                padding: EdgeInsets.only(bottom: 12.h),
+                                child: _buildPlayerPill(
+                                  player: player,
+                                  gradientColors: const [
+                                    Color(0xFF00C853),
+                                    Color(0xFF10B981),
+                                  ],
+                                  borderColor: const Color(0xFF69F0AE),
+                                  shadowColor: const Color(0xFF00C853),
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(height: 8.h),
+
+                            // VS DIVIDER WITH DASHED LINES
+                            _buildVsDivider(),
+
+                            SizedBox(height: 8.h),
+
+                            // TEAM RED PLAYERS (BOTTOM)
+                            ...team2.map(
+                              (player) => Padding(
+                                padding: EdgeInsets.only(bottom: 12.h),
+                                child: _buildPlayerPill(
+                                  player: player,
+                                  gradientColors: const [
+                                    Color(0xFFFF4848),
+                                    Color(0xFFFF7A00),
+                                  ],
+                                  borderColor: const Color(0xFFFF8B74),
+                                  shadowColor: const Color(0xFFFF4848),
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(height: 14.h),
+
+                            // TAP ANYWHERE / CONTINUE HINT
+                            GestureDetector(
+                              onTap: controller.navigateToNextScreen,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 20.w,
+                                  vertical: 8.h,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withValues(alpha: 0.25),
+                                  borderRadius: BorderRadius.circular(16.r),
+                                  border: Border.all(
+                                    color: Colors.white.withValues(alpha: 0.35),
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      'Starting Match...',
+                                      style: TextStyle(
+                                        fontFamily: segoeFont,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    SizedBox(width: 6.w),
+                                    const Icon(
+                                      Icons.arrow_forward_rounded,
+                                      color: Colors.white,
+                                      size: 15,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(height: 100.h), // Space for bottom illustration
+                          ],
+                        ),
+                      );
+                    }),
+                  ),
                 ],
               ),
-            );
-          }),
-        ),
-      ],
-    );
-  }
-
-  // ==================== HEADER ====================
-  Widget _buildHeader(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
-      child: Center(
-        child: Text(
-          StaticString.onlineGame.tr,
-          style: TextStyle(
-            fontFamily: segoeFont,
-            fontSize: 22.sp,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  // ==================== VS PLAYER CARD ====================
-  Widget _buildVsPlayerCard({
+  // PLAYER PILL (GREEN OR RED GRADIENT)
+  Widget _buildPlayerPill({
     required OnlinePlayerModel player,
-    bool isLandscape = false,
+    required List<Color> gradientColors,
+    required Color borderColor,
+    required Color shadowColor,
   }) {
-    final double cardHeight = isLandscape ? 56.0 : 60.h;
+    final firstLetter = player.name.isNotEmpty
+        ? player.name[0].toUpperCase()
+        : '?';
 
     return Container(
       width: double.infinity,
-      height: cardHeight,
-      padding: EdgeInsets.symmetric(
-        horizontal: isLandscape ? 8.0 : 10.w,
-        vertical: isLandscape ? 2.0 : 4.h,
-      ),
+      height: 52.h,
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
       decoration: BoxDecoration(
-        color: const Color(0xFF0C3058),
-        borderRadius: BorderRadius.circular(30.r),
+        gradient: LinearGradient(
+          colors: gradientColors,
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(28.r),
         border: Border.all(
-          color: const Color(0xFF38E5D8).withValues(alpha: 0.4),
+          color: Colors.white,
           width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF062343).withValues(alpha: 0.5),
+            color: shadowColor.withValues(alpha: 0.35),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
       child: Row(
         children: [
-          // Circular Avatar (Network Image or First Letter)
-          Builder(
-            builder: (context) {
-              final firstLetter =
-                  player.name.isNotEmpty ? player.name[0].toUpperCase() : '?';
-
-              Widget buildLetterAvatar() {
-                return Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xFF38E5D8), Color(0xFF0D5363)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      firstLetter,
-                      style: TextStyle(
-                        fontFamily: segoeFont,
-                        fontSize: isLandscape ? 14.0 : 18.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                );
-              }
-
-              return Container(
-                width: isLandscape ? 34.0 : 44.w,
-                height: isLandscape ? 34.0 : 44.w,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: const Color(0xFF38E5D8),
-                    width: 1.5,
-                  ),
+          // Circular Avatar (Image or First Letter Initial)
+          Container(
+            width: 38.w,
+            height: 38.w,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+              border: Border.all(color: Colors.white, width: 1.5),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.15),
+                  blurRadius: 4,
+                  offset: const Offset(0, 1),
                 ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: player.avatarUrl.isNotEmpty
-                      ? Image.network(
-                          player.avatarUrl,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) =>
-                              buildLetterAvatar(),
-                        )
-                      : buildLetterAvatar(),
-                ),
-              );
-            },
-          ),
-          SizedBox(width: isLandscape ? 8.0 : 14.w),
-
-          // Name and Subtitle
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  player.name,
-                  style: TextStyle(
-                    fontFamily: segoeFont,
-                    fontSize: isLandscape ? 12.5 : 15.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    height: 1.1,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                if (player.isYourTeam) ...[
-                  Text(
-                    StaticString.your.tr,
-                    style: TextStyle(
-                      fontFamily: segoeFont,
-                      fontSize: isLandscape ? 9.5 : 10.5.sp,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF38E5D8),
-                      height: 1.0,
-                    ),
-                  ),
-                ],
               ],
             ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: player.avatarUrl.isNotEmpty
+                  ? Image.network(
+                      player.avatarUrl,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Center(
+                        child: Text(
+                          firstLetter,
+                          style: TextStyle(
+                            fontFamily: segoeFont,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.bold,
+                            color: gradientColors.first,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Center(
+                      child: Text(
+                        firstLetter,
+                        style: TextStyle(
+                          fontFamily: segoeFont,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
+                          color: gradientColors.first,
+                        ),
+                      ),
+                    ),
+            ),
           ),
+
+          SizedBox(width: 12.w),
+
+          // Player Name
+          Expanded(
+            child: Text(
+              player.name,
+              style: TextStyle(
+                fontFamily: segoeFont,
+                fontSize: 15.sp,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                letterSpacing: 0.2,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+
+          // Subtle Active Dot
+          Container(
+            width: 10.w,
+            height: 10.w,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+            ),
+          ),
+          SizedBox(width: 6.w),
         ],
       ),
     );
   }
 
-  // ==================== HORIZONTAL VS DIVIDER ====================
-  Widget _buildHorizontalVsDivider() {
+  // VS DIVIDER WITH DASHED LINES
+  Widget _buildVsDivider() {
     return Row(
       children: [
         Expanded(
           child: CustomPaint(
             size: Size(double.infinity, 2.h),
-            painter: DashedLinePainter(isVertical: false),
+            painter: WhiteDashedLinePainter(),
           ),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          padding: EdgeInsets.symmetric(horizontal: 14.w),
           child: Text(
             StaticString.vsText,
             style: TextStyle(
               fontFamily: segoeFont,
-              fontSize: 28.sp,
+              fontSize: 26.sp,
               fontWeight: FontWeight.w900,
               color: Colors.white,
               fontStyle: FontStyle.italic,
               letterSpacing: 1.2,
+              shadows: [
+                Shadow(
+                  color: Colors.black.withValues(alpha: 0.2),
+                  blurRadius: 4,
+                  offset: const Offset(0, 1.5),
+                ),
+              ],
             ),
           ),
         ),
         Expanded(
           child: CustomPaint(
             size: Size(double.infinity, 2.h),
-            painter: DashedLinePainter(isVertical: false),
-          ),
-        ),
-      ],
-    );
-  }
-
-  // ==================== VERTICAL VS DIVIDER ====================
-  Widget _buildVerticalVsDivider() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Expanded(
-          child: CustomPaint(
-            size: const Size(2, double.infinity),
-            painter: DashedLinePainter(isVertical: true),
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 8),
-          child: Text(
-            StaticString.vsText,
-            style: TextStyle(
-              fontFamily: segoeFont,
-              fontSize: 24,
-              fontWeight: FontWeight.w900,
-              color: Colors.white,
-              fontStyle: FontStyle.italic,
-            ),
-          ),
-        ),
-        Expanded(
-          child: CustomPaint(
-            size: const Size(2, double.infinity),
-            painter: DashedLinePainter(isVertical: true),
+            painter: WhiteDashedLinePainter(),
           ),
         ),
       ],
@@ -439,45 +380,29 @@ class VsMatchScreen extends StatelessWidget {
   }
 }
 
-// DASHED LINE PAINTER FOR VS DIVIDER
-class DashedLinePainter extends CustomPainter {
-  final bool isVertical;
-
-  DashedLinePainter({this.isVertical = false});
-
+// WHITE DASHED LINE PAINTER
+class WhiteDashedLinePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = const Color(0xFF38E5D8).withValues(alpha: 0.6)
+      ..color = Colors.white.withValues(alpha: 0.7)
       ..strokeWidth = 2.0
       ..style = PaintingStyle.stroke;
 
-    const dashWidth = 6.0;
-    const dashSpace = 4.0;
+    const dashWidth = 7.0;
+    const dashSpace = 5.0;
 
-    if (isVertical) {
-      double startY = 0;
-      while (startY < size.height) {
-        canvas.drawLine(
-          Offset(size.width / 2, startY),
-          Offset(size.width / 2, startY + dashWidth),
-          paint,
-        );
-        startY += dashWidth + dashSpace;
-      }
-    } else {
-      double startX = 0;
-      while (startX < size.width) {
-        canvas.drawLine(
-          Offset(startX, size.height / 2),
-          Offset(startX + dashWidth, size.height / 2),
-          paint,
-        );
-        startX += dashWidth + dashSpace;
-      }
+    double startX = 0;
+    while (startX < size.width) {
+      canvas.drawLine(
+        Offset(startX, size.height / 2),
+        Offset(startX + dashWidth, size.height / 2),
+        paint,
+      );
+      startX += dashWidth + dashSpace;
     }
   }
 
   @override
-  bool shouldRepaint(covariant DashedLinePainter oldDelegate) => false;
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

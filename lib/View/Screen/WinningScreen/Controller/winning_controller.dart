@@ -30,7 +30,11 @@ class WinningController extends GetxController {
 
   void onPlayAgain() {
     if (isOnlineMatch.value) {
-      // ONLINE PLAY: Tapping Try/Play Again redirects to MatchmakingScreen to find next online opponent
+      // ONLINE PLAY: Tapping Try/Play Again redirects to MatchmakingScreen in portrait to find next online opponent
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
       Get.offAllNamed(AppRoute.matchmakingScreen);
     } else {
       // OFFLINE LOCAL PLAY: Tapping Play Again returns to TeamSelectScreen in landscape
@@ -45,6 +49,7 @@ class WinningController extends GetxController {
   void onBackToLobby() {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
     ]);
     Get.offAllNamed(AppRoute.mainScreen);
   }

@@ -18,41 +18,49 @@ class GameBoardScreen extends GetView<GameBoardController> {
       Get.put(GameBoardController());
     }
 
-    return Scaffold(
-      body: SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            // PERSISTENT FULL PAGE BACKGROUND
-            Positioned.fill(
-              child: Image.asset(AppImg.globalBackground, fit: BoxFit.cover),
-            ),
-
-            // MAIN CONTENT LAYER WITH SMOOTH ROTATION ANIMATION
-            SafeArea(
-              child: OrientationBuilder(
-                builder: (context, orientation) {
-                  final mediaSize = MediaQuery.of(context).size;
-                  final isPortrait = orientation == Orientation.portrait &&
-                      mediaSize.height >= mediaSize.width;
-                  return AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 200),
-                    child: isPortrait
-                        ? SizedBox(
-                            key: const ValueKey('gb_portrait'),
-                            child: _buildPortraitLayout(),
-                          )
-                        : SizedBox(
-                            key: const ValueKey('gb_landscape'),
-                            child: _buildLandscapeLayout(),
-                          ),
-                  );
-                },
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          controller.onExit();
+        }
+      },
+      child: Scaffold(
+        body: SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              // PERSISTENT FULL PAGE BACKGROUND
+              Positioned.fill(
+                child: Image.asset(AppImg.globalBackground, fit: BoxFit.cover),
               ),
-            ),
-          ],
+
+              // MAIN CONTENT LAYER WITH SMOOTH ROTATION ANIMATION
+              SafeArea(
+                child: OrientationBuilder(
+                  builder: (context, orientation) {
+                    final mediaSize = MediaQuery.of(context).size;
+                    final isPortrait = orientation == Orientation.portrait &&
+                        mediaSize.height >= mediaSize.width;
+                    return AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 200),
+                      child: isPortrait
+                          ? SizedBox(
+                              key: const ValueKey('gb_portrait'),
+                              child: _buildPortraitLayout(),
+                            )
+                          : SizedBox(
+                              key: const ValueKey('gb_landscape'),
+                              child: _buildLandscapeLayout(),
+                            ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

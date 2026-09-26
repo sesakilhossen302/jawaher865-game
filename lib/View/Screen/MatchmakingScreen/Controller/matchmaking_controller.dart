@@ -5,8 +5,8 @@ import '../../../../Core/AppRoute/app_route.dart';
 
 class MatchmakingController extends GetxController {
   final RxBool isOpponentFound = false.obs;
-  final RxString statusText = 'Searching for opponent...'.obs;
-  final RxString subText = 'Connecting with online players'.obs;
+  final RxString statusText = 'Searching for players...'.obs;
+  final RxString subText = 'Connecting with online melases'.obs;
 
   Timer? _searchTimer;
   Timer? _navigateTimer;
@@ -14,7 +14,7 @@ class MatchmakingController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // Enforce portrait mode for MatchmakingScreen
+    // Enforce portrait mode during matchmaking
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
@@ -22,17 +22,27 @@ class MatchmakingController extends GetxController {
   }
 
   void _startMatchmaking() {
-    // 1. Simulate finding an online opponent after 2.5 seconds
+    // Simulate finding online match after 2.5 seconds
     _searchTimer = Timer(const Duration(milliseconds: 2500), () {
+      if (isClosed) return;
       isOpponentFound.value = true;
-      statusText.value = 'Opponent found!';
-      subText.value = 'Connecting you now';
+      statusText.value = 'Opponent Found!';
+      subText.value = 'Preparing arena match...';
 
-      // 2. Auto-navigate to 2 vs 2 VS Match screen after 1.8 seconds
-      _navigateTimer = Timer(const Duration(milliseconds: 1800), () {
+      _navigateTimer = Timer(const Duration(milliseconds: 1000), () {
+        if (isClosed) return;
         Get.offNamed(AppRoute.vsMatchScreen);
       });
     });
+  }
+
+  void skipToMatch() {
+    _searchTimer?.cancel();
+    _navigateTimer?.cancel();
+    isOpponentFound.value = true;
+    statusText.value = 'Opponent Found!';
+    subText.value = 'Preparing arena match...';
+    Get.offNamed(AppRoute.vsMatchScreen);
   }
 
   @override
