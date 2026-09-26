@@ -10,6 +10,7 @@ Map<String, String> english = {
   'No internet connection available.': 'No internet connection available.',
   'Continue with Google': 'Continue with Google',
   'Continue with Apple': 'Continue with Apple',
+  'Continue with Email': 'Continue with Email',
   'OR': 'OR',
   'Sign in with Email': 'Sign in with Email',
   'Continue as Guest': 'Continue as Guest',
