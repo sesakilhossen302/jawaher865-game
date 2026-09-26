@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../Model/category_model.dart';
 import '../../../Utils/AppImg/app_img.dart';
 import '../../../Utils/StaticString/static_string.dart';
+import '../../Widget/CustomGradientButton/custom_gradient_button.dart';
 import 'Controller/choose_category_controller.dart';
 
 class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
@@ -55,7 +56,7 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
 
                     SizedBox(height: 14.h),
 
-                    // 2. ACTIVE TEAM BADGE (Blue Team / Red Team)
+                    // 2. ACTIVE TEAM BADGE (Red-Coral Pill matching screenshot)
                     Obx(
                       () => Center(
                         child: Container(
@@ -64,11 +65,11 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
                             vertical: 8.h,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF3358FE),
+                            color: const Color(0xFFFF3B30),
                             borderRadius: BorderRadius.circular(20.r),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(0xFF3358FE).withValues(alpha: 0.4),
+                                color: const Color(0xFFFF3B30).withValues(alpha: 0.4),
                                 blurRadius: 8,
                                 offset: const Offset(0, 3),
                               ),
@@ -96,22 +97,23 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
                         style: TextStyle(
                           fontFamily: segoeFont,
                           fontSize: 13.sp,
-                          color: const Color(0xFFB4ECE7),
+                          color: const Color(0xFF222222),
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
 
                     SizedBox(height: 16.h),
 
-                    // 4. SEARCH BAR
+                    // 4. SEARCH BAR (Glassmorphism)
                     Container(
                       height: 48.h,
                       padding: EdgeInsets.symmetric(horizontal: 14.w),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF065967).withValues(alpha: 0.65),
+                        color: Colors.white.withValues(alpha: 0.25),
                         borderRadius: BorderRadius.circular(14.r),
                         border: Border.all(
-                          color: const Color(0xFF38E5D8).withValues(alpha: 0.3),
+                          color: Colors.white.withValues(alpha: 0.45),
                           width: 1.w,
                         ),
                       ),
@@ -119,7 +121,7 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
                         children: [
                           Icon(
                             Icons.search,
-                            color: const Color(0xFFB4ECE7),
+                            color: const Color(0xFF555555),
                             size: 20.sp,
                           ),
                           SizedBox(width: 10.w),
@@ -130,14 +132,14 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
                               style: TextStyle(
                                 fontFamily: segoeFont,
                                 fontSize: 14.sp,
-                                color: Colors.white,
+                                color: const Color(0xFF222222),
                               ),
                               decoration: InputDecoration(
                                 hintText: StaticString.searchCategoriesHint.tr,
                                 hintStyle: TextStyle(
                                   fontFamily: segoeFont,
                                   fontSize: 14.sp,
-                                  color: const Color(0xFFB4ECE7).withValues(alpha: 0.6),
+                                  color: const Color(0xFF666666),
                                 ),
                                 border: InputBorder.none,
                                 isDense: true,
@@ -199,10 +201,10 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
                                     vertical: 7.h,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: const Color(0xFF065967).withValues(alpha: 0.85),
+                                    color: const Color(0xFFFF3B30),
                                     borderRadius: BorderRadius.circular(20.r),
                                     border: Border.all(
-                                      color: const Color(0xFF38E5D8).withValues(alpha: 0.5),
+                                      color: Colors.white.withValues(alpha: 0.4),
                                       width: 1.w,
                                     ),
                                   ),
@@ -246,7 +248,7 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
                         fontFamily: segoeFont,
                         fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: const Color(0xFF222222),
                       ),
                     ),
 
@@ -284,63 +286,39 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
 
                     SizedBox(height: 12.h),
 
-                    // 8. BOTTOM ACTION BUTTON (Dynamic Green when 3 selected)
+                    // 8. BOTTOM ACTION BUTTON
                     Obx(() {
                       final count = controller.selectedCategoryIds.length;
                       final isReady = count == 3;
 
-                      return SizedBox(
+                      if (isReady) {
+                        return CustomGradientButton(
+                          text: StaticString.startGame.tr,
+                          onTap: controller.onActionTap,
+                        );
+                      }
+
+                      return Container(
                         width: double.infinity,
-                        height: 56.h,
-                        child: ElevatedButton(
-                          onPressed: controller.onActionTap,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: isReady
-                                ? const Color(0xFF22C55E)
-                                : const Color(0xFF065967).withValues(alpha: 0.85),
-                            elevation: isReady ? 6 : 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.r),
-                              side: BorderSide(
-                                color: isReady
-                                    ? const Color(0xFF4ADE80)
-                                    : const Color(0xFF38E5D8),
-                                width: 1.5.w,
-                              ),
+                        height: 52.h,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.3),
+                          borderRadius: BorderRadius.circular(25.r),
+                          border: Border.all(
+                            color: Colors.white.withValues(alpha: 0.4),
+                            width: 1.2.w,
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            '${StaticString.choose3Categories.tr} ($count/3)',
+                            style: TextStyle(
+                              fontFamily: segoeFont,
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.bold,
+                              color: const Color(0xFF222222),
                             ),
                           ),
-                          child: isReady
-                              ? Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      StaticString.startGame.tr,
-                                      style: TextStyle(
-                                        fontFamily: segoeFont,
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    Text(
-                                      StaticString.threeCategoriesSelected.tr,
-                                      style: TextStyle(
-                                        fontFamily: segoeFont,
-                                        fontSize: 11.sp,
-                                        color: Colors.white.withValues(alpha: 0.9),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              : Text(
-                                  '${StaticString.choose3Categories.tr} ($count/3)',
-                                  style: TextStyle(
-                                    fontFamily: segoeFont,
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
                         ),
                       );
                     }),
@@ -367,21 +345,21 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
-          color: const Color(0xFF065967).withValues(alpha: 0.85),
+          color: const Color(0xFFFF3B30),
           borderRadius: BorderRadius.circular(18.r),
           border: Border.all(
             color: isSelected
-                ? const Color(0xFF38E5D8)
-                : const Color(0xFF38E5D8).withValues(alpha: 0.25),
-            width: isSelected ? 2.w : 1.w,
+                ? Colors.white
+                : Colors.white.withValues(alpha: 0.3),
+            width: isSelected ? 2.5.w : 1.w,
           ),
           boxShadow: [
             BoxShadow(
               color: isSelected
-                  ? const Color(0xFF38E5D8).withValues(alpha: 0.3)
-                  : Colors.transparent,
-              blurRadius: 10,
-              offset: const Offset(0, 4),
+                  ? Colors.white.withValues(alpha: 0.55)
+                  : const Color(0xFFFF3B30).withValues(alpha: 0.35),
+              blurRadius: isSelected ? 12 : 6,
+              offset: const Offset(0, 3),
             ),
           ],
         ),
@@ -397,12 +375,10 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: isSelected
-                      ? const Color(0xFF3358FE)
+                      ? Colors.white
                       : Colors.transparent,
                   border: Border.all(
-                    color: isSelected
-                        ? const Color(0xFF3358FE)
-                        : Colors.white.withValues(alpha: 0.35),
+                    color: Colors.white,
                     width: 1.5.w,
                   ),
                 ),
@@ -410,7 +386,7 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
                     ? Icon(
                         Icons.check,
                         size: 13.sp,
-                        color: Colors.white,
+                        color: const Color(0xFFFF3B30),
                       )
                     : null,
               ),
