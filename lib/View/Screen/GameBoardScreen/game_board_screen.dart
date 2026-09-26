@@ -263,7 +263,7 @@ class GameBoardScreen extends GetView<GameBoardController> {
               child: ElevatedButton(
                 onPressed: controller.onGameOver,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF3358FE),
+                  backgroundColor: const Color(0xFFFF3B30),
                   elevation: 4,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14.r),
@@ -314,21 +314,21 @@ class GameBoardScreen extends GetView<GameBoardController> {
         vertical: isLandscape ? 2.0 : 8.h,
       ),
       decoration: BoxDecoration(
-        color: const Color(0xFF003366).withValues(alpha: 0.85),
+        color: const Color(0xFFFF3B30),
         borderRadius: BorderRadius.circular(isLandscape ? 18 : 24.r),
         border: Border.all(
           color: isTurn
-              ? const Color(0xFF38E5D8)
-              : const Color(0xFF38E5D8).withValues(alpha: 0.25),
-          width: isTurn ? 1.5 : 1.w,
+              ? Colors.white
+              : Colors.white.withValues(alpha: 0.35),
+          width: isTurn ? 2.0 : 1.w,
         ),
         boxShadow: [
           BoxShadow(
             color: isTurn
-                ? const Color(0xFF38E5D8).withValues(alpha: 0.25)
-                : Colors.black.withValues(alpha: 0.15),
-            blurRadius: 6,
-            offset: const Offset(0, 2),
+                ? Colors.white.withValues(alpha: 0.4)
+                : const Color(0xFFFF3B30).withValues(alpha: 0.35),
+            blurRadius: 8,
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -382,8 +382,8 @@ class GameBoardScreen extends GetView<GameBoardController> {
                     style: TextStyle(
                       fontFamily: segoeFont,
                       fontSize: isLandscape ? 8.0 : 11.sp,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF22C55E),
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                       height: 1.0,
                     ),
                     maxLines: 1,
@@ -430,17 +430,17 @@ class GameBoardScreen extends GetView<GameBoardController> {
             height: isCompact ? 86.0 : 146.h,
             padding: const EdgeInsets.symmetric(horizontal: 2),
             decoration: BoxDecoration(
-              color: const Color(0xFF065967).withValues(alpha: 0.85),
+              color: const Color(0xFFFF3B30),
               borderRadius: BorderRadius.circular(16.r),
               border: Border.all(
-                color: const Color(0xFF38E5D8).withValues(alpha: 0.35),
+                color: Colors.white.withValues(alpha: 0.35),
                 width: 1.w,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.2),
-                  blurRadius: 6,
-                  offset: const Offset(0, 2),
+                  color: const Color(0xFFFF3B30).withValues(alpha: 0.3),
+                  blurRadius: 8,
+                  offset: const Offset(0, 3),
                 ),
               ],
             ),
@@ -506,15 +506,24 @@ class GameBoardScreen extends GetView<GameBoardController> {
           height: isCompact ? 26.0 : 42.h,
           decoration: BoxDecoration(
             color: isUsed
-                ? Colors.white.withValues(alpha: 0.15)
-                : const Color(0xFF065967).withValues(alpha: 0.85),
+                ? Colors.white.withValues(alpha: 0.2)
+                : const Color(0xFFFF3B30),
             borderRadius: BorderRadius.circular(isCompact ? 8 : 14.r),
             border: Border.all(
               color: isUsed
-                  ? Colors.white.withValues(alpha: 0.2)
-                  : const Color(0xFF38E5D8).withValues(alpha: 0.4),
+                  ? Colors.white.withValues(alpha: 0.25)
+                  : Colors.white.withValues(alpha: 0.4),
               width: 1.w,
             ),
+            boxShadow: isUsed
+                ? []
+                : [
+                    BoxShadow(
+                      color: const Color(0xFFFF3B30).withValues(alpha: 0.3),
+                      blurRadius: 4,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
           ),
           child: Center(
             child: Text(
