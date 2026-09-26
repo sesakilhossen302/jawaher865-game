@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../Utils/AppIcons/app_icons.dart';
 import '../../../Utils/AppImg/app_img.dart';
 import '../../../Utils/StaticString/static_string.dart';
+import '../../Widget/CustomGradientButton/custom_gradient_button.dart';
 import 'Controller/sign_up_controller.dart';
 
 class SignUpScreen extends GetView<SignUpController> {
@@ -40,304 +41,281 @@ class SignUpScreen extends GetView<SignUpController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                    // SizedBox(height: 10.h),
+                      SizedBox(height: 10.h),
 
-                    // Top Navigation Bar / Back Button
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: GestureDetector(
-                        onTap: () => Get.back(),
-                        child: Container(
-                          padding: EdgeInsets.all(10.r),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white.withValues(alpha: 0.25),
-                          ),
-                          child: SvgPicture.asset(
-                            AppIcons.backIcon,
-                            width: 16.w,
-                            height: 16.h,
-                            colorFilter: const ColorFilter.mode(
-                              Colors.white,
-                              BlendMode.srcIn,
+                      // Top Navigation Bar / Back Button
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: GestureDetector(
+                          onTap: () => Get.back(),
+                          child: Container(
+                            padding: EdgeInsets.all(10.r),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white.withValues(alpha: 0.25),
                             ),
-                            errorBuilder: (context, error, stackTrace) {
-                              return Icon(
-                                Icons.arrow_back_ios_new,
-                                size: 16.sp,
-                                color: Colors.white,
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    // SizedBox(height: 10.h),
-
-                    // Character & Logo Illustration Image
-                    Center(
-                      child: Image.asset(
-                        AppImg.welcomeSplashImg,
-                        width: 200.w,
-                        fit: BoxFit.contain,
-                        errorBuilder: (context, error, stackTrace) {
-                          return SizedBox(height: 100.h);
-                        },
-                      ),
-                    ),
-
-                    SizedBox(height: 14.h),
-
-                    // Title Text: Create a new account
-                    Center(
-                      child: Text(
-                        StaticString.createNewAccount.tr,
-                        style: TextStyle(
-                          fontFamily: segoeFont,
-                          fontSize: 21.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(height: 18.h),
-
-                    // 1. Full Name Field
-                    _buildFormInputField(
-                      controller: controller.fullNameController,
-                      hintText: StaticString.fullName.tr,
-                      svgIconPath: AppIcons.fullNameIcon,
-                    ),
-
-                    SizedBox(height: 12.h),
-
-                    // 2. Date of Birth Field
-                    _buildFormInputField(
-                      controller: controller.dateOfBirthController,
-                      hintText: StaticString.dateOfBirth.tr,
-                      svgIconPath: AppIcons.dateOfBirthIcon,
-                      readOnly: true,
-                      onTap: () => controller.selectDateOfBirth(context),
-                      suffixIcon: Icon(
-                        Icons.calendar_month_outlined,
-                        color: Colors.white.withValues(alpha: 0.9),
-                        size: 20.sp,
-                      ),
-                    ),
-
-                    SizedBox(height: 12.h),
-
-                    // 3. Gender Field
-                    _buildFormInputField(
-                      controller: controller.genderController,
-                      hintText: StaticString.gender.tr,
-                      svgIconPath: AppIcons.genderIcon,
-                      readOnly: true,
-                      onTap: () => controller.selectGender(context),
-                      suffixIcon: Icon(
-                        Icons.keyboard_arrow_down_rounded,
-                        color: Colors.white.withValues(alpha: 0.9),
-                        size: 24.sp,
-                      ),
-                    ),
-
-                    SizedBox(height: 12.h),
-
-                    // 4. Contact No Field
-                    _buildFormInputField(
-                      controller: controller.contactNoController,
-                      hintText: StaticString.contactNo.tr,
-                      svgIconPath: AppIcons.contactNoIcon,
-                      keyboardType: TextInputType.phone,
-                    ),
-
-                    SizedBox(height: 12.h),
-
-                    // 5. Email Field
-                    _buildFormInputField(
-                      controller: controller.emailController,
-                      hintText: StaticString.email.tr,
-                      svgIconPath: AppIcons.emailUpIcon,
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-
-                    SizedBox(height: 12.h),
-
-                    // 6. Password Field
-                    Obx(
-                      () => _buildFormInputField(
-                        controller: controller.passwordController,
-                        hintText: StaticString.password.tr,
-                        svgIconPath: AppIcons.passwordUpIcon,
-                        isObscure: controller.isPasswordObscure.value,
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            controller.isPasswordObscure.value
-                                ? Icons.visibility_off_outlined
-                                : Icons.visibility_outlined,
-                            color: Colors.white.withValues(alpha: 0.9),
-                            size: 20.sp,
-                          ),
-                          onPressed: controller.togglePasswordVisibility,
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(height: 12.h),
-
-                    // 7. Confirm Password Field
-                    Obx(
-                      () => _buildFormInputField(
-                        controller: controller.confirmPasswordController,
-                        hintText: StaticString.confirmPassword.tr,
-                        svgIconPath: AppIcons.passwordUpIcon,
-                        isObscure: controller.isConfirmPasswordObscure.value,
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            controller.isConfirmPasswordObscure.value
-                                ? Icons.visibility_off_outlined
-                                : Icons.visibility_outlined,
-                            color: Colors.white.withValues(alpha: 0.9),
-                            size: 20.sp,
-                          ),
-                          onPressed: controller.toggleConfirmPasswordVisibility,
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(height: 14.h),
-
-                    // Terms of Service & Privacy Policy Checkbox Row
-                    Row(
-                      children: [
-                        Obx(
-                          () => SizedBox(
-                            width: 20.w,
-                            height: 20.h,
-                            child: Checkbox(
-                              value: controller.isAgreeTerms.value,
-                              onChanged: controller.toggleAgreeTerms,
-                              activeColor: const Color(0xFF3358FE),
-                              checkColor: Colors.white,
-                              side: BorderSide(
-                                color: Colors.white.withValues(alpha: 0.5),
-                                width: 1.5,
+                            child: SvgPicture.asset(
+                              AppIcons.backIcon,
+                              width: 16.w,
+                              height: 16.h,
+                              colorFilter: const ColorFilter.mode(
+                                Colors.white,
+                                BlendMode.srcIn,
                               ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4.r),
-                              ),
+                              errorBuilder: (context, error, stackTrace) {
+                                return Icon(
+                                  Icons.arrow_back_ios_new,
+                                  size: 16.sp,
+                                  color: Colors.white,
+                                );
+                              },
                             ),
                           ),
                         ),
-                        SizedBox(width: 10.w),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () => controller.toggleAgreeTerms(
-                              !controller.isAgreeTerms.value,
-                            ),
-                            child: RichText(
-                              text: TextSpan(
-                                style: TextStyle(
-                                  fontFamily: segoeFont,
-                                  fontSize: 12.sp,
-                                  color: const Color(0xFFB4ECE7),
-                                ),
-                                children: [
-                                  TextSpan(text: StaticString.iAgreeWith.tr),
-                                  TextSpan(
-                                    text: StaticString.termsOfService.tr,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  TextSpan(text: StaticString.and.tr),
-                                  TextSpan(
-                                    text: StaticString.privacyPolicy.tr,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
 
-                    SizedBox(height: 20.h),
-
-                    // Sign Up Button
-                    SizedBox(
-                      width: double.infinity,
-                      height: 52.h,
-                      child: ElevatedButton(
-                        onPressed: controller.signUp,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF3358FE),
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.r),
-                            side: BorderSide(
-                              color: const Color(0xFF38E5D8),
-                              width: 1.5.w,
-                            ),
-                          ),
+                      // Character & Logo Illustration Image
+                      Center(
+                        child: Image.asset(
+                          AppImg.welcomeSplashImg,
+                          width: 200.w,
+                          fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) {
+                            return SizedBox(height: 100.h);
+                          },
                         ),
+                      ),
+
+                      SizedBox(height: 14.h),
+
+                      // Title Text: Create a new account
+                      Center(
                         child: Text(
-                          StaticString.signUp.tr,
+                          StaticString.createNewAccount.tr,
                           style: TextStyle(
                             fontFamily: segoeFont,
-                            fontSize: 16.sp,
+                            fontSize: 21.sp,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
                         ),
                       ),
-                    ),
 
-                    SizedBox(height: 16.h),
+                      SizedBox(height: 18.h),
 
-                    // Footer: have an account? Log in
-                    Center(
-                      child: GestureDetector(
-                        onTap: controller.goToLogin,
-                        child: RichText(
-                          text: TextSpan(
-                            style: TextStyle(
-                              fontFamily: segoeFont,
-                              fontSize: 14.sp,
-                              color: const Color(0xFFB4ECE7),
+                      // 1. Full Name Field
+                      _buildFormInputField(
+                        controller: controller.fullNameController,
+                        hintText: StaticString.fullName.tr,
+                        svgIconPath: AppIcons.fullNameIcon,
+                      ),
+
+                      SizedBox(height: 12.h),
+
+                      // 2. Date of Birth Field
+                      _buildFormInputField(
+                        controller: controller.dateOfBirthController,
+                        hintText: StaticString.dateOfBirth.tr,
+                        svgIconPath: AppIcons.dateOfBirthIcon,
+                        readOnly: true,
+                        onTap: () => controller.selectDateOfBirth(context),
+                        suffixIcon: Icon(
+                          Icons.calendar_month_outlined,
+                          color: const Color(0xFF5A4400).withValues(alpha: 0.75),
+                          size: 20.sp,
+                        ),
+                      ),
+
+                      SizedBox(height: 12.h),
+
+                      // 3. Gender Field
+                      _buildFormInputField(
+                        controller: controller.genderController,
+                        hintText: StaticString.gender.tr,
+                        svgIconPath: AppIcons.genderIcon,
+                        readOnly: true,
+                        onTap: () => controller.selectGender(context),
+                        suffixIcon: Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          color: const Color(0xFF5A4400).withValues(alpha: 0.75),
+                          size: 24.sp,
+                        ),
+                      ),
+
+                      SizedBox(height: 12.h),
+
+                      // 4. Contact No Field
+                      _buildFormInputField(
+                        controller: controller.contactNoController,
+                        hintText: StaticString.contactNo.tr,
+                        svgIconPath: AppIcons.contactNoIcon,
+                        keyboardType: TextInputType.phone,
+                      ),
+
+                      SizedBox(height: 12.h),
+
+                      // 5. Email Field
+                      _buildFormInputField(
+                        controller: controller.emailController,
+                        hintText: StaticString.email.tr,
+                        svgIconPath: AppIcons.emailUpIcon,
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+
+                      SizedBox(height: 12.h),
+
+                      // 6. Password Field
+                      Obx(
+                        () => _buildFormInputField(
+                          controller: controller.passwordController,
+                          hintText: StaticString.password.tr,
+                          svgIconPath: AppIcons.passwordUpIcon,
+                          isObscure: controller.isPasswordObscure.value,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              controller.isPasswordObscure.value
+                                  ? Icons.visibility_off_outlined
+                                  : Icons.visibility_outlined,
+                              color: const Color(0xFF5A4400).withValues(alpha: 0.75),
+                              size: 20.sp,
                             ),
-                            children: [
-                              TextSpan(text: StaticString.haveAnAccount.tr),
-                              TextSpan(
-                                text: StaticString.logIn.tr,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
+                            onPressed: controller.togglePasswordVisibility,
                           ),
                         ),
                       ),
-                    ),
 
-                    SizedBox(height: 24.h),
-                  ],
+                      SizedBox(height: 12.h),
+
+                      // 7. Confirm Password Field
+                      Obx(
+                        () => _buildFormInputField(
+                          controller: controller.confirmPasswordController,
+                          hintText: StaticString.confirmPassword.tr,
+                          svgIconPath: AppIcons.passwordUpIcon,
+                          isObscure: controller.isConfirmPasswordObscure.value,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              controller.isConfirmPasswordObscure.value
+                                  ? Icons.visibility_off_outlined
+                                  : Icons.visibility_outlined,
+                              color: const Color(0xFF5A4400).withValues(alpha: 0.75),
+                              size: 20.sp,
+                            ),
+                            onPressed: controller.toggleConfirmPasswordVisibility,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(height: 14.h),
+
+                      // Terms of Service & Privacy Policy Checkbox Row
+                      Row(
+                        children: [
+                          Obx(
+                            () => SizedBox(
+                              width: 20.w,
+                              height: 20.h,
+                              child: Checkbox(
+                                value: controller.isAgreeTerms.value,
+                                onChanged: controller.toggleAgreeTerms,
+                                activeColor: const Color(0xFFFF5252),
+                                checkColor: Colors.white,
+                                side: BorderSide(
+                                  color: const Color(0xFF4A3800).withValues(alpha: 0.5),
+                                  width: 1.5,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4.r),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10.w),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () => controller.toggleAgreeTerms(
+                                !controller.isAgreeTerms.value,
+                              ),
+                              child: RichText(
+                                text: TextSpan(
+                                  style: TextStyle(
+                                    fontFamily: segoeFont,
+                                    fontSize: 12.sp,
+                                    color: const Color(0xFF333333),
+                                  ),
+                                  children: [
+                                    TextSpan(text: StaticString.iAgreeWith.tr),
+                                    TextSpan(
+                                      text: StaticString.termsOfService.tr,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFF007AFF),
+                                      ),
+                                    ),
+                                    TextSpan(text: StaticString.and.tr),
+                                    TextSpan(
+                                      text: StaticString.privacyPolicy.tr,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFF007AFF),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(height: 20.h),
+
+                      // Sign Up Button (Coral-Orange Gradient)
+                      CustomGradientButton(
+                        onTap: controller.signUp,
+                        text: StaticString.signUp.tr,
+                        height: 52.h,
+                        borderRadius: BorderRadius.circular(25.r),
+                      ),
+
+                      SizedBox(height: 16.h),
+
+                      // Footer: have an account? Log in
+                      Center(
+                        child: GestureDetector(
+                          onTap: controller.goToLogin,
+                          child: RichText(
+                            text: TextSpan(
+                              style: TextStyle(
+                                fontFamily: segoeFont,
+                                fontSize: 14.sp,
+                                color: const Color(0xFF333333),
+                              ),
+                              children: [
+                                TextSpan(text: StaticString.haveAnAccount.tr),
+                                TextSpan(
+                                  text: StaticString.logIn.tr,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF007AFF),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(height: 24.h),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
+    );
   }
 
   Widget _buildFormInputField({
@@ -353,9 +331,12 @@ class SignUpScreen extends GetView<SignUpController> {
     return Container(
       height: 52.h,
       decoration: BoxDecoration(
-        color: const Color(0xFF065967).withValues(alpha: 0.85),
-        borderRadius: BorderRadius.circular(18.r),
-        border: Border.all(color: const Color(0xFF38E5D8), width: 1.5.w),
+        color: Colors.white.withValues(alpha: 0.22),
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.40),
+          width: 1.2.w,
+        ),
       ),
       child: TextField(
         controller: controller,
@@ -366,14 +347,14 @@ class SignUpScreen extends GetView<SignUpController> {
         style: TextStyle(
           fontFamily: segoeFont,
           fontSize: 14.sp,
-          color: Colors.white,
+          color: const Color(0xFF222222),
         ),
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: TextStyle(
             fontFamily: segoeFont,
             fontSize: 14.sp,
-            color: Colors.white.withValues(alpha: 0.8),
+            color: const Color(0xFF5A4400).withValues(alpha: 0.65),
           ),
           prefixIcon: Padding(
             padding: EdgeInsets.all(14.r),
@@ -381,12 +362,16 @@ class SignUpScreen extends GetView<SignUpController> {
               svgIconPath,
               width: 18.w,
               height: 18.h,
-              colorFilter: const ColorFilter.mode(
-                Colors.white,
+              colorFilter: ColorFilter.mode(
+                const Color(0xFF5A4400).withValues(alpha: 0.75),
                 BlendMode.srcIn,
               ),
               errorBuilder: (context, error, stackTrace) {
-                return Icon(Icons.input, color: Colors.white, size: 20.sp);
+                return Icon(
+                  Icons.input,
+                  color: const Color(0xFF5A4400).withValues(alpha: 0.75),
+                  size: 20.sp,
+                );
               },
             ),
           ),
