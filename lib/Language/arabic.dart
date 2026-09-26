@@ -10,6 +10,7 @@ Map<String, String> arabic = {
   'No internet connection available.': 'لا يوجد اتصال بالإنترنت.',
   'Continue with Google': 'المتابعة باستخدام Google',
   'Continue with Apple': 'المتابعة باستخدام Apple',
+  'Continue with Email': 'المتابعة بالبريد الإلكتروني',
   'OR': 'أو',
   'Sign in with Email': 'تسجيل الدخول بالبريد الإلكتروني',
   'Continue as Guest': 'المتابعة كضيف',
