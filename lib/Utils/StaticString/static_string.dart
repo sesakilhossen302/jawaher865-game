@@ -13,9 +13,11 @@ class StaticString {
   // Sign Screen Strings
   static const String continueWithGoogle = 'Continue with Google';
   static const String continueWithApple = 'Continue with Apple';
+  static const String continueWithEmail = 'Continue with Email';
   static const String or = 'OR';
   static const String signInWithEmail = 'Sign in with Email';
   static const String continueAsGuest = 'Continue as Guest';
+  static const String continueText = 'Continue';
 
   // Sign In Email Screen Strings
   static const String welcomeBackSubTitle = 'Welcome back! Please sign in to continue';
