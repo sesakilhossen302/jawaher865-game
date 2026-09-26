@@ -151,6 +151,9 @@ class QuestionController extends GetxController {
     chatInputController.clear();
   }
 
+  String get activeTeamName =>
+      player1.value.isTurn ? player1.value.name : player2.value.name;
+
   void toggleShowAnswer() {
     if (viewState.value == QuestionViewState.question) {
       viewState.value = QuestionViewState.answerRevealed;
@@ -159,12 +162,20 @@ class QuestionController extends GetxController {
     }
   }
 
+  void onBackToQuestion() {
+    viewState.value = QuestionViewState.question;
+  }
+
   void goToResultDistribution() {
     countdownTimer?.cancel();
     viewState.value = QuestionViewState.resultDistribution;
   }
 
   void onReturnToAnswer() {
+    viewState.value = QuestionViewState.answerRevealed;
+  }
+
+  void onResultDistributionBack() {
     viewState.value = QuestionViewState.answerRevealed;
   }
 

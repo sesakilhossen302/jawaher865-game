@@ -7,6 +7,9 @@ class TeamSelectController extends GetxController {
   late TextEditingController blueTeamController;
   late TextEditingController redTeamController;
 
+  final RxString selectedBlueIcon = ''.obs;
+  final RxString selectedRedIcon = ''.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -14,7 +17,7 @@ class TeamSelectController extends GetxController {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
-    blueTeamController = TextEditingController(text: 'Blue Team');
+    blueTeamController = TextEditingController(text: 'Green Team');
     redTeamController = TextEditingController(text: 'Red Team');
   }
 
@@ -22,7 +25,7 @@ class TeamSelectController extends GetxController {
     try {
       final _ = blueTeamController.text;
     } catch (_) {
-      blueTeamController = TextEditingController(text: 'Blue Team');
+      blueTeamController = TextEditingController(text: 'Green Team');
     }
 
     try {
@@ -38,11 +41,13 @@ class TeamSelectController extends GetxController {
       AppRoute.chooseCategoryScreen,
       arguments: {
         'blueTeam': blueTeamController.text.trim().isEmpty
-            ? 'Blue Team'
+            ? 'Green Team'
             : blueTeamController.text.trim(),
         'redTeam': redTeamController.text.trim().isEmpty
             ? 'Red Team'
             : redTeamController.text.trim(),
+        'blueIcon': selectedBlueIcon.value,
+        'redIcon': selectedRedIcon.value,
       },
     );
   }

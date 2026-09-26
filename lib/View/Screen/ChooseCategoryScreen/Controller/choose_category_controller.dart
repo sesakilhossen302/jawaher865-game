@@ -18,43 +18,43 @@ class ChooseCategoryController extends GetxController {
   final RxList<CategoryModel> categories = <CategoryModel>[
     CategoryModel(
       id: 1,
-      title: 'Islamic',
-      imagePath: AppImg.islamicImg,
+      title: 'UAE',
+      imagePath: AppImg.catUae,
     ),
     CategoryModel(
       id: 2,
-      title: 'Flags',
-      imagePath: AppImg.flagsImg,
+      title: 'SONGS',
+      imagePath: AppImg.catSongs,
     ),
     CategoryModel(
       id: 3,
-      title: 'AI',
-      imagePath: AppImg.aiImg,
+      title: 'ABDULMAJED',
+      imagePath: AppImg.catAbdulmajed,
     ),
     CategoryModel(
       id: 4,
-      title: 'AI',
-      imagePath: AppImg.aiImg,
+      title: 'ARABIC',
+      imagePath: AppImg.catArabic,
     ),
     CategoryModel(
       id: 5,
-      title: 'Islamic',
-      imagePath: AppImg.islamicImg,
+      title: 'FIFA',
+      imagePath: AppImg.catFifa,
     ),
     CategoryModel(
       id: 6,
-      title: 'Flags',
-      imagePath: AppImg.flagsImg,
+      title: 'HARRY POTTER',
+      imagePath: AppImg.catHarryPotter,
     ),
     CategoryModel(
       id: 7,
-      title: 'Islamic',
-      imagePath: AppImg.islamicImg,
+      title: 'FRIENDS',
+      imagePath: AppImg.catFriends,
     ),
     CategoryModel(
       id: 8,
-      title: 'Flags',
-      imagePath: AppImg.flagsImg,
+      title: 'SHOWS',
+      imagePath: AppImg.catShows,
     ),
   ].obs;
 
@@ -74,7 +74,7 @@ class ChooseCategoryController extends GetxController {
     if (Get.arguments != null && Get.arguments is Map) {
       final args = Get.arguments as Map;
       isOnlineMatch.value = args['isOnlineMatch'] ?? false;
-      blueTeamName.value = args['blueTeam'] ?? args['player1'] ?? 'Blue Team';
+      blueTeamName.value = args['blueTeam'] ?? args['player1'] ?? 'Green Team';
       redTeamName.value = args['redTeam'] ?? args['player2'] ?? 'Red Team';
       activeTeamName.value = blueTeamName.value;
     }
@@ -114,18 +114,7 @@ class ChooseCategoryController extends GetxController {
     if (selectedCategoryIds.contains(id)) {
       selectedCategoryIds.remove(id);
     } else {
-      if (selectedCategoryIds.length < 3) {
-        selectedCategoryIds.add(id);
-      } else {
-        Get.snackbar(
-          'Category Limit',
-          'You can choose maximum 3 categories!',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: const Color(0xFF065967),
-          colorText: Colors.white,
-          duration: const Duration(seconds: 2),
-        );
-      }
+      selectedCategoryIds.add(id);
     }
   }
 
@@ -142,7 +131,7 @@ class ChooseCategoryController extends GetxController {
   }
 
   void onActionTap() {
-    if (selectedCategoryIds.length == 3) {
+    if (selectedCategoryIds.isNotEmpty) {
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.landscapeLeft,
         DeviceOrientation.landscapeRight,
@@ -160,9 +149,9 @@ class ChooseCategoryController extends GetxController {
     } else {
       Get.snackbar(
         'Select Categories',
-        'Please select 3 categories to continue.',
+        'Please select at least 1 category to play.',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: const Color(0xFF065967),
+        backgroundColor: const Color(0xFFFF3B30),
         colorText: Colors.white,
       );
     }

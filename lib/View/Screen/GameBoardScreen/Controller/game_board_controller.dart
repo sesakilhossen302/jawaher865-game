@@ -5,7 +5,6 @@ import '../../../../Core/AppRoute/app_route.dart';
 import '../../../../Model/category_model.dart';
 import '../../../../Model/game_board_model.dart';
 import '../../../../Model/team_model.dart';
-import '../../../../Utils/AppIcons/app_icons.dart';
 import '../../../../Utils/AppImg/app_img.dart';
 
 class GameBoardController extends GetxController {
@@ -66,17 +65,15 @@ class GameBoardController extends GetxController {
         if (selected.isNotEmpty) {
           final List<GameBoardBlockModel> blocks = [];
           int blockIdCounter = 1;
-          for (int round = 0; round < 2; round++) {
-            for (var cat in selected) {
-              blocks.add(
-                GameBoardBlockModel(
-                  id: blockIdCounter++,
-                  title: cat.title,
-                  imagePath: cat.imagePath ?? AppImg.islamicImg,
-                  iconUrl: cat.iconUrl,
-                ),
-              );
-            }
+          for (var cat in selected) {
+            blocks.add(
+              GameBoardBlockModel(
+                id: blockIdCounter++,
+                title: cat.title,
+                imagePath: cat.imagePath ?? AppImg.catUae,
+                iconUrl: cat.iconUrl,
+              ),
+            );
           }
           categoryBlocks.value = blocks;
         }
@@ -95,7 +92,7 @@ class GameBoardController extends GetxController {
       orElse: () => GameBoardBlockModel(
         id: categoryId,
         title: 'Flags',
-        imagePath: AppImg.flagsImg,
+        imagePath: AppImg.qBrazilFlag,
       ),
     );
 
@@ -126,79 +123,178 @@ class GameBoardController extends GetxController {
   Map<String, String> _getQuestionForCategory(String title, int points) {
     final cleanTitle = title.toLowerCase().trim();
 
-    if (cleanTitle.contains('islam')) {
+    if (cleanTitle.contains('uae')) {
       if (points == 200) {
         return {
-          'question': 'How many Surahs are in the Holy Quran shown here?',
-          'answer': '114 Surahs',
-          'image': AppIcons.quranBookSvg,
+          'question': 'Which emirate is Burj Khalifa located in?',
+          'answer': 'Dubai',
+          'image': AppImg.catUae,
         };
       } else if (points == 400) {
         return {
-          'question':
-              'Which sacred book of Islam is placed on the Rehal stand?',
-          'answer': 'Holy Quran',
-          'image': AppIcons.quranBookSvg,
+          'question': 'What is the capital city of the United Arab Emirates?',
+          'answer': 'Abu Dhabi',
+          'image': AppImg.catUae,
         };
       } else {
         return {
-          'question':
-              'In which Holy Islamic month was the Quran revealed to Prophet Muhammad (PBUH)?',
-          'answer': 'Ramadan',
-          'image': AppIcons.ramadanMoonSvg,
+          'question': 'In what year was the UAE federation founded?',
+          'answer': '1971',
+          'image': AppImg.catUae,
+        };
+      }
+    } else if (cleanTitle.contains('song')) {
+      if (points == 200) {
+        return {
+          'question': 'Who is widely celebrated as the King of Pop?',
+          'answer': 'Michael Jackson',
+          'image': AppImg.catSongs,
+        };
+      } else if (points == 400) {
+        return {
+          'question': 'Which legendary album features Thriller & Billie Jean?',
+          'answer': 'Thriller',
+          'image': AppImg.catSongs,
+        };
+      } else {
+        return {
+          'question': 'What signature dance move did Michael Jackson debut in 1983?',
+          'answer': 'Moonwalk',
+          'image': AppImg.catSongs,
+        };
+      }
+    } else if (cleanTitle.contains('abdulmajed')) {
+      if (points == 200) {
+        return {
+          'question': 'What traditional musical instrument does Abdul Majeed play?',
+          'answer': 'Oud',
+          'image': AppImg.catAbdulmajed,
+        };
+      } else if (points == 400) {
+        return {
+          'question': 'Which Arabian Gulf country is singer Abdul Majeed from?',
+          'answer': 'Saudi Arabia',
+          'image': AppImg.catAbdulmajed,
+        };
+      } else {
+        return {
+          'question': 'Which famous romantic Arabic song is sung by Abdul Majeed Abdullah?',
+          'answer': 'Ghanili',
+          'image': AppImg.catAbdulmajed,
+        };
+      }
+    } else if (cleanTitle.contains('arabic')) {
+      if (points == 200) {
+        return {
+          'question': 'What stringed instrument is known as the king of Arabic instruments?',
+          'answer': 'Oud',
+          'image': AppImg.catArabic,
+        };
+      } else if (points == 400) {
+        return {
+          'question': 'What Arabic percussion instrument is shaped like a goblet drum?',
+          'answer': 'Darbuka',
+          'image': AppImg.catArabic,
+        };
+      } else {
+        return {
+          'question': 'Which melodic framework system is fundamental to Arabic traditional music?',
+          'answer': 'Maqam',
+          'image': AppImg.catArabic,
+        };
+      }
+    } else if (cleanTitle.contains('fifa')) {
+      if (points == 200) {
+        return {
+          'question': 'WHAT COUNTRY DOES THIS FLAG BELONG TO?',
+          'answer': 'Brazil',
+          'image': AppImg.qBrazilFlag,
+        };
+      } else if (points == 400) {
+        return {
+          'question': 'In which year did Lionel Messi lead Argentina to World Cup glory in Qatar?',
+          'answer': '2022',
+          'image': AppImg.catFifa,
+        };
+      } else {
+        return {
+          'question': 'How many players are on the pitch for one team in a standard football match?',
+          'answer': '11 Players',
+          'image': AppImg.catFifa,
+        };
+      }
+    } else if (cleanTitle.contains('potter')) {
+      if (points == 200) {
+        return {
+          'question': 'Which Hogwarts house was Harry Potter sorted into?',
+          'answer': 'Gryffindor',
+          'image': AppImg.catHarryPotter,
+        };
+      } else if (points == 400) {
+        return {
+          'question': 'What broomstick sport is played high in the air at Hogwarts?',
+          'answer': 'Quidditch',
+          'image': AppImg.catHarryPotter,
+        };
+      } else {
+        return {
+          'question': 'What is the name of Harry Potter\'s pet snowy owl?',
+          'answer': 'Hedwig',
+          'image': AppImg.catHarryPotter,
+        };
+      }
+    } else if (cleanTitle.contains('friend')) {
+      if (points == 200) {
+        return {
+          'question': 'HOW MANY SISTERS DID JOEY TRIBBANI HAVE?',
+          'answer': '7 Sisters',
+          'image': AppImg.qJoey,
+        };
+      } else if (points == 400) {
+        return {
+          'question': 'What is the name of the coffee shop where the Friends hung out?',
+          'answer': 'Central Perk',
+          'image': AppImg.catFriends,
+        };
+      } else {
+        return {
+          'question': 'What catchphrase does Joey famously use when greeting women?',
+          'answer': 'How you doin\'?',
+          'image': AppImg.qJoey,
+        };
+      }
+    } else if (cleanTitle.contains('show')) {
+      if (points == 200) {
+        return {
+          'question': 'Which British period crime drama features Thomas Shelby?',
+          'answer': 'Peaky Blinders',
+          'image': AppImg.catShows,
+        };
+      } else if (points == 400) {
+        return {
+          'question': 'Which epic fantasy series features the Iron Throne and Westeros?',
+          'answer': 'Game of Thrones',
+          'image': AppImg.catShows,
+        };
+      } else {
+        return {
+          'question': 'In which critically acclaimed series does Walter White become Heisenberg?',
+          'answer': 'Breaking Bad',
+          'image': AppImg.catShows,
         };
       }
     } else if (cleanTitle.contains('flag')) {
-      if (points == 200) {
-        return {
-          'question':
-              'What is the country name of this green national flag with Arabic script & sword?',
-          'answer': 'Saudi Arabia Flag',
-          'image': AppIcons.saudiFlagSvg,
-        };
-      } else if (points == 400) {
-        return {
-          'question':
-              'Which Muslim country\'s flag features black, white, and green stripes with a red triangle?',
-          'answer': 'Palestine Flag',
-          'image': AppIcons.palestineFlagSvg,
-        };
-      } else {
-        return {
-          'question':
-              'Which Muslim country\'s flag features a white crescent moon and star on a red field?',
-          'answer': 'Turkey Flag',
-          'image': AppIcons.turkeyFlagSvg,
-        };
-      }
-    } else if (cleanTitle.contains('ai')) {
-      if (points == 200) {
-        return {
-          'question': 'What does AI stand for in modern computer technology?',
-          'answer': 'Artificial Intelligence',
-          'image': AppIcons.aiBrainEngineSvg,
-        };
-      } else if (points == 400) {
-        return {
-          'question':
-              'What mechanical gear & neural brain graphic represents machine processing?',
-          'answer': 'Neural Processing Engine',
-          'image': AppIcons.aiBrainEngineSvg,
-        };
-      } else {
-        return {
-          'question':
-              'Which neural network architecture powers modern Large Language Models?',
-          'answer': 'Transformer Architecture',
-          'image': AppIcons.aiBrainEngineSvg,
-        };
-      }
+      return {
+        'question': 'WHAT COUNTRY DOES THIS FLAG BELONG TO?',
+        'answer': 'Brazil',
+        'image': AppImg.qBrazilFlag,
+      };
     }
 
     return {
-      'question': 'What is the answer for $title ($points Points)?',
-      'answer': 'Correct Answer for $title',
-      'image': AppImg.flagsImg,
+      'question': 'What is the correct answer for $title ($points Points)?',
+      'answer': 'Answer for $title',
+      'image': AppImg.catUae,
     };
   }
 

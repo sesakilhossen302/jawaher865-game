@@ -79,33 +79,74 @@ class WinningScreen extends GetView<WinningController> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Spacer(flex: 2),
+          SizedBox(height: 10.h),
+
+          // Top Back circular button
+          Align(
+            alignment: Alignment.centerLeft,
+            child: GestureDetector(
+              onTap: () => Get.back(),
+              child: Container(
+                width: 38.w,
+                height: 38.w,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+                child: const Center(
+                  child: Icon(Icons.arrow_back, color: Colors.black87, size: 20),
+                ),
+              ),
+            ),
+          ),
+
+          const Spacer(flex: 1),
+
+          // 3 Avatars illustration matching Figma Screen 4
+          Image.asset(
+            AppImg.qAvatars,
+            height: 72.h,
+            fit: BoxFit.contain,
+          ),
+
+          SizedBox(height: 20.h),
+
+          // Clapping Hands Graphic 👏
+          Text(
+            '👏',
+            style: TextStyle(
+              fontSize: 60.sp,
+            ),
+          ),
+
+          SizedBox(height: 24.h),
 
           // Congratulations Text
           Text(
-            StaticString.congratulationsOnTheWin.tr,
+            StaticString.congratulationsOnTheWin.tr.toUpperCase(),
             style: TextStyle(
               fontFamily: segoeFont,
-              fontSize: 16.sp,
+              fontSize: 13.sp,
               fontWeight: FontWeight.w700,
               color: const Color(0xFF222222),
+              letterSpacing: 0.5,
             ),
             textAlign: TextAlign.center,
           ),
 
-          SizedBox(height: 6.h),
+          SizedBox(height: 8.h),
 
           // Winner Name
           Obx(
             () => Text(
-              controller.winnerName.value,
+              controller.winnerName.value.toUpperCase(),
               style: TextStyle(
                 fontFamily: segoeFont,
                 fontSize: 28.sp,
                 fontWeight: FontWeight.w900,
                 color: Colors.white,
+                letterSpacing: 1.0,
                 shadows: [
                   Shadow(
                     color: Colors.black.withValues(alpha: 0.25),
@@ -118,14 +159,9 @@ class WinningScreen extends GetView<WinningController> {
             ),
           ),
 
-          SizedBox(height: 24.h),
+          const Spacer(flex: 2),
 
-          // Winner Card Box
-          _buildWinnerCard(isLandscape: false),
-
-          const Spacer(flex: 3),
-
-          // Play Again Button
+          // Play Again & Back to Lobby Buttons
           _buildPlayAgainButton(isLandscape: false),
 
           SizedBox(height: 24.h),
@@ -303,8 +339,8 @@ class WinningScreen extends GetView<WinningController> {
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
-          width: isLandscape ? 260 : 280.w,
-          height: isLandscape ? 42 : 52.h,
+          width: isLandscape ? 260 : double.infinity,
+          height: isLandscape ? 42 : 50.h,
           child: ElevatedButton(
             onPressed: controller.onPlayAgain,
             style: ElevatedButton.styleFrom(
@@ -316,7 +352,7 @@ class WinningScreen extends GetView<WinningController> {
               ),
             ),
             child: Text(
-              StaticString.playAgain.tr,
+              StaticString.playAgain.tr.toUpperCase(),
               style: TextStyle(
                 fontFamily: segoeFont,
                 fontSize: isLandscape ? 14 : 16.sp,
@@ -326,16 +362,17 @@ class WinningScreen extends GetView<WinningController> {
             ),
           ),
         ),
-        SizedBox(height: 12.h),
+        SizedBox(height: 14.h),
         GestureDetector(
-          onTap: () => Get.back(),
+          onTap: controller.onBackToLobby,
           child: Text(
             'BACK TO LOBBY',
             style: TextStyle(
               fontFamily: segoeFont,
               fontSize: 13.sp,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xFF222222),
+              fontWeight: FontWeight.w800,
+              color: const Color(0xFF2C2416),
+              letterSpacing: 0.5,
             ),
           ),
         ),

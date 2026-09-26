@@ -41,4 +41,11 @@ class WinningController extends GetxController {
       Get.offNamedUntil(AppRoute.teamSelectScreen, (route) => route.isFirst);
     }
   }
+
+  void onBackToLobby() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+    Get.offAllNamed(AppRoute.mainScreen);
+  }
 }

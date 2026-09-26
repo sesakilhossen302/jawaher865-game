@@ -122,7 +122,8 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
                                     labelColor: const Color(0xFFE8F5E9),
                                     illustrationSvgPath: AppIcons.blueTeamImg,
                                     illustrationHeight: 85.h,
-                                    illustrationRight: 22.w,
+                                    illustrationRight: 10.w,
+                                    iconPreviewPath: AppImg.leaderboardRightYoungManImg,
                                   ),
 
                                   SizedBox(height: 16.h),
@@ -141,7 +142,8 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
                                     labelColor: const Color(0xFFFFEBE6),
                                     illustrationSvgPath: AppIcons.redTeamImg,
                                     illustrationHeight: 85.h,
-                                    illustrationRight: 14.w,
+                                    illustrationRight: 10.w,
+                                    iconPreviewPath: AppImg.playRightFemaleImg,
                                   ),
                                 ],
                               ),
@@ -209,9 +211,10 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
     required String illustrationSvgPath,
     required double illustrationHeight,
     required double illustrationRight,
+    String? iconPreviewPath,
   }) {
     return Container(
-      height: 180.h,
+      height: 195.h,
       width: double.infinity,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
@@ -248,7 +251,7 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
 
           // Card Foreground Content
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 16.h),
+            padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 14.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -264,12 +267,12 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
                   ),
                 ),
 
-                SizedBox(height: 10.h),
+                SizedBox(height: 8.h),
 
                 // Editable Team Name Pill Container (Full Width)
                 Container(
                   width: double.infinity,
-                  height: 48.h,
+                  height: 42.h,
                   padding: EdgeInsets.symmetric(horizontal: 14.w),
                   decoration: BoxDecoration(
                     color: inputBgColor,
@@ -282,7 +285,7 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
                           controller: controller,
                           style: TextStyle(
                             fontFamily: segoeFont,
-                            fontSize: 16.sp,
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
@@ -297,6 +300,68 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
                         Icons.edit_outlined,
                         color: Colors.white,
                         size: 16.sp,
+                      ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: 10.h),
+
+                // CHOOSE ICON Title
+                Text(
+                  'CHOOSE ICON',
+                  style: TextStyle(
+                    fontFamily: segoeFont,
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.bold,
+                    color: labelColor,
+                    letterSpacing: 1.1,
+                  ),
+                ),
+
+                SizedBox(height: 6.h),
+
+                // Choose Icon Selector Pill
+                Container(
+                  width: 170.w,
+                  height: 38.h,
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  decoration: BoxDecoration(
+                    color: inputBgColor,
+                    borderRadius: BorderRadius.circular(14.r),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Select icon',
+                        style: TextStyle(
+                          fontFamily: segoeFont,
+                          fontSize: 12.sp,
+                          color: Colors.white.withValues(alpha: 0.9),
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          if (iconPreviewPath != null)
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(6.r),
+                              child: Image.asset(
+                                iconPreviewPath,
+                                width: 22.w,
+                                height: 22.h,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) => const SizedBox(),
+                              ),
+                            ),
+                          SizedBox(width: 4.w),
+                          Icon(
+                            Icons.keyboard_arrow_down,
+                            color: Colors.white,
+                            size: 18.sp,
+                          ),
+                        ],
                       ),
                     ],
                   ),

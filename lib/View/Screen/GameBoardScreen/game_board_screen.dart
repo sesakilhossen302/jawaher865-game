@@ -424,53 +424,71 @@ class GameBoardScreen extends GetView<GameBoardController> {
 
         SizedBox(width: isCompact ? 3 : 10.w),
 
-        // Center Category Card (Flexible Container)
+        // Center Category Card (Flexible Container matching Figma Screen 5)
         Expanded(
           child: Container(
-            height: isCompact ? 86.0 : 146.h,
-            padding: const EdgeInsets.symmetric(horizontal: 2),
+            height: isCompact ? 86.0 : 136.h,
+            clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
               color: const Color(0xFFFF3B30),
               borderRadius: BorderRadius.circular(16.r),
               border: Border.all(
                 color: Colors.white.withValues(alpha: 0.35),
-                width: 1.w,
+                width: 1.2.w,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFFFF3B30).withValues(alpha: 0.3),
+                  color: const Color(0xFFFF3B30).withValues(alpha: 0.35),
                   blurRadius: 8,
                   offset: const Offset(0, 3),
                 ),
               ],
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
-                  block.imagePath,
-                  height: isCompact ? 30.0 : 52.h,
-                  fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Icon(
-                      Icons.category_rounded,
-                      size: isCompact ? 22.0 : 38.sp,
-                      color: Colors.amber,
-                    );
-                  },
-                ),
-                SizedBox(height: isCompact ? 2 : 8.h),
-                Text(
-                  block.title,
-                  style: TextStyle(
-                    fontFamily: segoeFont,
-                    fontSize: isCompact ? 10.5 : 14.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                // Top Artwork
+                Expanded(
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Image.asset(
+                      block.imagePath,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: const Color(0xFF1E293B),
+                          child: const Center(
+                            child: Icon(
+                              Icons.category_rounded,
+                              color: Colors.white70,
+                              size: 28,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                ),
+
+                // Bottom Red Title Banner
+                Container(
+                  height: isCompact ? 22.0 : 30.h,
+                  width: double.infinity,
+                  color: const Color(0xFFFF3B30),
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(horizontal: 4.w),
+                  child: Text(
+                    block.title.toUpperCase(),
+                    style: TextStyle(
+                      fontFamily: segoeFont,
+                      fontSize: isCompact ? 9.5 : 12.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      letterSpacing: 0.8,
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ],
             ),

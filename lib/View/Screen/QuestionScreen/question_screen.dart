@@ -59,18 +59,362 @@ class QuestionScreen extends GetView<QuestionController> {
 
   // ==================== PORTRAIT LAYOUT ====================
   Widget _buildPortraitLayout() {
+    return Obx(() {
+      final isOnline = controller.isOnlineMatch.value;
+      if (!isOnline) {
+        return _buildFigmaOfflinePortraitLayout();
+      }
+      return _buildOnlinePortraitLayout();
+    });
+  }
+
+  // ==================== FIGMA OFFLINE PORTRAIT FLOW ====================
+  Widget _buildFigmaOfflinePortraitLayout() {
+    return Obx(() {
+      final state = controller.viewState.value;
+
+      if (state == QuestionViewState.resultDistribution) {
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Column(
+            children: [
+              SizedBox(height: 10.h),
+              // Top Bar with back button
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: controller.onResultDistributionBack,
+                    child: Container(
+                      width: 38.w,
+                      height: 38.w,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                      ),
+                      child: const Center(
+                        child: Icon(Icons.arrow_back, color: Colors.black87, size: 20),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Text(
+                          '${controller.categoryTitle.value.toUpperCase()} QUESTION - ${controller.points.value} POINTS',
+                          style: TextStyle(
+                            fontFamily: segoeFont,
+                            fontSize: 11.5.sp,
+                            fontWeight: FontWeight.bold,
+                            color: const Color(0xFF6B4A00),
+                            letterSpacing: 0.5,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 4.h),
+                        Text(
+                          'WHICH TEAM ANSWER CORRECTLY?',
+                          style: TextStyle(
+                            fontFamily: segoeFont,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w800,
+                            color: const Color(0xFF2C2416),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 38.w), // Balance back button
+                ],
+              ),
+
+              const Spacer(flex: 2),
+
+              // 3 Big Red Action Buttons
+              _buildFigmaAwardButton(
+                title: controller.player1.value.name.toUpperCase(),
+                onTap: controller.onAwardTeam1,
+              ),
+              SizedBox(height: 16.h),
+              _buildFigmaAwardButton(
+                title: controller.player2.value.name.toUpperCase(),
+                onTap: controller.onAwardTeam2,
+              ),
+              SizedBox(height: 16.h),
+              _buildFigmaAwardButton(
+                title: 'NO ONE',
+                onTap: controller.onAwardNoOne,
+              ),
+
+              const Spacer(flex: 3),
+
+              // Avatars illustration at bottom
+              Image.asset(
+                AppImg.qAvatars,
+                height: 60.h,
+                fit: BoxFit.contain,
+              ),
+              SizedBox(height: 20.h),
+            ],
+          ),
+        );
+      }
+
+      // Question or AnswerRevealed state
+      return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        child: Column(
+          children: [
+            SizedBox(height: 10.h),
+            // Header: Left Back Button, Right Team Turn Pill
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: controller.onExit,
+                  child: Container(
+                    width: 38.w,
+                    height: 38.w,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                    ),
+                    child: const Center(
+                      child: Icon(Icons.arrow_back, color: Colors.black87, size: 20),
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 7.h),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFF3B30),
+                    borderRadius: BorderRadius.circular(16.r),
+                  ),
+                  child: Text(
+                    "${controller.activeTeamName}'s Turn",
+                    style: TextStyle(
+                      fontFamily: segoeFont,
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            const Spacer(flex: 1),
+
+            // Question Text
+            Text(
+              controller.questionText.value.toUpperCase(),
+              style: TextStyle(
+                fontFamily: segoeFont,
+                fontSize: 15.sp,
+                fontWeight: FontWeight.w800,
+                color: const Color(0xFF2C2416),
+                letterSpacing: 0.3,
+              ),
+              textAlign: TextAlign.center,
+            ),
+
+            SizedBox(height: 18.h),
+
+            // Question Image
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12.r),
+              child: Container(
+                width: 290.w,
+                height: 165.h,
+                color: Colors.black12,
+                child: Image.asset(
+                  controller.questionImage.value,
+                  fit: BoxFit.cover,
+                  errorBuilder: (ctx, error, stackTrace) => Image.asset(
+                    AppImg.qBrazilFlag,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+
+            SizedBox(height: 22.h),
+
+            // Subtitle
+            Text(
+              '${controller.categoryTitle.value} Questions - ${controller.points.value} Points',
+              style: TextStyle(
+                fontFamily: segoeFont,
+                fontSize: 13.sp,
+                fontWeight: FontWeight.w600,
+                color: const Color(0xFF5A482A),
+              ),
+              textAlign: TextAlign.center,
+            ),
+
+            SizedBox(height: 6.h),
+
+            // Cyan Timer
+            Text(
+              'TIME 1:42MIN',
+              style: TextStyle(
+                fontFamily: segoeFont,
+                fontSize: 13.sp,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xFF00B0FF),
+              ),
+              textAlign: TextAlign.center,
+            ),
+
+            const Spacer(flex: 2),
+
+            // Bottom Buttons
+            if (state == QuestionViewState.question) ...[
+              GestureDetector(
+                onTap: controller.toggleShowAnswer,
+                child: Container(
+                  width: double.infinity,
+                  height: 48.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14.r),
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFFF5252), Color(0xFFFF3B30)],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFFFF3B30).withValues(alpha: 0.35),
+                        blurRadius: 8,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Answer',
+                      style: TextStyle(
+                        fontFamily: segoeFont,
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ] else ...[
+              // RESULT DISTRIBUTION BUTTON
+              GestureDetector(
+                onTap: controller.goToResultDistribution,
+                child: Container(
+                  width: double.infinity,
+                  height: 48.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14.r),
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFFF5252), Color(0xFFFF3B30)],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFFFF3B30).withValues(alpha: 0.35),
+                        blurRadius: 8,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Text(
+                      'RESULT DISTRIBUTION',
+                      style: TextStyle(
+                        fontFamily: segoeFont,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 12.h),
+              // BACK TO QUESTION BUTTON
+              GestureDetector(
+                onTap: controller.onBackToQuestion,
+                child: Container(
+                  width: double.infinity,
+                  height: 48.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14.r),
+                    color: const Color(0xFFF3C242).withValues(alpha: 0.3),
+                    border: Border.all(
+                      color: const Color(0xFFD49A00),
+                      width: 1.5,
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'BACK TO QUESTION',
+                      style: TextStyle(
+                        fontFamily: segoeFont,
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.bold,
+                        color: const Color(0xFF2C2416),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+
+            SizedBox(height: 24.h),
+          ],
+        ),
+      );
+    });
+  }
+
+  Widget _buildFigmaAwardButton({
+    required String title,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        height: 60.h,
+        decoration: BoxDecoration(
+          color: const Color(0xFFFF3B30),
+          borderRadius: BorderRadius.circular(14.r),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFFFF3B30).withValues(alpha: 0.35),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Center(
+          child: Text(
+            title,
+            style: TextStyle(
+              fontFamily: segoeFont,
+              fontSize: 15.sp,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ==================== ONLINE PORTRAIT LAYOUT ====================
+  Widget _buildOnlinePortraitLayout() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Column(
         children: [
           SizedBox(height: 6.h),
-
-          // 1. TOP ACTION BAR
           _buildTopActionBar(),
-
           SizedBox(height: 10.h),
-
-          // 2. TITLE HEADER
           Obx(
             () => Text(
               '${controller.categoryTitle.value} Question – ${controller.points.value} Points',
@@ -83,109 +427,53 @@ class QuestionScreen extends GetView<QuestionController> {
               textAlign: TextAlign.center,
             ),
           ),
-
           SizedBox(height: 10.h),
-
-          // 3. DUAL-MODE DYNAMIC BODY (ONLINE vs OFFLINE)
           Expanded(
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Obx(() {
-                final isOnline = controller.isOnlineMatch.value;
-
-                if (isOnline) {
-                  // ONLINE MULTIPLAYER MODE LAYOUT
-                  if (controller.viewState.value ==
-                      QuestionViewState.resultDistribution) {
-                    return _buildResultDistributionContent(isLandscape: false);
-                  }
-                  return Column(
-                    children: [
-                      _buildQuestionBox(isLandscape: false),
-                      SizedBox(height: 14.h),
-                      _buildOnlineChatContainer(isLandscape: false),
-                      SizedBox(height: 14.h),
-                      _buildTimerPill(isLandscape: false),
-                      SizedBox(height: 10.h),
-                      _buildAnswerInputField(isLandscape: false),
-                      SizedBox(height: 12.h),
-                      _buildSubmitAnswerButton(isLandscape: false),
-                      SizedBox(height: 14.h),
-                    ],
-                  );
-                } else {
-                  // ORIGINAL OFFLINE MODE LAYOUT
-                  if (controller.viewState.value ==
-                      QuestionViewState.resultDistribution) {
-                    return _buildResultDistributionContent(isLandscape: false);
-                  }
-                  return Column(
-                    children: [
-                      _buildQuestionBox(isLandscape: false),
-                      SizedBox(height: 14.h),
-                      _buildTimerPill(isLandscape: false),
-                      SizedBox(height: 16.h),
-                      _buildActionButtons(isLandscape: false),
-                      SizedBox(height: 20.h),
-                    ],
-                  );
+                if (controller.viewState.value ==
+                    QuestionViewState.resultDistribution) {
+                  return _buildResultDistributionContent(isLandscape: false);
                 }
+                return Column(
+                  children: [
+                    _buildQuestionBox(isLandscape: false),
+                    SizedBox(height: 14.h),
+                    _buildOnlineChatContainer(isLandscape: false),
+                    SizedBox(height: 14.h),
+                    _buildTimerPill(isLandscape: false),
+                    SizedBox(height: 10.h),
+                    _buildAnswerInputField(isLandscape: false),
+                    SizedBox(height: 12.h),
+                    _buildSubmitAnswerButton(isLandscape: false),
+                    SizedBox(height: 14.h),
+                  ],
+                );
               }),
             ),
           ),
-
-          // 4. SCOREBOARD LAYER (ONLINE vs OFFLINE)
-          Obx(() {
-            final isOnline = controller.isOnlineMatch.value;
-
-            if (isOnline) {
-              return Column(
-                children: [
-                  _buildOnlinePlayerCard(
-                    name: controller.player1.value.name,
-                    score: controller.player1.value.score.toString(),
-                    isTurn: controller.player1.value.isTurn,
-                    avatarColor: const Color(0xFF275BEA),
-                  ),
-                  SizedBox(height: 6.h),
-                  _buildTeamTurnIndicatorPill(isLandscape: false),
-                  SizedBox(height: 6.h),
-                  _buildOnlinePlayerCard(
-                    name: controller.player2.value.name,
-                    score: controller.player2.value.score.toString(),
-                    isTurn: controller.player2.value.isTurn,
-                    avatarColor: const Color(0xFFE54124),
-                  ),
-                ],
-              );
-            } else {
-              return Column(
-                children: [
-                  _buildPlayerCard(
-                    name: controller.player1.value.name,
-                    score: controller.player1.value.score.toString(),
-                    isTurn: controller.player1.value.isTurn,
-                    avatarInitials: controller.player1.value.avatarInitials,
-                    avatarColor: const Color(0xFF275BEA),
-                  ),
-                  SizedBox(height: 8.h),
-                  if (controller.viewState.value !=
-                      QuestionViewState.resultDistribution) ...[
-                    _buildTurnButton(),
-                    SizedBox(height: 8.h),
-                  ],
-                  _buildPlayerCard(
-                    name: controller.player2.value.name,
-                    score: controller.player2.value.score.toString(),
-                    isTurn: controller.player2.value.isTurn,
-                    avatarInitials: controller.player2.value.avatarInitials,
-                    avatarColor: const Color(0xFFE54124),
-                  ),
-                ],
-              );
-            }
-          }),
-
+          Obx(
+            () => Column(
+              children: [
+                _buildOnlinePlayerCard(
+                  name: controller.player1.value.name,
+                  score: controller.player1.value.score.toString(),
+                  isTurn: controller.player1.value.isTurn,
+                  avatarColor: const Color(0xFF275BEA),
+                ),
+                SizedBox(height: 6.h),
+                _buildTeamTurnIndicatorPill(isLandscape: false),
+                SizedBox(height: 6.h),
+                _buildOnlinePlayerCard(
+                  name: controller.player2.value.name,
+                  score: controller.player2.value.score.toString(),
+                  isTurn: controller.player2.value.isTurn,
+                  avatarColor: const Color(0xFFE54124),
+                ),
+              ],
+            ),
+          ),
           SizedBox(height: 10.h),
         ],
       ),
