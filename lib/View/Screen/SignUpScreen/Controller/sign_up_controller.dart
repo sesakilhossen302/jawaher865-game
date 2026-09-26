@@ -44,28 +44,28 @@ class SignUpController extends GetxController {
     Get.bottomSheet(
       Container(
         decoration: const BoxDecoration(
-          color: Color(0xFF065967),
+          color: Colors.white,
           borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              title: const Text('Male', style: TextStyle(color: Colors.white)),
+              title: const Text('Male', style: TextStyle(color: Color(0xFF222222), fontWeight: FontWeight.w600)),
               onTap: () {
                 genderController.text = 'Male';
                 Get.back();
               },
             ),
             ListTile(
-              title: const Text('Female', style: TextStyle(color: Colors.white)),
+              title: const Text('Female', style: TextStyle(color: Color(0xFF222222), fontWeight: FontWeight.w600)),
               onTap: () {
                 genderController.text = 'Female';
                 Get.back();
               },
             ),
             ListTile(
-              title: const Text('Other', style: TextStyle(color: Colors.white)),
+              title: const Text('Other', style: TextStyle(color: Color(0xFF222222), fontWeight: FontWeight.w600)),
               onTap: () {
                 genderController.text = 'Other';
                 Get.back();
