@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../Utils/AppIcons/app_icons.dart';
+import '../../../Utils/AppImg/app_img.dart';
 
 class CustomPlayCard extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
   final String? leftSvgPath;
   final String? rightSvgPath;
+  final String? leftImagePath;
+  final String? rightImagePath;
   final double? height;
   final double? width;
   final List<Color>? gradientColors;
@@ -19,6 +22,8 @@ class CustomPlayCard extends StatelessWidget {
     required this.onTap,
     this.leftSvgPath,
     this.rightSvgPath,
+    this.leftImagePath,
+    this.rightImagePath,
     this.height,
     this.width,
     this.gradientColors,
@@ -111,31 +116,26 @@ class CustomPlayCard extends StatelessWidget {
             // 2. FOREGROUND ILLUSTRATIONS & PLAY BUTTON
             // ============================================
 
-            // Left Character SVG
+            // Left Character (Male)
             Positioned(
               left: 5.w,
               bottom: 0,
-              child: SvgPicture.asset(
-                leftSvgPath ?? AppIcons.singleMaleImg,
+              child: _buildCharacter(
+                imagePath: leftImagePath,
+                svgPath: leftSvgPath ?? AppIcons.singleMaleImg,
                 height: 130.h,
-                fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) {
-                  return const SizedBox();
-                },
               ),
             ),
 
-            // Right Character SVG
+            // Right Character (Female - 9-Photoroom 1.png)
             Positioned(
-              right: 10.w,
+              right: 6.w,
               bottom: 0,
-              child: SvgPicture.asset(
-                rightSvgPath ?? AppIcons.singleFemaleImg,
-                height: 130.h,
-                fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) {
-                  return const SizedBox();
-                },
+              child: _buildCharacter(
+                imagePath: rightImagePath ??
+                    (rightSvgPath == null ? AppImg.playRightFemaleImg : null),
+                svgPath: rightSvgPath,
+                height: 140.h,
               ),
             ),
 
@@ -181,5 +181,29 @@ class CustomPlayCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildCharacter({
+    String? imagePath,
+    String? svgPath,
+    required double height,
+  }) {
+    if (imagePath != null && imagePath.isNotEmpty) {
+      return Image.asset(
+        imagePath,
+        height: height,
+        fit: BoxFit.contain,
+        errorBuilder: (context, error, stackTrace) => const SizedBox(),
+      );
+    }
+    if (svgPath != null && svgPath.isNotEmpty) {
+      return SvgPicture.asset(
+        svgPath,
+        height: height,
+        fit: BoxFit.contain,
+        errorBuilder: (context, error, stackTrace) => const SizedBox(),
+      );
+    }
+    return const SizedBox();
   }
 }

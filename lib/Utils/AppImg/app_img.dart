@@ -8,6 +8,11 @@ class AppImg {
   static const String routeitBackground = '$basePath/routeit-Background-image .png';
   static const String middleMedalImg = '$basePath/Middle-img🏅.png';
 
+  // Home Screen Character Avatars
+  static const String leaderboardLeftElderlyImg = '$basePath/7-Photoroom 2.png';
+  static const String leaderboardRightYoungManImg = '$basePath/2-Photoroom 1.png';
+  static const String playRightFemaleImg = '$basePath/9-Photoroom 1.png';
+
   // Category Images
   static const String aiImg = '$basePath/AI-img.png';
   static const String flagsImg = '$basePath/Flags-img.png';

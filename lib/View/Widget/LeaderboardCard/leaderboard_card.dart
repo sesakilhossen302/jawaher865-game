@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../../Utils/AppIcons/app_icons.dart';
 import '../../../Utils/AppImg/app_img.dart';
 
 class LeaderboardWinnerCard extends StatelessWidget {
@@ -9,6 +8,8 @@ class LeaderboardWinnerCard extends StatelessWidget {
   final String score;
   final String avatarText;
   final String? avatarImagePath;
+  final String? leftImagePath;
+  final String? rightImagePath;
   final VoidCallback? onTap;
 
   const LeaderboardWinnerCard({
@@ -17,6 +18,8 @@ class LeaderboardWinnerCard extends StatelessWidget {
     this.score = '0',
     this.avatarText = 'ش',
     this.avatarImagePath,
+    this.leftImagePath,
+    this.rightImagePath,
     this.onTap,
   });
 
@@ -50,25 +53,25 @@ class LeaderboardWinnerCard extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            // Left Character Illustration
+            // Left Character Illustration (Elderly Man with Phone - 7-Photoroom 2.png)
             Positioned(
-              left: 4.w,
+              left: 2.w,
               bottom: 0,
-              child: SvgPicture.asset(
-                AppIcons.singleMaleImg,
-                height: 75.h,
+              child: Image.asset(
+                leftImagePath ?? AppImg.leaderboardLeftElderlyImg,
+                height: 84.h,
                 fit: BoxFit.contain,
                 errorBuilder: (context, error, stackTrace) => const SizedBox(),
               ),
             ),
 
-            // Right Character Illustration
+            // Right Character Illustration (Young Man in Blue with Phone - 2-Photoroom 1.png)
             Positioned(
-              right: 4.w,
+              right: 2.w,
               bottom: 0,
-              child: SvgPicture.asset(
-                AppIcons.blueTeamImg,
-                height: 75.h,
+              child: Image.asset(
+                rightImagePath ?? AppImg.leaderboardRightYoungManImg,
+                height: 96.h,
                 fit: BoxFit.contain,
                 errorBuilder: (context, error, stackTrace) => const SizedBox(),
               ),

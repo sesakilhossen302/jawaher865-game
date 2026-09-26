@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../../Utils/AppIcons/app_icons.dart';
+import '../../../Utils/AppImg/app_img.dart';
 import '../../../Utils/StaticString/static_string.dart';
 import '../../Widget/CustomPlayCard/custom_play_card.dart';
 import '../../Widget/LeaderboardCard/leaderboard_card.dart';
@@ -160,7 +161,7 @@ class HomeScreen extends GetView<HomeController> {
             title: StaticString.play.tr,
             onTap: controller.onPlayTap,
             leftSvgPath: AppIcons.singleMaleImg,
-            rightSvgPath: AppIcons.singleFemaleImg,
+            rightImagePath: AppImg.playRightFemaleImg,
           ),
 
           SizedBox(height: 24.h),
@@ -246,6 +247,8 @@ class HomeScreen extends GetView<HomeController> {
             username: 'demo_user',
             score: '0',
             avatarText: 'ش',
+            leftImagePath: AppImg.leaderboardLeftElderlyImg,
+            rightImagePath: AppImg.leaderboardRightYoungManImg,
             onTap: controller.onViewAllLeaderboardTap,
           ),
 
