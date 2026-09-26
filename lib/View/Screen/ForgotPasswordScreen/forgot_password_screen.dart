@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../Utils/AppIcons/app_icons.dart';
 import '../../../Utils/AppImg/app_img.dart';
 import '../../../Utils/StaticString/static_string.dart';
+import '../../Widget/CustomGradientButton/custom_gradient_button.dart';
 import 'Controller/forgot_password_controller.dart';
 
 class ForgotPasswordScreen extends GetView<ForgotPasswordController> {
@@ -93,7 +94,7 @@ class ForgotPasswordScreen extends GetView<ForgotPasswordController> {
 
                       SizedBox(height: 24.h),
 
-                      // Forgot Password
+                      // Forgot Password Title
                       Center(
                         child: Text(
                           StaticString.forgotPasswordTitle.tr,
@@ -108,43 +109,22 @@ class ForgotPasswordScreen extends GetView<ForgotPasswordController> {
 
                       SizedBox(height: 28.h),
 
-                      // Email
+                      // Email Field
                       _buildInputField(
                         controller: controller.emailController,
-                        hintText: StaticString.email.tr,
+                        hintText: StaticString.enterYourEmail.tr,
                         svgPrefixIcon: AppIcons.emailIcon,
                         keyboardType: TextInputType.emailAddress,
                       ),
 
                       SizedBox(height: 32.h),
 
-                      // Send Verification Code
-                      SizedBox(
-                        width: double.infinity,
+                      // Send Verification Code Button (Coral-Orange Gradient)
+                      CustomGradientButton(
+                        onTap: controller.sendVerificationCode,
+                        text: StaticString.sendVerificationCode.tr,
                         height: 54.h,
-                        child: ElevatedButton(
-                          onPressed: controller.sendVerificationCode,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF3358FE),
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.r),
-                              side: BorderSide(
-                                color: const Color(0xFF38E5D8),
-                                width: 1.5.w,
-                              ),
-                            ),
-                          ),
-                          child: Text(
-                            StaticString.sendVerificationCode.tr,
-                            style: TextStyle(
-                              fontFamily: segoeFont,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                        borderRadius: BorderRadius.circular(25.r),
                       ),
 
                       SizedBox(height: 40.h),
@@ -168,9 +148,12 @@ class ForgotPasswordScreen extends GetView<ForgotPasswordController> {
     return Container(
       height: 54.h,
       decoration: BoxDecoration(
-        color: const Color(0xFF065967).withValues(alpha: 0.85),
-        borderRadius: BorderRadius.circular(18.r),
-        border: Border.all(color: const Color(0xFF38E5D8), width: 1.5.w),
+        color: Colors.white.withValues(alpha: 0.22),
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.40),
+          width: 1.2.w,
+        ),
       ),
       child: TextField(
         controller: controller,
@@ -178,14 +161,14 @@ class ForgotPasswordScreen extends GetView<ForgotPasswordController> {
         style: TextStyle(
           fontFamily: segoeFont,
           fontSize: 15.sp,
-          color: Colors.white,
+          color: const Color(0xFF222222),
         ),
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: TextStyle(
             fontFamily: segoeFont,
             fontSize: 15.sp,
-            color: Colors.white.withValues(alpha: 0.9),
+            color: const Color(0xFF5A4400).withValues(alpha: 0.65),
           ),
           prefixIcon: Padding(
             padding: EdgeInsets.all(14.r),
@@ -193,12 +176,16 @@ class ForgotPasswordScreen extends GetView<ForgotPasswordController> {
               svgPrefixIcon,
               width: 20.w,
               height: 20.h,
-              colorFilter: const ColorFilter.mode(
-                Colors.white,
+              colorFilter: ColorFilter.mode(
+                const Color(0xFF5A4400).withValues(alpha: 0.75),
                 BlendMode.srcIn,
               ),
               errorBuilder: (context, error, stackTrace) {
-                return Icon(Icons.input, color: Colors.white, size: 20.sp);
+                return Icon(
+                  Icons.input,
+                  color: const Color(0xFF5A4400).withValues(alpha: 0.75),
+                  size: 20.sp,
+                );
               },
             ),
           ),
