@@ -37,11 +37,11 @@ class HomeScreen extends GetView<HomeController> {
                   vertical: 6.h,
                 ),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF065967).withValues(alpha: 0.85),
+                  color: Colors.white.withValues(alpha: 0.25),
                   borderRadius: BorderRadius.circular(20.r),
                   border: Border.all(
-                    color: const Color(0xFF38E5D8),
-                    width: 1.5.w,
+                    color: Colors.white.withValues(alpha: 0.45),
+                    width: 1.2.w,
                   ),
                 ),
                 child: Row(
@@ -52,7 +52,7 @@ class HomeScreen extends GetView<HomeController> {
                       height: 38.h,
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Color(0xFF009EA0),
+                        color: Color(0xFFF5B800),
                       ),
                       child: Center(
                         child: Text(
@@ -80,7 +80,7 @@ class HomeScreen extends GetView<HomeController> {
                             fontFamily: segoeFont,
                             fontSize: 14.sp,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: const Color(0xFF222222),
                           ),
                         ),
                         Text(
@@ -88,7 +88,7 @@ class HomeScreen extends GetView<HomeController> {
                           style: TextStyle(
                             fontFamily: segoeFont,
                             fontSize: 11.sp,
-                            color: const Color(0xFFB4ECE7),
+                            color: const Color(0xFF555555),
                           ),
                         ),
                       ],
@@ -104,10 +104,10 @@ class HomeScreen extends GetView<HomeController> {
                 height: 44.h,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: const Color(0xFF065967).withValues(alpha: 0.85),
+                  color: Colors.white.withValues(alpha: 0.25),
                   border: Border.all(
-                    color: const Color(0xFF38E5D8),
-                    width: 1.5.w,
+                    color: Colors.white.withValues(alpha: 0.45),
+                    width: 1.2.w,
                   ),
                 ),
                 child: Center(
@@ -117,7 +117,7 @@ class HomeScreen extends GetView<HomeController> {
                       fontFamily: segoeFont,
                       fontSize: 13.sp,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: const Color(0xFF222222),
                     ),
                   ),
                 ),
@@ -190,13 +190,13 @@ class HomeScreen extends GetView<HomeController> {
                       fontFamily: segoeFont,
                       fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: const Color(0xFF222222),
                     ),
                   ),
                 ],
               ),
 
-              // View All Button Pill
+              // View All Button Pill (Vibrant Red)
               GestureDetector(
                 onTap: controller.onViewAllLeaderboardTap,
                 child: Container(
@@ -205,12 +205,15 @@ class HomeScreen extends GetView<HomeController> {
                     vertical: 6.h,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF065967).withValues(alpha: 0.65),
+                    color: const Color(0xFFFF3B30),
                     borderRadius: BorderRadius.circular(16.r),
-                    border: Border.all(
-                      color: const Color(0xFF38E5D8).withValues(alpha: 0.4),
-                      width: 1.w,
-                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFFFF3B30).withValues(alpha: 0.35),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
                   ),
                   child: Row(
                     children: [
