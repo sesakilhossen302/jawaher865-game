@@ -63,10 +63,10 @@ class MainScreen extends GetView<MainController> {
                       width: double.infinity,
                       padding: EdgeInsets.only(bottom: bottomPadding),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFE5B518).withValues(alpha: 0.95),
+                        color: const Color(0xFFF0BB02),
                         border: Border(
                           top: BorderSide(
-                            color: Colors.white.withValues(alpha: 0.40),
+                            color: Colors.white.withValues(alpha: 0.35),
                             width: 1.w,
                           ),
                         ),
@@ -79,7 +79,7 @@ class MainScreen extends GetView<MainController> {
                         ],
                       ),
                       child: SizedBox(
-                        height: 64.h,
+                        height: 72.h,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -128,50 +128,69 @@ class MainScreen extends GetView<MainController> {
     required IconData fallbackIcon,
   }) {
     final isSelected = controller.selectedIndex.value == index;
-    final activeColor = Colors.white;
-    final inactiveColor = Colors.white.withValues(alpha: 0.65);
 
     return GestureDetector(
       onTap: () => controller.changeIndex(index),
       behavior: HitTestBehavior.opaque,
       child: SizedBox(
-        width: 70.w,
+        width: 75.w,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              padding: EdgeInsets.all(isSelected ? 6.r : 0),
-              decoration: isSelected
-                  ? BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white.withValues(alpha: 0.30),
-                    )
-                  : null,
-              child: SvgPicture.asset(
-                iconPath,
-                width: 20.w,
-                height: 20.h,
-                colorFilter: ColorFilter.mode(
-                  isSelected ? activeColor : inactiveColor,
-                  BlendMode.srcIn,
+            // Circular 3D Glossy Badge with Active White Glowing Ring
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              width: 44.w,
+              height: 44.w,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: isSelected ? Colors.white : Colors.transparent,
+                  width: 2.2.w,
                 ),
-                errorBuilder: (context, error, stackTrace) {
-                  return Icon(
-                    fallbackIcon,
-                    size: 20.sp,
-                    color: isSelected ? activeColor : inactiveColor,
-                  );
-                },
+                boxShadow: isSelected
+                    ? [
+                        BoxShadow(
+                          color: Colors.white.withValues(alpha: 0.65),
+                          blurRadius: 10,
+                          spreadRadius: 1,
+                        ),
+                      ]
+                    : [],
+              ),
+              child: Center(
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 200),
+                  opacity: isSelected ? 1.0 : 0.55,
+                  child: SvgPicture.asset(
+                    iconPath,
+                    width: 38.w,
+                    height: 38.w,
+                    fit: BoxFit.contain,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Icon(
+                        fallbackIcon,
+                        size: 24.sp,
+                        color: isSelected ? Colors.white : Colors.white.withValues(alpha: 0.6),
+                      );
+                    },
+                  ),
+                ),
               ),
             ),
-            SizedBox(height: 2.h),
+
+            SizedBox(height: 3.h),
+
+            // Tab Text Label
             Text(
               label,
               style: TextStyle(
                 fontFamily: segoeFont,
-                fontSize: 11.sp,
+                fontSize: 12.sp,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                color: isSelected ? activeColor : inactiveColor,
+                color: isSelected
+                    ? Colors.white
+                    : Colors.white.withValues(alpha: 0.65),
               ),
             ),
           ],
