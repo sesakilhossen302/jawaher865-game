@@ -32,8 +32,8 @@ class CustomPlayCard extends StatelessWidget {
     final effectiveHeight = height ?? 180.h;
     final effectiveWidth = width ?? double.infinity;
     final effectiveGradient =
-        gradientColors ?? const [Color(0xFF009EA0), Color(0xFF38E5D8)];
-    final effectiveBorderColor = borderColor ?? const Color(0xFF38E5D8);
+        gradientColors ?? const [Color(0xFFFF4848), Color(0xFFFF7A00)];
+    final effectiveBorderColor = borderColor ?? Colors.transparent;
 
     return GestureDetector(
       onTap: onTap,
@@ -45,13 +45,15 @@ class CustomPlayCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(24.r),
           gradient: LinearGradient(
             colors: effectiveGradient,
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-          border: Border.all(color: effectiveBorderColor, width: 1.5.w),
+          border: effectiveBorderColor != Colors.transparent
+              ? Border.all(color: effectiveBorderColor, width: 1.5.w)
+              : null,
           boxShadow: [
             BoxShadow(
-              color: effectiveBorderColor.withValues(alpha: 0.3),
+              color: effectiveGradient.first.withValues(alpha: 0.35),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -60,10 +62,10 @@ class CustomPlayCard extends StatelessWidget {
         child: Stack(
           children: [
             // ============================================
-            // 1. TRANSLUCENT DECORATIVE CIRCLES (GOL GOL BUBBLES)
+            // 1. TRANSLUCENT DECORATIVE CIRCLES
             // ============================================
 
-            // Circle 1: Top-Left Overflow Bubble
+            // Circle 1: Top-Left Bubble
             Positioned(
               left: -35.w,
               top: -35.h,
@@ -72,12 +74,12 @@ class CustomPlayCard extends StatelessWidget {
                 height: 150.h,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: const Color(0xFF4A7FFF).withValues(alpha: 0.40),
+                  color: Colors.white.withValues(alpha: 0.12),
                 ),
               ),
             ),
 
-            // Circle 2: Top-Right Bubble (Previous white color)
+            // Circle 2: Top-Right Bubble
             Positioned(
               right: 40.w,
               top: -25.h,
@@ -86,12 +88,12 @@ class CustomPlayCard extends StatelessWidget {
                 height: 125.h,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white.withValues(alpha: 0.14),
+                  color: Colors.white.withValues(alpha: 0.12),
                 ),
               ),
             ),
 
-            // Circle 3: Bottom-Right Overflow Bubble
+            // Circle 3: Bottom-Right Bubble
             Positioned(
               right: -45.w,
               bottom: -45.h,
@@ -100,40 +102,10 @@ class CustomPlayCard extends StatelessWidget {
                 height: 180.h,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: const Color(0xFF4A7FFF).withValues(alpha: 0.35),
+                  color: Colors.white.withValues(alpha: 0.12),
                 ),
               ),
             ),
-
-            // // Question mark ? watermark top right
-            // Positioned(
-            //   right: 14.w,
-            //   top: 10.h,
-            //   child: Text(
-            //     '?',
-            //     style: TextStyle(
-            //       fontFamily: segoeFont,
-            //       fontSize: 20.sp,
-            //       fontWeight: FontWeight.bold,
-            //       color: Colors.white.withValues(alpha: 0.25),
-            //     ),
-            //   ),
-            // ),
-
-            // Question mark ? watermark bottom left
-            // Positioned(
-            //   left: 14.w,
-            //   bottom: 10.h,
-            //   child: Text(
-            //     '?',
-            //     style: TextStyle(
-            //       fontFamily: segoeFont,
-            //       fontSize: 18.sp,
-            //       fontWeight: FontWeight.bold,
-            //       color: Colors.white.withValues(alpha: 0.20),
-            //     ),
-            //   ),
-            // ),
 
             // ============================================
             // 2. FOREGROUND ILLUSTRATIONS & PLAY BUTTON
@@ -167,7 +139,7 @@ class CustomPlayCard extends StatelessWidget {
               ),
             ),
 
-            // Center Play Button & Title
+            // Center Play Button & Title (Green Circular Play Button)
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -177,8 +149,14 @@ class CustomPlayCard extends StatelessWidget {
                     height: 56.h,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.white.withValues(alpha: 0.2),
-                      border: Border.all(color: Colors.white, width: 2.w),
+                      color: const Color(0xFF00C853),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF00C853).withValues(alpha: 0.4),
+                          blurRadius: 10,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
                     ),
                     child: Icon(
                       Icons.play_arrow_rounded,
