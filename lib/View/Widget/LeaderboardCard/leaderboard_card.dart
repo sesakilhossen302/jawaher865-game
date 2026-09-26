@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../../Utils/AppIcons/app_icons.dart';
 import '../../../Utils/AppImg/app_img.dart';
 
 class LeaderboardWinnerCard extends StatelessWidget {
@@ -30,48 +31,48 @@ class LeaderboardWinnerCard extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         padding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 16.w),
         decoration: BoxDecoration(
-          color: const Color(0xFF065967).withValues(alpha: 0.85),
           borderRadius: BorderRadius.circular(24.r),
-          border: Border.all(color: const Color(0xFF38E5D8), width: 1.5.w),
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFFFF4848),
+              Color(0xFFFF7A00),
+            ],
+          ),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF38E5D8).withValues(alpha: 0.25),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
+              color: const Color(0xFFFF4848).withValues(alpha: 0.35),
+              blurRadius: 14,
+              offset: const Offset(0, 6),
             ),
           ],
         ),
         child: Stack(
           children: [
-            // // Question mark ? watermark top right
-            // Positioned(
-            //   right: 12.w,
-            //   top: 8.h,
-            //   child: Text(
-            //     '?',
-            //     style: TextStyle(
-            //       fontFamily: segoeFont,
-            //       fontSize: 20.sp,
-            //       fontWeight: FontWeight.bold,
-            //       color: const Color(0xFF38E5D8).withValues(alpha: 0.30),
-            //     ),
-            //   ),
-            // ),
+            // Left Character Illustration
+            Positioned(
+              left: 4.w,
+              bottom: 0,
+              child: SvgPicture.asset(
+                AppIcons.singleMaleImg,
+                height: 75.h,
+                fit: BoxFit.contain,
+                errorBuilder: (context, error, stackTrace) => const SizedBox(),
+              ),
+            ),
 
-            // // Question mark ? watermark bottom left
-            // Positioned(
-            //   left: 12.w,
-            //   bottom: 8.h,
-            //   child: Text(
-            //     '?',
-            //     style: TextStyle(
-            //       fontFamily: segoeFont,
-            //       fontSize: 20.sp,
-            //       fontWeight: FontWeight.bold,
-            //       color: const Color(0xFF38E5D8).withValues(alpha: 0.30),
-            //     ),
-            //   ),
-            // ),
+            // Right Character Illustration
+            Positioned(
+              right: 4.w,
+              bottom: 0,
+              child: SvgPicture.asset(
+                AppIcons.blueTeamImg,
+                height: 75.h,
+                fit: BoxFit.contain,
+                errorBuilder: (context, error, stackTrace) => const SizedBox(),
+              ),
+            ),
 
             // Main Content Column
             Center(
@@ -81,7 +82,7 @@ class LeaderboardWinnerCard extends StatelessWidget {
                   // Top Medal Image
                   Image.asset(
                     AppImg.middleMedalImg,
-                    width: 20.w,
+                    width: 22.w,
                     height: 28.h,
                     fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) {
@@ -93,19 +94,26 @@ class LeaderboardWinnerCard extends StatelessWidget {
                     },
                   ),
 
-                  SizedBox(height: 6.h),
+                  SizedBox(height: 4.h),
 
-                  // Avatar Circle with Cyan Border
+                  // Avatar Circle with Golden/Yellow Border
                   Container(
-                    width: 72.w,
-                    height: 72.h,
+                    width: 68.w,
+                    height: 68.h,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: const Color(0xFF35B3E6),
+                      color: const Color(0xFFF5B800),
                       border: Border.all(
-                        color: const Color(0xFF5EE8F7),
+                        color: const Color(0xFFFFE57F),
                         width: 3.5.w,
                       ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.15),
+                          blurRadius: 8,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
                     ),
                     child: Center(
                       child: avatarImagePath != null
@@ -114,7 +122,7 @@ class LeaderboardWinnerCard extends StatelessWidget {
                               avatarText,
                               style: TextStyle(
                                 fontFamily: segoeFont,
-                                fontSize: 30.sp,
+                                fontSize: 28.sp,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
@@ -122,7 +130,7 @@ class LeaderboardWinnerCard extends StatelessWidget {
                     ),
                   ),
 
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 8.h),
 
                   // Username
                   Text(
@@ -135,18 +143,19 @@ class LeaderboardWinnerCard extends StatelessWidget {
                     ),
                   ),
 
-                  SizedBox(height: 4.h),
-
-                  // Score
-                  Text(
-                    score,
-                    style: TextStyle(
-                      fontFamily: segoeFont,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.bold,
-                      color: const Color(0xFFFF7A00),
+                  if (score != '0') ...[
+                    SizedBox(height: 4.h),
+                    // Score
+                    Text(
+                      score,
+                      style: TextStyle(
+                        fontFamily: segoeFont,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
+                  ],
                 ],
               ),
             ),
