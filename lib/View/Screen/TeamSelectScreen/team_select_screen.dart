@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../Utils/AppIcons/app_icons.dart';
 import '../../../Utils/AppImg/app_img.dart';
 import '../../../Utils/StaticString/static_string.dart';
+import '../../Widget/CustomGradientButton/custom_gradient_button.dart';
 import 'Controller/team_select_controller.dart';
 
 class TeamSelectScreen extends GetView<TeamSelectController> {
@@ -107,18 +108,18 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
                             children: [
                               Column(
                                 children: [
-                                  // 1. BLUE TEAM CARD
+                                  // 1. GREEN TEAM CARD (matching screenshot)
                                   _buildTeamCard(
                                     sectionTitle: StaticString.blueTeamCaps.tr,
                                     controller: controller.blueTeamController,
                                     gradientColors: const [
-                                      Color(0xFF275BEA),
-                                      Color(0xFF3B72FE),
+                                      Color(0xFF00C853),
+                                      Color(0xFF10B981),
                                     ],
-                                    borderColor: const Color(0xFF67B0FF).withValues(alpha: 0.6),
-                                    inputBgColor: const Color(0xFF4A7FFF).withValues(alpha: 0.35),
-                                    circleColor: const Color(0xFF4A7FFF).withValues(alpha: 0.35),
-                                    labelColor: const Color(0xFFD4E3FF),
+                                    borderColor: const Color(0xFF69F0AE).withValues(alpha: 0.6),
+                                    inputBgColor: const Color(0xFF00C853).withValues(alpha: 0.25),
+                                    circleColor: const Color(0xFF00E676).withValues(alpha: 0.35),
+                                    labelColor: const Color(0xFFE8F5E9),
                                     illustrationSvgPath: AppIcons.blueTeamImg,
                                     illustrationHeight: 85.h,
                                     illustrationRight: 22.w,
@@ -126,18 +127,18 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
 
                                   SizedBox(height: 16.h),
 
-                                  // 2. RED TEAM CARD
+                                  // 2. RED TEAM CARD (matching screenshot)
                                   _buildTeamCard(
                                     sectionTitle: StaticString.redTeamCaps.tr,
                                     controller: controller.redTeamController,
                                     gradientColors: const [
-                                      Color(0xFFE54124),
-                                      Color(0xFFF15934),
+                                      Color(0xFFFF4848),
+                                      Color(0xFFFF7A00),
                                     ],
                                     borderColor: const Color(0xFFFF8B74).withValues(alpha: 0.6),
-                                    inputBgColor: const Color(0xFFF86649).withValues(alpha: 0.35),
-                                    circleColor: const Color(0xFFFF7256).withValues(alpha: 0.35),
-                                    labelColor: const Color(0xFFFFDCD5),
+                                    inputBgColor: const Color(0xFFFF4848).withValues(alpha: 0.25),
+                                    circleColor: const Color(0xFFFF7A00).withValues(alpha: 0.35),
+                                    labelColor: const Color(0xFFFFEBE6),
                                     illustrationSvgPath: AppIcons.redTeamImg,
                                     illustrationHeight: 85.h,
                                     illustrationRight: 14.w,
@@ -179,33 +180,10 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
 
                       SizedBox(height: 30.h),
 
-                      // BOTTOM NEXT ACTION BUTTON
-                      SizedBox(
-                        width: double.infinity,
-                        height: 54.h,
-                        child: ElevatedButton(
-                          onPressed: controller.onNextTap,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF3358FE),
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.r),
-                              side: BorderSide(
-                                color: const Color(0xFF38E5D8),
-                                width: 1.5.w,
-                              ),
-                            ),
-                          ),
-                          child: Text(
-                            StaticString.next.tr,
-                            style: TextStyle(
-                              fontFamily: segoeFont,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                      // BOTTOM NEXT ACTION BUTTON (CustomGradientButton)
+                      CustomGradientButton(
+                        text: StaticString.next.tr,
+                        onTap: controller.onNextTap,
                       ),
 
                       SizedBox(height: 24.h),
