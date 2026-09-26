@@ -6,6 +6,7 @@ import 'package:pinput/pinput.dart';
 import '../../../Utils/AppIcons/app_icons.dart';
 import '../../../Utils/AppImg/app_img.dart';
 import '../../../Utils/StaticString/static_string.dart';
+import '../../Widget/CustomGradientButton/custom_gradient_button.dart';
 import 'Controller/otp_controller.dart';
 
 class OtpScreen extends GetView<OtpController> {
@@ -15,7 +16,7 @@ class OtpScreen extends GetView<OtpController> {
 
   @override
   Widget build(BuildContext context) {
-    // Custom Pinput Theme matching UI design
+    // Custom Pinput Theme matching yellow theme design
     final defaultPinTheme = PinTheme(
       width: 48.w,
       height: 54.h,
@@ -23,12 +24,15 @@ class OtpScreen extends GetView<OtpController> {
         fontFamily: segoeFont,
         fontSize: 20.sp,
         fontWeight: FontWeight.bold,
-        color: Colors.white,
+        color: const Color(0xFF222222),
       ),
       decoration: BoxDecoration(
-        color: const Color(0xFF065967).withValues(alpha: 0.85),
+        color: Colors.white.withValues(alpha: 0.25),
         borderRadius: BorderRadius.circular(14.r),
-        border: Border.all(color: const Color(0xFF38E5D8), width: 1.5.w),
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.45),
+          width: 1.2.w,
+        ),
       ),
     );
 
@@ -38,7 +42,14 @@ class OtpScreen extends GetView<OtpController> {
       ),
     );
 
-    final submittedPinTheme = defaultPinTheme;
+    final submittedPinTheme = defaultPinTheme.copyWith(
+      decoration: defaultPinTheme.decoration!.copyWith(
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.65),
+          width: 1.5.w,
+        ),
+      ),
+    );
 
     return Scaffold(
       body: SizedBox(
@@ -146,33 +157,12 @@ class OtpScreen extends GetView<OtpController> {
 
                       SizedBox(height: 32.h),
 
-                      // Verify and Continue Button
-                      SizedBox(
-                        width: double.infinity,
+                      // Verify and Continue Button (Coral-Orange Gradient)
+                      CustomGradientButton(
+                        onTap: controller.verifyOtp,
+                        text: StaticString.verifyAndContinue.tr,
                         height: 54.h,
-                        child: ElevatedButton(
-                          onPressed: controller.verifyOtp,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF3358FE),
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.r),
-                              side: BorderSide(
-                                color: const Color(0xFF38E5D8),
-                                width: 1.5.w,
-                              ),
-                            ),
-                          ),
-                          child: Text(
-                            StaticString.verifyAndContinue.tr,
-                            style: TextStyle(
-                              fontFamily: segoeFont,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                        borderRadius: BorderRadius.circular(25.r),
                       ),
 
                       SizedBox(height: 24.h),
@@ -187,7 +177,7 @@ class OtpScreen extends GetView<OtpController> {
                               fontFamily: segoeFont,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w600,
-                              color: const Color(0xFFB4ECE7),
+                              color: const Color(0xFF007AFF),
                             ),
                           ),
                         ),
