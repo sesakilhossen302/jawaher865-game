@@ -42,7 +42,7 @@ class PlayScreen extends GetView<PlayController> {
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Column(
               children: [
-                // 1. CARD 1: Challenge Your Melas (Blue Card)
+                // 1. CARD 1: Challenge Your Melas (Green Card matching screenshot)
                 _buildChallengeCard(
                   title: StaticString.challengeYourMelas.tr,
                   subtitle: StaticString.playTogetherOnOneDevice.tr,
@@ -51,20 +51,20 @@ class PlayScreen extends GetView<PlayController> {
                   illustrationSvgPath: AppIcons.challengeYourMelasImg,
                   illustrationHeight: 90.h,
                   gradientColors: const [
-                    Color(0xFF275BEA),
-                    Color(0xFF3B72FE),
+                    Color(0xFF00C853),
+                    Color(0xFF10B981),
                   ],
-                  borderColor: const Color(0xFF67B0FF).withValues(alpha: 0.6),
-                  buttonColor: const Color(0xFF5A89FF),
-                  badgeColor: const Color(0xFF4E7DFC).withValues(alpha: 0.9),
-                  circleColor: const Color(0xFF4A7FFF).withValues(alpha: 0.45),
-                  subtitleColor: const Color(0xFFD4E3FF),
+                  borderColor: const Color(0xFF69F0AE).withValues(alpha: 0.6),
+                  buttonColor: const Color(0xFF00E676),
+                  badgeColor: const Color(0xFF00C853).withValues(alpha: 0.9),
+                  circleColor: const Color(0xFF00E676).withValues(alpha: 0.35),
+                  subtitleColor: const Color(0xFFE8F5E9),
                   onTap: controller.onStartNowTap,
                 ),
 
                 SizedBox(height: 16.h),
 
-                // 2. CARD 2: Challenge Other Melases (Orange-Red Card)
+                // 2. CARD 2: Challenge Other Melases (Orange-Coral Card matching screenshot)
                 _buildChallengeCard(
                   title: StaticString.challengeOtherMelases.tr,
                   subtitle: StaticString.challengePlayersOnline.tr,
@@ -72,20 +72,20 @@ class PlayScreen extends GetView<PlayController> {
                   badgeIcon: Icons.language_rounded,
                   illustrationSvgPath: AppIcons.challengeOtherMelasesImg,
                   gradientColors: const [
-                    Color(0xFFE54124),
-                    Color(0xFFF15934),
+                    Color(0xFFFF4848),
+                    Color(0xFFFF7A00),
                   ],
                   borderColor: const Color(0xFFFF8B74).withValues(alpha: 0.6),
-                  buttonColor: const Color(0xFFF66B4F),
-                  badgeColor: const Color(0xFFF86649).withValues(alpha: 0.9),
-                  circleColor: const Color(0xFFFF7256).withValues(alpha: 0.45),
-                  subtitleColor: const Color(0xFFFFDCD5),
+                  buttonColor: const Color(0xFFFF5722),
+                  badgeColor: const Color(0xFFFF4848).withValues(alpha: 0.9),
+                  circleColor: const Color(0xFFFF7A00).withValues(alpha: 0.35),
+                  subtitleColor: const Color(0xFFFFEBE6),
                   onTap: controller.onPlayOnlineTap,
                 ),
 
                 SizedBox(height: 16.h),
 
-                // 3. CARD 3: My Community (Teal-Cyan Card)
+                // 3. CARD 3: My Community (Warm Deep Coral Card)
                 _buildChallengeCard(
                   title: StaticString.myCommunity.tr,
                   subtitle: StaticString.myCommunityTagline.tr,
@@ -93,14 +93,14 @@ class PlayScreen extends GetView<PlayController> {
                   badgeIcon: Icons.groups_rounded,
                   illustrationSvgPath: AppIcons.challengeYourMelasImg,
                   gradientColors: const [
-                    Color(0xFF065967),
-                    Color(0xFF09808E),
+                    Color(0xFFFF5252),
+                    Color(0xFFFF7043),
                   ],
-                  borderColor: const Color(0xFF38E5D8).withValues(alpha: 0.6),
-                  buttonColor: const Color(0xFF0D97A3),
-                  badgeColor: const Color(0xFF00B0B9).withValues(alpha: 0.9),
-                  circleColor: const Color(0xFF0FA8B4).withValues(alpha: 0.45),
-                  subtitleColor: const Color(0xFFB4ECE7),
+                  borderColor: const Color(0xFFFFAB91).withValues(alpha: 0.6),
+                  buttonColor: const Color(0xFFFF5722),
+                  badgeColor: const Color(0xFFFF7043).withValues(alpha: 0.9),
+                  circleColor: const Color(0xFFFF8A65).withValues(alpha: 0.35),
+                  subtitleColor: const Color(0xFFFBE9E7),
                   onTap: controller.onCommunityTap,
                 ),
 
