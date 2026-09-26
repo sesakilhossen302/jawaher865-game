@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../Utils/AppIcons/app_icons.dart';
 import '../../../Utils/AppImg/app_img.dart';
 import '../../../Utils/StaticString/static_string.dart';
+import '../../Widget/CustomGradientButton/custom_gradient_button.dart';
 import 'Controller/sign_controller.dart';
 
 class SignScreen extends GetView<SignController> {
@@ -86,41 +87,93 @@ class SignScreen extends GetView<SignController> {
 
                       SizedBox(height: 20.h),
 
-                      // Social Login Options (Google & Apple)
+                      // Social Login Options (Google, Apple, Email)
                       Column(
                         children: [
-                          _buildSocialButton(
+                          // Continue with Google Button (Golden translucent glass)
+                          _buildCustomButton(
                             onTap: () => controller.signInWithGoogle(),
-                            iconPath: AppIcons.googleIcon,
+                            icon: SvgPicture.asset(
+                              AppIcons.googleIcon,
+                              width: 20.w,
+                              height: 20.h,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Icon(
+                                  Icons.g_mobiledata,
+                                  size: 24.sp,
+                                  color: const Color(0xFF222222),
+                                );
+                              },
+                            ),
                             label: StaticString.continueWithGoogle.tr,
-                            backgroundColor: const Color(
-                              0xFF065967,
-                            ).withValues(alpha: 0.85),
+                            backgroundColor: Colors.white.withValues(alpha: 0.25),
+                            borderColor: Colors.white.withValues(alpha: 0.40),
+                            textColor: const Color(0xFF222222),
+                          ),
+
+                          SizedBox(height: 14.h),
+
+                          // Continue with Apple Button (Dark charcoal/black)
+                          _buildCustomButton(
+                            onTap: () => controller.signInWithApple(),
+                            icon: SvgPicture.asset(
+                              AppIcons.appleIcon,
+                              width: 20.w,
+                              height: 20.h,
+                              colorFilter: const ColorFilter.mode(
+                                Colors.white,
+                                BlendMode.srcIn,
+                              ),
+                              errorBuilder: (context, error, stackTrace) {
+                                return Icon(
+                                  Icons.apple,
+                                  size: 22.sp,
+                                  color: Colors.white,
+                                );
+                              },
+                            ),
+                            label: StaticString.continueWithApple.tr,
+                            backgroundColor: const Color(0xFF222222),
+                            borderColor: Colors.transparent,
                             textColor: Colors.white,
                           ),
 
                           SizedBox(height: 14.h),
 
-                          _buildSocialButton(
-                            onTap: () => controller.signInWithApple(),
-                            iconPath: AppIcons.appleIcon,
-                            label: StaticString.continueWithApple.tr,
-                            backgroundColor: const Color(
-                              0xFF065967,
-                            ).withValues(alpha: 0.85),
-                            textColor: Colors.white,
+                          // Continue with Email Button (Red-Orange Gradient)
+                          CustomGradientButton(
+                            onTap: () => controller.signInWithEmail(),
+                            text: StaticString.continueWithEmail.tr,
+                            height: 54.h,
+                            borderRadius: BorderRadius.circular(25.r),
+                            icon: SvgPicture.asset(
+                              AppIcons.emailIcon,
+                              width: 18.w,
+                              height: 18.h,
+                              colorFilter: const ColorFilter.mode(
+                                Colors.white,
+                                BlendMode.srcIn,
+                              ),
+                              errorBuilder: (context, error, stackTrace) {
+                                return Icon(
+                                  Icons.email_outlined,
+                                  size: 18.sp,
+                                  color: Colors.white,
+                                );
+                              },
+                            ),
                           ),
                         ],
                       ),
 
-                      SizedBox(height: 20.h),
+                      SizedBox(height: 18.h),
 
                       // Divider with 'OR' Text
                       Row(
                         children: [
-                          const Expanded(
+                          Expanded(
                             child: Divider(
-                              color: Color(0xFF38E5D8),
+                              color: const Color(0xFF4A3800).withValues(alpha: 0.25),
                               thickness: 1,
                             ),
                           ),
@@ -130,40 +183,38 @@ class SignScreen extends GetView<SignController> {
                               StaticString.or.tr,
                               style: TextStyle(
                                 fontFamily: segoeFont,
-                                fontSize: 14.sp,
+                                fontSize: 13.sp,
                                 fontWeight: FontWeight.w600,
-                                color: Colors.white,
+                                color: const Color(0xFF4A3800),
                               ),
                             ),
                           ),
-                          const Expanded(
+                          Expanded(
                             child: Divider(
-                              color: Color(0xFF38E5D8),
+                              color: const Color(0xFF4A3800).withValues(alpha: 0.25),
                               thickness: 1,
                             ),
                           ),
                         ],
                       ),
 
-                      SizedBox(height: 20.h),
+                      SizedBox(height: 18.h),
 
-                      // Sign in with Email Button
-                      _buildActionButton(
-                        onTap: () => controller.signInWithEmail(),
-                        label: StaticString.signInWithEmail.tr,
-                        backgroundColor: Colors.white,
-                        textColor: const Color(0xFF222222),
-                      ),
-
-                      SizedBox(height: 14.h),
-
-                      // Continue as Guest Button
-                      _buildActionButton(
+                      // Continue as Guest Button (Solid Pure White)
+                      _buildCustomButton(
                         onTap: () => controller.continueAsGuest(),
                         label: StaticString.continueAsGuest.tr,
-                        backgroundColor: const Color(0xFF3358FE),
-                        textColor: Colors.white,
+                        backgroundColor: Colors.white,
+                        borderColor: Colors.transparent,
+                        textColor: const Color(0xFF1E1E1E),
                         isBold: true,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.06),
+                            blurRadius: 10,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
                       ),
 
                       SizedBox(height: 40.h),
@@ -178,85 +229,49 @@ class SignScreen extends GetView<SignController> {
     );
   }
 
-  Widget _buildSocialButton({
+  Widget _buildCustomButton({
     required VoidCallback onTap,
-    required String iconPath,
     required String label,
     required Color backgroundColor,
     required Color textColor,
     Color? borderColor,
-  }) {
-    return SizedBox(
-      width: double.infinity,
-      height: 54.h,
-      child: ElevatedButton(
-        onPressed: onTap,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor,
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18.r),
-            side: BorderSide(
-              color: borderColor ?? const Color(0xFF38E5D8),
-              width: 1.5.w,
-            ),
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              iconPath,
-              width: 22.w,
-              height: 22.h,
-              errorBuilder: (context, error, stackTrace) {
-                return Icon(Icons.g_mobiledata, size: 24.sp, color: textColor);
-              },
-            ),
-            SizedBox(width: 12.w),
-            Text(
-              label,
-              style: TextStyle(
-                fontFamily: segoeFont,
-                fontSize: 15.sp,
-                fontWeight: FontWeight.w600,
-                color: textColor,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildActionButton({
-    required VoidCallback onTap,
-    required String label,
-    required Color backgroundColor,
-    required Color textColor,
+    Widget? icon,
     bool isBold = false,
+    List<BoxShadow>? boxShadow,
   }) {
-    return SizedBox(
+    return Container(
       width: double.infinity,
       height: 54.h,
-      child: ElevatedButton(
-        onPressed: onTap,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor,
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18.r),
-            side: BorderSide(color: const Color(0xFF38E5D8), width: 1.5.w),
-          ),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            fontFamily: segoeFont,
-            fontSize: 16.sp,
-            fontWeight: isBold ? FontWeight.bold : FontWeight.w600,
-            color: textColor,
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(25.r),
+        border: borderColor != null && borderColor != Colors.transparent
+            ? Border.all(color: borderColor, width: 1.2.w)
+            : null,
+        boxShadow: boxShadow,
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(25.r),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (icon != null) ...[
+                icon,
+                SizedBox(width: 12.w),
+              ],
+              Text(
+                label,
+                style: TextStyle(
+                  fontFamily: segoeFont,
+                  fontSize: 15.sp,
+                  fontWeight: isBold ? FontWeight.bold : FontWeight.w600,
+                  color: textColor,
+                ),
+              ),
+            ],
           ),
         ),
       ),
