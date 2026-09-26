@@ -63,13 +63,20 @@ class MainScreen extends GetView<MainController> {
                       width: double.infinity,
                       padding: EdgeInsets.only(bottom: bottomPadding),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF065967).withValues(alpha: 0.95),
+                        color: const Color(0xFFE5B518).withValues(alpha: 0.95),
                         border: Border(
                           top: BorderSide(
-                            color: const Color(0xFF38E5D8),
-                            width: 1.5.w,
+                            color: Colors.white.withValues(alpha: 0.40),
+                            width: 1.w,
                           ),
                         ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.08),
+                            blurRadius: 10,
+                            offset: const Offset(0, -3),
+                          ),
+                        ],
                       ),
                       child: SizedBox(
                         height: 64.h,
@@ -122,7 +129,7 @@ class MainScreen extends GetView<MainController> {
   }) {
     final isSelected = controller.selectedIndex.value == index;
     final activeColor = Colors.white;
-    final inactiveColor = Colors.white.withValues(alpha: 0.45);
+    final inactiveColor = Colors.white.withValues(alpha: 0.65);
 
     return GestureDetector(
       onTap: () => controller.changeIndex(index),
@@ -132,23 +139,32 @@ class MainScreen extends GetView<MainController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SvgPicture.asset(
-              iconPath,
-              width: 22.w,
-              height: 22.h,
-              colorFilter: ColorFilter.mode(
-                isSelected ? activeColor : inactiveColor,
-                BlendMode.srcIn,
+            Container(
+              padding: EdgeInsets.all(isSelected ? 6.r : 0),
+              decoration: isSelected
+                  ? BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white.withValues(alpha: 0.30),
+                    )
+                  : null,
+              child: SvgPicture.asset(
+                iconPath,
+                width: 20.w,
+                height: 20.h,
+                colorFilter: ColorFilter.mode(
+                  isSelected ? activeColor : inactiveColor,
+                  BlendMode.srcIn,
+                ),
+                errorBuilder: (context, error, stackTrace) {
+                  return Icon(
+                    fallbackIcon,
+                    size: 20.sp,
+                    color: isSelected ? activeColor : inactiveColor,
+                  );
+                },
               ),
-              errorBuilder: (context, error, stackTrace) {
-                return Icon(
-                  fallbackIcon,
-                  size: 22.sp,
-                  color: isSelected ? activeColor : inactiveColor,
-                );
-              },
             ),
-            SizedBox(height: 4.h),
+            SizedBox(height: 2.h),
             Text(
               label,
               style: TextStyle(
