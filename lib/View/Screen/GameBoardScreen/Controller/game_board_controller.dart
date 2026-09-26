@@ -39,6 +39,8 @@ class GameBoardController extends GetxController {
   ].obs;
 
   final RxBool isOnlineMatch = false.obs;
+  final RxMap<String, Map<String, dynamic>> dynamicQuestions =
+      <String, Map<String, dynamic>>{}.obs;
 
   @override
   void onInit() {
@@ -60,25 +62,49 @@ class GameBoardController extends GetxController {
         player2.value = player2.value.copyWith(name: args['player2']);
       }
       if (args['selectedCategories'] != null &&
-          args['selectedCategories'] is List<CategoryModel>) {
-        final List<CategoryModel> selected = args['selectedCategories'];
-        if (selected.isNotEmpty) {
+          args['selectedCategories'] is List) {
+        final List incoming = args['selectedCategories'];
+        if (incoming.isNotEmpty) {
           final List<GameBoardBlockModel> blocks = [];
           int blockIdCounter = 1;
-          for (var cat in selected) {
-            blocks.add(
-              GameBoardBlockModel(
-                id: blockIdCounter++,
-                title: cat.title,
-                imagePath: cat.imagePath ?? AppImg.catUae,
-                iconUrl: cat.iconUrl,
-              ),
-            );
+          for (var item in incoming) {
+            if (item is CategoryModel) {
+              blocks.add(
+                GameBoardBlockModel(
+                  id: blockIdCounter++,
+                  title: item.title,
+                  imagePath: item.imagePath ?? item.iconUrl ?? AppImg.catUae,
+                  iconUrl: item.iconUrl,
+                ),
+              );
+            } else if (item is GameBoardBlockModel) {
+              blocks.add(item);
+            } else if (item is Map<String, dynamic>) {
+              blocks.add(GameBoardBlockModel.fromJson(item));
+            }
           }
-          categoryBlocks.value = blocks;
+          if (blocks.isNotEmpty) {
+            categoryBlocks.value = blocks;
+          }
         }
       }
+      if (args['questions'] != null && args['questions'] is Map) {
+        final Map incomingQ = args['questions'];
+        incomingQ.forEach((k, v) {
+          if (v is Map) {
+            dynamicQuestions[k.toString()] = Map<String, dynamic>.from(v);
+          }
+        });
+      }
     }
+  }
+
+  void setQuestionsFromApi(Map<String, dynamic> questionsMap) {
+    questionsMap.forEach((k, v) {
+      if (v is Map) {
+        dynamicQuestions[k] = Map<String, dynamic>.from(v);
+      }
+    });
   }
 
   void onPointTap(int categoryId, String side, int points) {
@@ -122,6 +148,17 @@ class GameBoardController extends GetxController {
 
   Map<String, String> _getQuestionForCategory(String title, int points) {
     final cleanTitle = title.toLowerCase().trim();
+
+    // 1. Check if dynamic question exists from API
+    final keyWithPoints = '$cleanTitle-$points';
+    if (dynamicQuestions.containsKey(keyWithPoints)) {
+      final q = dynamicQuestions[keyWithPoints]!;
+      return {
+        'question': q['question']?.toString() ?? 'Question for $title',
+        'answer': q['answer']?.toString() ?? 'Answer for $title',
+        'image': q['image']?.toString() ?? '',
+      };
+    }
 
     if (cleanTitle.contains('uae')) {
       if (points == 200) {

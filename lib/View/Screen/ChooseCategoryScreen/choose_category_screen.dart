@@ -221,37 +221,11 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
         clipBehavior: Clip.antiAlias,
         child: Column(
           children: [
-            // Top Artwork Area
+            // Top Artwork Area (Supports Network URLs, SVGs, and Local Assets)
             Expanded(
               child: SizedBox(
                 width: double.infinity,
-                child: category.imagePath != null
-                    ? Image.asset(
-                        category.imagePath!,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Container(
-                            color: const Color(0xFF1E293B),
-                            child: const Center(
-                              child: Icon(
-                                Icons.category,
-                                color: Colors.white70,
-                                size: 36,
-                              ),
-                            ),
-                          );
-                        },
-                      )
-                    : Container(
-                        color: const Color(0xFF1E293B),
-                        child: const Center(
-                          child: Icon(
-                            Icons.category,
-                            color: Colors.white70,
-                            size: 36,
-                          ),
-                        ),
-                      ),
+                child: _buildDynamicImage(category.imagePath ?? category.iconUrl),
               ),
             ),
 
@@ -276,6 +250,61 @@ class ChooseCategoryScreen extends GetView<ChooseCategoryController> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDynamicImage(String? path) {
+    if (path == null || path.isEmpty) {
+      return Container(
+        color: const Color(0xFF1E293B),
+        child: const Center(
+          child: Icon(Icons.category, color: Colors.white70, size: 36),
+        ),
+      );
+    }
+
+    final isNetwork = path.startsWith('http://') || path.startsWith('https://');
+    final isSvg = path.toLowerCase().endsWith('.svg');
+
+    if (isSvg) {
+      if (isNetwork) {
+        return SvgPicture.network(
+          path,
+          fit: BoxFit.cover,
+          placeholderBuilder: (ctx) => const Center(
+            child: CircularProgressIndicator(strokeWidth: 2),
+          ),
+        );
+      } else {
+        return SvgPicture.asset(
+          path,
+          fit: BoxFit.cover,
+        );
+      }
+    }
+
+    if (isNetwork) {
+      return Image.network(
+        path,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) => Container(
+          color: const Color(0xFF1E293B),
+          child: const Center(
+            child: Icon(Icons.category, color: Colors.white70, size: 36),
+          ),
+        ),
+      );
+    }
+
+    return Image.asset(
+      path,
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) => Container(
+        color: const Color(0xFF1E293B),
+        child: const Center(
+          child: Icon(Icons.category, color: Colors.white70, size: 36),
         ),
       ),
     );

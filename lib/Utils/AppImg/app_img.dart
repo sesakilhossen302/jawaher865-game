@@ -25,8 +25,8 @@ class AppImg {
 
   // Question Media
   static const String qBrazilFlag = '$basePath/q_brazil_flag.png';
-  static const String qJoey = '$basePath/q_joey.png';
-  static const String qAvatars = '$basePath/q_avatars.png';
+  static const String qJoey = '$basePath/Screenshot 2026-08-25 104904 2.png';
+  static const String qAvatars = 'assets/icons/Challenge Your Melas-img.svg';
 
   static const String aiImg = '$basePath/AI-img.png';
   static const String flagsImg = '$basePath/Flags-img.png';

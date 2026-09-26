@@ -77,6 +77,27 @@ class ChooseCategoryController extends GetxController {
       blueTeamName.value = args['blueTeam'] ?? args['player1'] ?? 'Green Team';
       redTeamName.value = args['redTeam'] ?? args['player2'] ?? 'Red Team';
       activeTeamName.value = blueTeamName.value;
+      if (args['categories'] != null && args['categories'] is List) {
+        final List incoming = args['categories'];
+        if (incoming.isNotEmpty) {
+          categories.value = incoming.map((item) {
+            if (item is CategoryModel) return item;
+            if (item is Map<String, dynamic>) return CategoryModel.fromJson(item);
+            return CategoryModel(id: 0, title: item.toString());
+          }).toList();
+        }
+      }
+    }
+  }
+
+  // Populate dynamic categories directly from API response
+  void setCategoriesFromApi(List<dynamic> apiList) {
+    if (apiList.isNotEmpty) {
+      categories.value = apiList.map((item) {
+        if (item is CategoryModel) return item;
+        if (item is Map<String, dynamic>) return CategoryModel.fromJson(item);
+        return CategoryModel(id: 0, title: item.toString());
+      }).toList();
     }
   }
 
@@ -84,9 +105,9 @@ class ChooseCategoryController extends GetxController {
   Future<void> fetchCategoriesFromApi() async {
     try {
       isLoading.value = true;
-      // TODO: Replace with real API service call when backend endpoint is ready
+      // When backend endpoint is called:
       // final response = await ApiService.getCategories();
-      // categories.value = response.map((data) => CategoryModel.fromJson(data)).toList();
+      // setCategoriesFromApi(response);
     } catch (e) {
       // Handle error
     } finally {

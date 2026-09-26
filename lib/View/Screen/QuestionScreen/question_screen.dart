@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../../Utils/AppIcons/app_icons.dart';
 import '../../../Utils/AppImg/app_img.dart';
 import '../../../Utils/StaticString/static_string.dart';
 import 'Controller/question_controller.dart';
@@ -148,9 +149,9 @@ class QuestionScreen extends GetView<QuestionController> {
 
               const Spacer(flex: 3),
 
-              // Avatars illustration at bottom
-              Image.asset(
-                AppImg.qAvatars,
+              // Challenge Your Melas illustration at bottom
+              SvgPicture.asset(
+                AppIcons.challengeYourMelasImg,
                 height: 60.h,
                 fit: BoxFit.contain,
               ),
@@ -220,20 +221,17 @@ class QuestionScreen extends GetView<QuestionController> {
 
             SizedBox(height: 18.h),
 
-            // Question Image
+            // Question Image (Dynamic: supports API URLs, SVG, and local assets)
             ClipRRect(
               borderRadius: BorderRadius.circular(12.r),
               child: Container(
                 width: 290.w,
                 height: 165.h,
                 color: Colors.black12,
-                child: Image.asset(
+                child: _buildDynamicQuestionMedia(
                   controller.questionImage.value,
-                  fit: BoxFit.cover,
-                  errorBuilder: (ctx, error, stackTrace) => Image.asset(
-                    AppImg.qBrazilFlag,
-                    fit: BoxFit.cover,
-                  ),
+                  width: 290.w,
+                  height: 165.h,
                 ),
               ),
             ),
@@ -402,6 +400,75 @@ class QuestionScreen extends GetView<QuestionController> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildDynamicQuestionMedia(
+    String imgPath, {
+    required double width,
+    required double height,
+  }) {
+    if (imgPath.isEmpty) {
+      return Container(
+        width: width,
+        height: height,
+        color: Colors.black12,
+        child: const Center(
+          child: Icon(Icons.help_outline_rounded, color: Colors.white70, size: 36),
+        ),
+      );
+    }
+
+    final isNetwork = imgPath.startsWith('http://') || imgPath.startsWith('https://');
+    final isSvg = imgPath.toLowerCase().endsWith('.svg');
+
+    if (isSvg) {
+      if (isNetwork) {
+        return SvgPicture.network(
+          imgPath,
+          width: width,
+          height: height,
+          fit: BoxFit.contain,
+          placeholderBuilder: (ctx) => const Center(
+            child: CircularProgressIndicator(strokeWidth: 2),
+          ),
+        );
+      } else {
+        return SvgPicture.asset(
+          imgPath,
+          width: width,
+          height: height,
+          fit: BoxFit.contain,
+        );
+      }
+    }
+
+    if (isNetwork) {
+      return Image.network(
+        imgPath,
+        width: width,
+        height: height,
+        fit: BoxFit.cover,
+        errorBuilder: (ctx, error, stackTrace) => Image.asset(
+          AppImg.qBrazilFlag,
+          width: width,
+          height: height,
+          fit: BoxFit.cover,
+        ),
+      );
+    }
+
+    return Image.asset(
+      imgPath,
+      width: width,
+      height: height,
+      fit: BoxFit.cover,
+      errorBuilder: (ctx, error, stackTrace) => Image.asset(
+        AppImg.qBrazilFlag,
+        width: width,
+        height: height,
+        fit: BoxFit.cover,
       ),
     );
   }

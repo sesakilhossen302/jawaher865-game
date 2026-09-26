@@ -103,9 +103,9 @@ class WinningScreen extends GetView<WinningController> {
 
           const Spacer(flex: 1),
 
-          // 3 Avatars illustration matching Figma Screen 4
-          Image.asset(
-            AppImg.qAvatars,
+          // Challenge Your Melas illustration matching Figma Screen 4
+          SvgPicture.asset(
+            AppIcons.challengeYourMelasImg,
             height: 72.h,
             fit: BoxFit.contain,
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../../Model/game_board_model.dart';
 import '../../../Utils/AppImg/app_img.dart';
@@ -446,26 +447,11 @@ class GameBoardScreen extends GetView<GameBoardController> {
             ),
             child: Column(
               children: [
-                // Top Artwork
+                // Top Artwork (Supports Network URLs, SVGs, and Local Assets)
                 Expanded(
                   child: SizedBox(
                     width: double.infinity,
-                    child: Image.asset(
-                      block.imagePath,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          color: const Color(0xFF1E293B),
-                          child: const Center(
-                            child: Icon(
-                              Icons.category_rounded,
-                              color: Colors.white70,
-                              size: 28,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                    child: _buildDynamicBlockImage(block.imagePath),
                   ),
                 ),
 
@@ -559,5 +545,60 @@ class GameBoardScreen extends GetView<GameBoardController> {
         ),
       );
     });
+  }
+
+  Widget _buildDynamicBlockImage(String path) {
+    if (path.isEmpty) {
+      return Container(
+        color: const Color(0xFF1E293B),
+        child: const Center(
+          child: Icon(Icons.category_rounded, color: Colors.white70, size: 28),
+        ),
+      );
+    }
+
+    final isNetwork = path.startsWith('http://') || path.startsWith('https://');
+    final isSvg = path.toLowerCase().endsWith('.svg');
+
+    if (isSvg) {
+      if (isNetwork) {
+        return SvgPicture.network(
+          path,
+          fit: BoxFit.cover,
+          placeholderBuilder: (ctx) => const Center(
+            child: CircularProgressIndicator(strokeWidth: 2),
+          ),
+        );
+      } else {
+        return SvgPicture.asset(
+          path,
+          fit: BoxFit.cover,
+        );
+      }
+    }
+
+    if (isNetwork) {
+      return Image.network(
+        path,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) => Container(
+          color: const Color(0xFF1E293B),
+          child: const Center(
+            child: Icon(Icons.category_rounded, color: Colors.white70, size: 28),
+          ),
+        ),
+      );
+    }
+
+    return Image.asset(
+      path,
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) => Container(
+        color: const Color(0xFF1E293B),
+        child: const Center(
+          child: Icon(Icons.category_rounded, color: Colors.white70, size: 28),
+        ),
+      ),
+    );
   }
 }
