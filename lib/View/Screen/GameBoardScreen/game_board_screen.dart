@@ -80,7 +80,12 @@ class GameBoardScreen extends GetView<GameBoardController> {
                   score: controller.player1.value.score.toString(),
                   isTurn: controller.player1.value.isTurn,
                   avatarInitials: controller.player1.value.avatarInitials,
-                  avatarColor: const Color(0xFF275BEA),
+                  avatarColor: const Color(0xFF007E33),
+                  gradientColors: const [
+                    Color(0xFF00C853),
+                    Color(0xFF10B981),
+                  ],
+                  borderColor: const Color(0xFF69F0AE),
                 ),
                 SizedBox(height: 10.h),
                 _buildPlayerCard(
@@ -88,7 +93,12 @@ class GameBoardScreen extends GetView<GameBoardController> {
                   score: controller.player2.value.score.toString(),
                   isTurn: controller.player2.value.isTurn,
                   avatarInitials: controller.player2.value.avatarInitials,
-                  avatarColor: const Color(0xFFE54124),
+                  avatarColor: const Color(0xFFC62828),
+                  gradientColors: const [
+                    Color(0xFFFF4848),
+                    Color(0xFFFF7A00),
+                  ],
+                  borderColor: const Color(0xFFFF8B74),
                 ),
               ],
             ),
@@ -117,20 +127,18 @@ class GameBoardScreen extends GetView<GameBoardController> {
     );
   }
 
-  // COMPACT LANDSCAPE LAYOUT (SINGLE PAGE FIT)
+  // COMPACT LANDSCAPE LAYOUT (CONSOLE / ARENA STYLE FIT)
   Widget _buildLandscapeLayout() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 14),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Column(
         children: [
-          const SizedBox(height: 2),
-
           // 1. TOP ACTION BAR (Exit, Restart on left | Game Over, dots on right)
           _buildTopActionBar(isLandscape: true),
 
-          const SizedBox(height: 4),
+          const SizedBox(height: 6),
 
-          // 2. COMPACT PLAYER SCOREBOARD ROW (Player 1 on Left | Player 2 on Right)
+          // 2. PLAYER SCOREBOARD ROW (Green Team on Left | Red Team on Right)
           Obx(
             () => Row(
               children: [
@@ -140,18 +148,28 @@ class GameBoardScreen extends GetView<GameBoardController> {
                     score: controller.player1.value.score.toString(),
                     isTurn: controller.player1.value.isTurn,
                     avatarInitials: controller.player1.value.avatarInitials,
-                    avatarColor: const Color(0xFF275BEA),
+                    avatarColor: const Color(0xFF007E33),
+                    gradientColors: const [
+                      Color(0xFF00C853),
+                      Color(0xFF10B981),
+                    ],
+                    borderColor: const Color(0xFF69F0AE),
                     isLandscape: true,
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 14),
                 Expanded(
                   child: _buildPlayerCard(
                     name: controller.player2.value.name,
                     score: controller.player2.value.score.toString(),
                     isTurn: controller.player2.value.isTurn,
                     avatarInitials: controller.player2.value.avatarInitials,
-                    avatarColor: const Color(0xFFE54124),
+                    avatarColor: const Color(0xFFC62828),
+                    gradientColors: const [
+                      Color(0xFFFF4848),
+                      Color(0xFFFF7A00),
+                    ],
+                    borderColor: const Color(0xFFFF8B74),
                     isLandscape: true,
                   ),
                 ),
@@ -159,39 +177,23 @@ class GameBoardScreen extends GetView<GameBoardController> {
             ),
           ),
 
-          const SizedBox(height: 6),
+          const SizedBox(height: 8),
 
-          // 3. CATEGORY BOARD GRID (3 Categories across per row)
+          // 3. CATEGORY BOARD ROWS (Player 1 Points on Left | Category Card Center | Player 2 Points on Right)
           Expanded(
-            child: Obx(() {
-              final blocks = controller.categoryBlocks;
-              List<Widget> rows = [];
-              for (int i = 0; i < blocks.length; i += 3) {
-                final rowBlocks = blocks.sublist(
-                  i,
-                  (i + 3 < blocks.length) ? i + 3 : blocks.length,
-                );
-                rows.add(
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 6),
-                    child: Row(
-                      children: [
-                        for (int j = 0; j < rowBlocks.length; j++) ...[
-                          if (j > 0) const SizedBox(width: 6),
-                          Expanded(
-                            child: _buildCategoryRow(rowBlocks[j], isCompact: true),
-                          ),
-                        ],
-                      ],
-                    ),
-                  ),
-                );
-              }
-              return SingleChildScrollView(
+            child: Obx(
+              () => SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                child: Column(children: rows),
-              );
-            }),
+                child: Column(
+                  children: controller.categoryBlocks.map((block) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: _buildLandscapeCategoryRow(block),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
           ),
 
           const SizedBox(height: 2),
@@ -306,28 +308,35 @@ class GameBoardScreen extends GetView<GameBoardController> {
     required bool isTurn,
     required String avatarInitials,
     required Color avatarColor,
+    List<Color>? gradientColors,
+    Color? borderColor,
     bool isLandscape = false,
   }) {
+    final colors = gradientColors ?? const [Color(0xFFFF4848), Color(0xFFFF7A00)];
+    final activeBorder = borderColor ?? Colors.white;
+
     return Container(
-      height: isLandscape ? 32.0 : null,
+      height: isLandscape ? 38.0 : null,
       padding: EdgeInsets.symmetric(
-        horizontal: isLandscape ? 8.0 : 14.w,
-        vertical: isLandscape ? 2.0 : 8.h,
+        horizontal: isLandscape ? 10.0 : 14.w,
+        vertical: isLandscape ? 3.0 : 8.h,
       ),
       decoration: BoxDecoration(
-        color: const Color(0xFFFF3B30),
+        gradient: LinearGradient(
+          colors: colors,
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
         borderRadius: BorderRadius.circular(isLandscape ? 18 : 24.r),
         border: Border.all(
-          color: isTurn
-              ? Colors.white
-              : Colors.white.withValues(alpha: 0.35),
+          color: isTurn ? activeBorder : Colors.white.withValues(alpha: 0.4),
           width: isTurn ? 2.0 : 1.w,
         ),
         boxShadow: [
           BoxShadow(
             color: isTurn
-                ? Colors.white.withValues(alpha: 0.4)
-                : const Color(0xFFFF3B30).withValues(alpha: 0.35),
+                ? colors.first.withValues(alpha: 0.5)
+                : Colors.black.withValues(alpha: 0.15),
             blurRadius: 8,
             offset: const Offset(0, 3),
           ),
@@ -337,18 +346,25 @@ class GameBoardScreen extends GetView<GameBoardController> {
         children: [
           // Avatar Circle
           Container(
-            width: isLandscape ? 24.0 : 36.w,
-            height: isLandscape ? 24.0 : 36.h,
+            width: isLandscape ? 28.0 : 36.w,
+            height: isLandscape ? 28.0 : 36.h,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: avatarColor,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.2),
+                  blurRadius: 3,
+                  offset: const Offset(0, 1),
+                ),
+              ],
             ),
             child: Center(
               child: Text(
                 avatarInitials,
                 style: TextStyle(
                   fontFamily: segoeFont,
-                  fontSize: isLandscape ? 11.0 : 16.sp,
+                  fontSize: isLandscape ? 12.0 : 16.sp,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
@@ -356,7 +372,7 @@ class GameBoardScreen extends GetView<GameBoardController> {
             ),
           ),
 
-          SizedBox(width: isLandscape ? 6.0 : 12.w),
+          SizedBox(width: isLandscape ? 8.0 : 12.w),
 
           // Player Name & Turn Subtitle
           Expanded(
@@ -369,7 +385,7 @@ class GameBoardScreen extends GetView<GameBoardController> {
                   name,
                   style: TextStyle(
                     fontFamily: segoeFont,
-                    fontSize: isLandscape ? 11.0 : 15.sp,
+                    fontSize: isLandscape ? 12.0 : 15.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                     height: 1.1,
@@ -382,9 +398,9 @@ class GameBoardScreen extends GetView<GameBoardController> {
                     StaticString.yourTurn.tr,
                     style: TextStyle(
                       fontFamily: segoeFont,
-                      fontSize: isLandscape ? 8.0 : 11.sp,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      fontSize: isLandscape ? 8.5 : 11.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white.withValues(alpha: 0.9),
                       height: 1.0,
                     ),
                     maxLines: 1,
@@ -393,14 +409,25 @@ class GameBoardScreen extends GetView<GameBoardController> {
             ),
           ),
 
-          // Score
-          Text(
-            score,
-            style: TextStyle(
-              fontFamily: segoeFont,
-              fontSize: isLandscape ? 13.0 : 20.sp,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
+          // Score Badge
+          Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: isLandscape ? 10 : 12.w,
+              vertical: isLandscape ? 2 : 4.h,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.black.withValues(alpha: 0.2),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(
+              score,
+              style: TextStyle(
+                fontFamily: segoeFont,
+                fontSize: isLandscape ? 13.0 : 18.sp,
+                fontWeight: FontWeight.w900,
+                color: Colors.white,
+                letterSpacing: 0.5,
+              ),
             ),
           ),
           SizedBox(width: isLandscape ? 2.0 : 4.w),
@@ -409,7 +436,125 @@ class GameBoardScreen extends GetView<GameBoardController> {
     );
   }
 
-  // CATEGORY ROW WITH LEFT & RIGHT POINT BUTTONS
+  // LANDSCAPE CATEGORY ROW (Player 1 Points | Artwork Card | Player 2 Points)
+  Widget _buildLandscapeCategoryRow(GameBoardBlockModel block) {
+    return Container(
+      constraints: const BoxConstraints(maxWidth: 820),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Left Player Point Buttons (Green Team - 200, 400, 600)
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: block.pointValues.map((pts) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 6),
+                child: _buildPointButton(
+                  block.id,
+                  'left',
+                  pts,
+                  width: 58,
+                  height: 44,
+                  fontSize: 13,
+                  customGradient: const [Color(0xFF00C853), Color(0xFF10B981)],
+                ),
+              );
+            }).toList(),
+          ),
+
+          const SizedBox(width: 10),
+
+          // Center Category Card (Artwork + Title Banner)
+          Expanded(
+            child: Container(
+              height: 72,
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                color: const Color(0xFFFF3B30),
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(
+                  color: Colors.white.withValues(alpha: 0.6),
+                  width: 1.5,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.18),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  // Full Background Artwork
+                  _buildDynamicBlockImage(block.imagePath),
+
+                  // Bottom Gradient Title Banner
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: 24,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            const Color(0xFFFF3B30).withValues(alpha: 0.85),
+                            const Color(0xFFFF2D55).withValues(alpha: 0.98),
+                          ],
+                        ),
+                      ),
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Text(
+                        block.title.toUpperCase(),
+                        style: TextStyle(
+                          fontFamily: segoeFont,
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          letterSpacing: 0.8,
+                        ),
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          const SizedBox(width: 10),
+
+          // Right Player Point Buttons (Red Team - 200, 400, 600)
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: block.pointValues.map((pts) {
+              return Padding(
+                padding: const EdgeInsets.only(left: 6),
+                child: _buildPointButton(
+                  block.id,
+                  'right',
+                  pts,
+                  width: 58,
+                  height: 44,
+                  fontSize: 13,
+                  customGradient: const [Color(0xFFFF4848), Color(0xFFFF7A00)],
+                ),
+              );
+            }).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // CATEGORY ROW WITH LEFT & RIGHT POINT BUTTONS (PORTRAIT)
   Widget _buildCategoryRow(GameBoardBlockModel block, {bool isCompact = false}) {
     return Row(
       children: [
@@ -418,7 +563,13 @@ class GameBoardScreen extends GetView<GameBoardController> {
           children: block.pointValues.map((pts) {
             return Padding(
               padding: EdgeInsets.only(bottom: isCompact ? 2 : 8.h),
-              child: _buildPointButton(block.id, 'left', pts, isCompact: isCompact),
+              child: _buildPointButton(
+                block.id,
+                'left',
+                pts,
+                isCompact: isCompact,
+                customGradient: const [Color(0xFF00C853), Color(0xFF10B981)],
+              ),
             );
           }).toList(),
         ),
@@ -488,7 +639,13 @@ class GameBoardScreen extends GetView<GameBoardController> {
           children: block.pointValues.map((pts) {
             return Padding(
               padding: EdgeInsets.only(bottom: isCompact ? 2 : 8.h),
-              child: _buildPointButton(block.id, 'right', pts, isCompact: isCompact),
+              child: _buildPointButton(
+                block.id,
+                'right',
+                pts,
+                isCompact: isCompact,
+                customGradient: const [Color(0xFFFF4848), Color(0xFFFF7A00)],
+              ),
             );
           }).toList(),
         ),
@@ -497,33 +654,50 @@ class GameBoardScreen extends GetView<GameBoardController> {
   }
 
   // POINT BUTTON WIDGET (200, 400, 600)
-  Widget _buildPointButton(int categoryId, String side, int points, {bool isCompact = false}) {
+  Widget _buildPointButton(
+    int categoryId,
+    String side,
+    int points, {
+    bool isCompact = false,
+    double? width,
+    double? height,
+    double? fontSize,
+    List<Color>? customGradient,
+  }) {
     return Obx(() {
       final key = '$categoryId-$side-$points';
       final isUsed = controller.usedPointButtons.contains(key);
+      final gradientColors = customGradient ?? const [Color(0xFFFF4848), Color(0xFFFF7A00)];
 
       return GestureDetector(
         onTap: () => controller.onPointTap(categoryId, side, points),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          width: isCompact ? 30.0 : 58.w,
-          height: isCompact ? 26.0 : 42.h,
+          width: width ?? (isCompact ? 30.0 : 58.w),
+          height: height ?? (isCompact ? 26.0 : 42.h),
           decoration: BoxDecoration(
-            color: isUsed
-                ? Colors.white.withValues(alpha: 0.2)
-                : const Color(0xFFFF3B30),
-            borderRadius: BorderRadius.circular(isCompact ? 8 : 14.r),
+            color: isUsed ? Colors.white.withValues(alpha: 0.2) : null,
+            gradient: isUsed
+                ? null
+                : LinearGradient(
+                    colors: gradientColors,
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+            borderRadius: BorderRadius.circular(
+              width != null ? 10 : (isCompact ? 8 : 14.r),
+            ),
             border: Border.all(
               color: isUsed
                   ? Colors.white.withValues(alpha: 0.25)
-                  : Colors.white.withValues(alpha: 0.4),
+                  : Colors.white.withValues(alpha: 0.5),
               width: 1.w,
             ),
             boxShadow: isUsed
                 ? []
                 : [
                     BoxShadow(
-                      color: const Color(0xFFFF3B30).withValues(alpha: 0.3),
+                      color: gradientColors.first.withValues(alpha: 0.35),
                       blurRadius: 4,
                       offset: const Offset(0, 2),
                     ),
@@ -534,7 +708,7 @@ class GameBoardScreen extends GetView<GameBoardController> {
               points.toString(),
               style: TextStyle(
                 fontFamily: segoeFont,
-                fontSize: isCompact ? 9.5 : 13.sp,
+                fontSize: fontSize ?? (isCompact ? 9.5 : 13.sp),
                 fontWeight: FontWeight.bold,
                 color: isUsed
                     ? Colors.white.withValues(alpha: 0.4)

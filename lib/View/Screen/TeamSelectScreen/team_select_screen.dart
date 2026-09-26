@@ -110,7 +110,7 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
             ],
           ),
 
-          const SizedBox(height: 12),
+          const SizedBox(height: 10),
 
           // TEAM CARDS SIDE-BY-SIDE WITH VS BADGE
           Stack(
@@ -120,7 +120,7 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
                 children: [
                   Expanded(
                     child: _buildTeamCard(
-                      sectionTitle: StaticString.blueTeamCaps.tr,
+                      sectionTitle: 'GREEN TEAM',
                       controller: controller.blueTeamController,
                       gradientColors: const [
                         Color(0xFF00C853),
@@ -131,16 +131,16 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
                       circleColor: const Color(0xFF00E676).withValues(alpha: 0.35),
                       labelColor: const Color(0xFFE8F5E9),
                       illustrationSvgPath: AppIcons.blueTeamImg,
-                      illustrationHeight: 70,
+                      illustrationHeight: 85,
                       illustrationRight: 8,
                       iconPreviewPath: AppImg.leaderboardRightYoungManImg,
                       isLandscape: true,
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  const SizedBox(width: 18),
                   Expanded(
                     child: _buildTeamCard(
-                      sectionTitle: StaticString.redTeamCaps.tr,
+                      sectionTitle: 'RED TEAM',
                       controller: controller.redTeamController,
                       gradientColors: const [
                         Color(0xFFFF4848),
@@ -151,7 +151,7 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
                       circleColor: const Color(0xFFFF7A00).withValues(alpha: 0.35),
                       labelColor: const Color(0xFFFFEBE6),
                       illustrationSvgPath: AppIcons.redTeamImg,
-                      illustrationHeight: 70,
+                      illustrationHeight: 85,
                       illustrationRight: 8,
                       iconPreviewPath: AppImg.playRightFemaleImg,
                       isLandscape: true,
@@ -162,8 +162,8 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
 
               // OVERLAPPING VS BADGE IN THE MIDDLE
               Container(
-                width: 40,
-                height: 40,
+                width: 44,
+                height: 44,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: const Color(0xFFFF7A00),
@@ -180,7 +180,7 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
                     StaticString.vsText.tr,
                     style: const TextStyle(
                       fontFamily: segoeFont,
-                      fontSize: 13,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
@@ -190,7 +190,7 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
             ],
           ),
 
-          const SizedBox(height: 14),
+          const SizedBox(height: 12),
 
           // BOTTOM NEXT ACTION BUTTON
           SizedBox(
@@ -383,7 +383,7 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
     bool isLandscape = false,
   }) {
     return Container(
-      height: isLandscape ? 165 : 195.h,
+      height: isLandscape ? 180 : 195.h,
       width: double.infinity,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
@@ -406,11 +406,11 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
         children: [
           // Translucent Background Decorative Circle Matching Figma Screenshot
           Positioned(
-            right: -20.w,
-            bottom: -60.h,
+            right: isLandscape ? -10 : -20.w,
+            bottom: isLandscape ? -30 : -60.h,
             child: Container(
-              width: 240.w,
-              height: 240.h,
+              width: isLandscape ? 180 : 240.w,
+              height: isLandscape ? 180 : 240.h,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: circleColor,
@@ -493,17 +493,16 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
 
                 SizedBox(height: isLandscape ? 4 : 6.h),
 
-                // Choose Icon Selector Pill
+                // Choose Icon Selector Pill (Responsive, no overflow)
                 Container(
-                  width: isLandscape ? 150 : 170.w,
-                  height: isLandscape ? 34 : 38.h,
-                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  height: isLandscape ? 36 : 38.h,
+                  padding: EdgeInsets.symmetric(horizontal: isLandscape ? 10 : 12.w),
                   decoration: BoxDecoration(
                     color: inputBgColor,
                     borderRadius: BorderRadius.circular(14.r),
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
                         'Select icon',
@@ -514,26 +513,23 @@ class TeamSelectScreen extends GetView<TeamSelectController> {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      Row(
-                        children: [
-                          if (iconPreviewPath != null)
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(6.r),
-                              child: Image.asset(
-                                iconPreviewPath,
-                                width: isLandscape ? 20 : 22.w,
-                                height: isLandscape ? 20 : 22.h,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) => const SizedBox(),
-                              ),
-                            ),
-                          SizedBox(width: 4.w),
-                          Icon(
-                            Icons.keyboard_arrow_down,
-                            color: Colors.white,
-                            size: isLandscape ? 16 : 18.sp,
+                      SizedBox(width: isLandscape ? 8 : 8.w),
+                      if (iconPreviewPath != null)
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(6.r),
+                          child: Image.asset(
+                            iconPreviewPath,
+                            width: isLandscape ? 20 : 22.w,
+                            height: isLandscape ? 20 : 22.h,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) => const SizedBox(),
                           ),
-                        ],
+                        ),
+                      SizedBox(width: isLandscape ? 4 : 4.w),
+                      Icon(
+                        Icons.keyboard_arrow_down,
+                        color: Colors.white,
+                        size: isLandscape ? 16 : 18.sp,
                       ),
                     ],
                   ),
