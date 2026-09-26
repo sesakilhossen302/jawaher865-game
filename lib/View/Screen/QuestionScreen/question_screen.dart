@@ -265,7 +265,7 @@ class QuestionScreen extends GetView<QuestionController> {
                 child: ElevatedButton(
                   onPressed: controller.onGameOver,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF3358FE),
+                    backgroundColor: const Color(0xFFFF3B30),
                     elevation: 4,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
@@ -729,10 +729,10 @@ class QuestionScreen extends GetView<QuestionController> {
         vertical: isLandscape ? 4 : 8.h,
       ),
       decoration: BoxDecoration(
-        color: const Color(0xFF065967).withValues(alpha: 0.8),
+        color: const Color(0xFFFF3B30),
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(
-          color: const Color(0xFF38E5D8).withValues(alpha: 0.4),
+          color: Colors.white.withValues(alpha: 0.4),
           width: 1,
         ),
       ),
@@ -846,10 +846,10 @@ class QuestionScreen extends GetView<QuestionController> {
       height: cardHeight,
       padding: EdgeInsets.symmetric(horizontal: 10.w),
       decoration: BoxDecoration(
-        color: const Color(0xFF0C2B4E),
+        color: const Color(0xFFFF3B30),
         borderRadius: BorderRadius.circular(28.r),
         border: Border.all(
-          color: isTurn ? const Color(0xFF38E5D8) : Colors.white24,
+          color: isTurn ? Colors.white : Colors.white24,
           width: isTurn ? 2.0 : 1.0,
         ),
       ),
@@ -931,10 +931,10 @@ class QuestionScreen extends GetView<QuestionController> {
           width: double.infinity,
           height: isLandscape ? 36 : 46.h,
           decoration: BoxDecoration(
-            color: const Color(0xFF065967).withValues(alpha: 0.9),
+            color: const Color(0xFFFF3B30),
             borderRadius: BorderRadius.circular(16.r),
             border: Border.all(
-              color: const Color(0xFF38E5D8).withValues(alpha: 0.4),
+              color: Colors.white.withValues(alpha: 0.4),
               width: 1.w,
             ),
           ),
@@ -1005,7 +1005,7 @@ class QuestionScreen extends GetView<QuestionController> {
             ElevatedButton(
               onPressed: controller.onGameOver,
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF3358FE),
+                backgroundColor: const Color(0xFFFF3B30),
                 elevation: 4,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16.r),
@@ -1046,10 +1046,10 @@ class QuestionScreen extends GetView<QuestionController> {
         vertical: isLandscape ? 8 : 14.h,
       ),
       decoration: BoxDecoration(
-        color: const Color(0xFF065967).withValues(alpha: 0.85),
+        color: Colors.white.withValues(alpha: 0.25),
         borderRadius: BorderRadius.circular(20.r),
         border: Border.all(
-          color: const Color(0xFF38E5D8).withValues(alpha: 0.35),
+          color: Colors.white.withValues(alpha: 0.45),
           width: 1.w,
         ),
       ),
@@ -1062,7 +1062,7 @@ class QuestionScreen extends GetView<QuestionController> {
                 fontFamily: segoeFont,
                 fontSize: isLandscape ? 13 : 16.sp,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: const Color(0xFF222222),
               ),
               textAlign: TextAlign.center,
             ),
@@ -1250,7 +1250,7 @@ class QuestionScreen extends GetView<QuestionController> {
                 child: ElevatedButton(
                   onPressed: controller.goToResultDistribution,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF22C55E),
+                    backgroundColor: const Color(0xFFFF3B30),
                     elevation: 4,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.r),
@@ -1286,7 +1286,7 @@ class QuestionScreen extends GetView<QuestionController> {
             fontFamily: segoeFont,
             fontSize: isLandscape ? 14 : 18.sp,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: const Color(0xFF222222),
           ),
           textAlign: TextAlign.center,
         ),
@@ -1303,12 +1303,15 @@ class QuestionScreen extends GetView<QuestionController> {
                   child: Container(
                     height: isLandscape ? 52 : 88.h,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF065967).withValues(alpha: 0.85),
+                      color: const Color(0xFFFF3B30),
                       borderRadius: BorderRadius.circular(16.r),
-                      border: Border.all(
-                        color: const Color(0xFF38E5D8).withValues(alpha: 0.4),
-                        width: 1.w,
-                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFFFF3B30).withValues(alpha: 0.35),
+                          blurRadius: 8,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
                     ),
                     child: Center(
                       child: Text(
@@ -1334,12 +1337,15 @@ class QuestionScreen extends GetView<QuestionController> {
                   child: Container(
                     height: isLandscape ? 52 : 88.h,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF065967).withValues(alpha: 0.85),
+                      color: const Color(0xFFFF3B30),
                       borderRadius: BorderRadius.circular(16.r),
-                      border: Border.all(
-                        color: const Color(0xFF38E5D8).withValues(alpha: 0.4),
-                        width: 1.w,
-                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFFFF3B30).withValues(alpha: 0.35),
+                          blurRadius: 8,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
                     ),
                     child: Center(
                       child: Text(
@@ -1370,12 +1376,15 @@ class QuestionScreen extends GetView<QuestionController> {
             width: isLandscape ? 180 : 220.w,
             height: isLandscape ? 40 : 60.h,
             decoration: BoxDecoration(
-              color: const Color(0xFF065967).withValues(alpha: 0.85),
+              color: const Color(0xFFFF3B30),
               borderRadius: BorderRadius.circular(16.r),
-              border: Border.all(
-                color: const Color(0xFF38E5D8).withValues(alpha: 0.4),
-                width: 1.w,
-              ),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFFFF3B30).withValues(alpha: 0.35),
+                  blurRadius: 8,
+                  offset: const Offset(0, 3),
+                ),
+              ],
             ),
             child: Center(
               child: Text(
