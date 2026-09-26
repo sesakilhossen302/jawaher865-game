@@ -31,10 +31,6 @@ class QuestionController extends GetxController {
   final RxBool isCheckingBackend = false.obs;
   final RxString checkingStatus = 'Verifying answer with server...'.obs;
 
-  final RxBool isSubmitting = false.obs;
-  final RxString feedbackMessage = ''.obs;
-  final Rx<bool?> isAnswerCorrect = Rx<bool?>(null);
-
   final RxList<Map<String, String>> chatMessages = <Map<String, String>>[
     {
       'sender': 'Asaduzzaman',
@@ -150,62 +146,6 @@ class QuestionController extends GetxController {
     } else {
       goToResultDistribution();
     }
-  }
-
-  void submitAnswerFromDialog() {
-    if (isSubmitting.value) return;
-
-    final input = userAnswerController.text.trim();
-    if (input.isEmpty) {
-      Get.snackbar(
-        'Empty Answer',
-        'Please type your answer before submitting',
-        backgroundColor: const Color(0xFFFF5252),
-        colorText: Colors.white,
-        snackPosition: SnackPosition.TOP,
-        duration: const Duration(seconds: 2),
-      );
-      return;
-    }
-
-    final userAns = input.toLowerCase();
-    final correctAns = answerText.value.trim().toLowerCase();
-
-    bool isCorrect = false;
-    if (userAns == correctAns) {
-      isCorrect = true;
-    } else {
-      final words = correctAns.split(RegExp(r'\s+'));
-      for (var word in words) {
-        if (word.length >= 3 && userAns.contains(word)) {
-          isCorrect = true;
-          break;
-        }
-      }
-    }
-
-    isSubmitting.value = true;
-    isAnswerCorrect.value = isCorrect;
-
-    if (isCorrect) {
-      feedbackMessage.value = '✓ Correct Answer! +${points.value} Points';
-      if (player1.value.isTurn) {
-        _awardPointsToPlayer(isPlayer1: true);
-      } else {
-        _awardPointsToPlayer(isPlayer1: false);
-      }
-    } else {
-      feedbackMessage.value = '✗ Incorrect! Correct: ${answerText.value}';
-      _awardPointsToPlayer(isNoOne: true);
-    }
-
-    // Delay 1.4 seconds to display feedback, then dismiss dialog and return to board
-    Timer(const Duration(milliseconds: 1400), () {
-      if (Get.isDialogOpen ?? false) {
-        Get.back(); // close dialog
-      }
-      Get.back(); // return to game board
-    });
   }
 
   void sendChatMessage(String msg) {

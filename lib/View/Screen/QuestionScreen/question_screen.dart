@@ -42,11 +42,11 @@ class QuestionScreen extends GetView<QuestionController> {
                     child: isPortrait
                         ? SizedBox(
                             key: const ValueKey('qs_portrait_dual'),
-                            child: _buildPortraitLayout(context),
+                            child: _buildPortraitLayout(),
                           )
                         : SizedBox(
                             key: const ValueKey('qs_landscape_dual'),
-                            child: _buildLandscapeLayout(context),
+                            child: _buildLandscapeLayout(),
                           ),
                   );
                 },
@@ -59,12 +59,18 @@ class QuestionScreen extends GetView<QuestionController> {
   }
 
   // ==================== PORTRAIT LAYOUT ====================
-  Widget _buildPortraitLayout(BuildContext context) {
-    return _buildFigmaOfflinePortraitLayout(context);
+  Widget _buildPortraitLayout() {
+    return Obx(() {
+      final isOnline = controller.isOnlineMatch.value;
+      if (!isOnline) {
+        return _buildFigmaOfflinePortraitLayout();
+      }
+      return _buildOnlinePortraitLayout();
+    });
   }
 
   // ==================== FIGMA OFFLINE PORTRAIT FLOW ====================
-  Widget _buildFigmaOfflinePortraitLayout(BuildContext context) {
+  Widget _buildFigmaOfflinePortraitLayout() {
     return Obx(() {
       final state = controller.viewState.value;
 
@@ -263,7 +269,7 @@ class QuestionScreen extends GetView<QuestionController> {
             // Bottom Buttons
             if (state == QuestionViewState.question) ...[
               GestureDetector(
-                onTap: () => _showAnswerDialog(context, isLandscape: false),
+                onTap: controller.toggleShowAnswer,
                 child: Container(
                   width: double.infinity,
                   height: 48.h,
@@ -468,7 +474,6 @@ class QuestionScreen extends GetView<QuestionController> {
   }
 
   // ==================== ONLINE PORTRAIT LAYOUT ====================
-  @pragma('vm:entry-point')
   Widget _buildOnlinePortraitLayout() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -543,12 +548,18 @@ class QuestionScreen extends GetView<QuestionController> {
   }
 
   // ==================== LANDSCAPE LAYOUT ====================
-  Widget _buildLandscapeLayout(BuildContext context) {
-    return _buildFigmaOfflineLandscapeLayout(context);
+  Widget _buildLandscapeLayout() {
+    return Obx(() {
+      final isOnline = controller.isOnlineMatch.value;
+      if (!isOnline) {
+        return _buildFigmaOfflineLandscapeLayout();
+      }
+      return _buildOnlineLandscapeLayout();
+    });
   }
 
   // ==================== FIGMA OFFLINE LANDSCAPE FLOW ====================
-  Widget _buildFigmaOfflineLandscapeLayout(BuildContext context) {
+  Widget _buildFigmaOfflineLandscapeLayout() {
     return Obx(() {
       final state = controller.viewState.value;
 
@@ -822,7 +833,7 @@ class QuestionScreen extends GetView<QuestionController> {
                         // Action Button (Answer or Next)
                         if (state == QuestionViewState.question)
                           GestureDetector(
-                            onTap: () => _showAnswerDialog(context, isLandscape: true),
+                            onTap: controller.toggleShowAnswer,
                             child: Container(
                               height: 42,
                               decoration: BoxDecoration(
@@ -933,7 +944,6 @@ class QuestionScreen extends GetView<QuestionController> {
   }
 
   // ==================== ONLINE / LEGACY LANDSCAPE LAYOUT ====================
-  @pragma('vm:entry-point')
   Widget _buildOnlineLandscapeLayout() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -2174,213 +2184,6 @@ class QuestionScreen extends GetView<QuestionController> {
 
         SizedBox(height: isLandscape ? 4 : 14.h),
       ],
-    );
-  }
-
-  // ANSWER INPUT POPUP DIALOG MATCHING FIGMA SCREEN 6 (06_answer_dialog.png)
-  void _showAnswerDialog(BuildContext context, {bool isLandscape = false}) {
-    controller.userAnswerController.clear();
-    controller.isSubmitting.value = false;
-    controller.feedbackMessage.value = '';
-    controller.isAnswerCorrect.value = null;
-
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (dialogContext) {
-        return Dialog(
-          backgroundColor: Colors.transparent,
-          insetPadding: EdgeInsets.symmetric(
-            horizontal: isLandscape ? 140 : 22.w,
-            vertical: isLandscape ? 14 : 20.h,
-          ),
-          child: Container(
-            constraints: BoxConstraints(
-              maxWidth: isLandscape ? 440 : 350.w,
-            ),
-            padding: EdgeInsets.all(isLandscape ? 16 : 18.w),
-            decoration: BoxDecoration(
-              color: const Color(0xFFFBBF24),
-              borderRadius: BorderRadius.circular(isLandscape ? 18 : 22.r),
-              border: Border.all(
-                color: Colors.white,
-                width: 2.0,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.3),
-                  blurRadius: 16,
-                  offset: const Offset(0, 6),
-                ),
-              ],
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // Top Row: Question Text + Close 'X' Button
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          controller.questionText.value.toUpperCase(),
-                          style: TextStyle(
-                            fontFamily: segoeFont,
-                            fontSize: isLandscape ? 13 : 15.sp,
-                            fontWeight: FontWeight.w800,
-                            color: const Color(0xFF2C2416),
-                            height: 1.25,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      GestureDetector(
-                        onTap: () => Navigator.of(dialogContext).pop(),
-                        child: Container(
-                          width: 24,
-                          height: 24,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xFFFF4848),
-                          ),
-                          child: const Icon(
-                            Icons.close,
-                            color: Colors.white,
-                            size: 15,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: isLandscape ? 10 : 12.h),
-
-                  // "Answer" Label
-                  Text(
-                    'Answer',
-                    style: TextStyle(
-                      fontFamily: segoeFont,
-                      fontSize: isLandscape ? 11.5 : 13.sp,
-                      fontWeight: FontWeight.bold,
-                      color: const Color(0xFF5A482A),
-                    ),
-                  ),
-
-                  SizedBox(height: isLandscape ? 4 : 6.h),
-
-                  // Pale Golden Input Container
-                  Container(
-                    height: isLandscape ? 38 : 46.h,
-                    padding: EdgeInsets.symmetric(horizontal: 12.w),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFDE68A),
-                      borderRadius: BorderRadius.circular(12.r),
-                      border: Border.all(
-                        color: Colors.white.withValues(alpha: 0.6),
-                        width: 1.2,
-                      ),
-                    ),
-                    alignment: Alignment.centerLeft,
-                    child: TextField(
-                      controller: controller.userAnswerController,
-                      autofocus: true,
-                      style: TextStyle(
-                        fontFamily: segoeFont,
-                        fontSize: isLandscape ? 13 : 15.sp,
-                        fontWeight: FontWeight.bold,
-                        color: const Color(0xFF1E293B),
-                      ),
-                      decoration: InputDecoration(
-                        hintText: 'Type answer here...',
-                        hintStyle: TextStyle(
-                          fontFamily: segoeFont,
-                          fontSize: isLandscape ? 11.5 : 13.sp,
-                          color: const Color(0xFF8C7355),
-                          fontWeight: FontWeight.w500,
-                        ),
-                        border: InputBorder.none,
-                        isDense: true,
-                        contentPadding: EdgeInsets.zero,
-                      ),
-                      onSubmitted: (_) => controller.submitAnswerFromDialog(),
-                    ),
-                  ),
-
-                  // Feedback Banner (If submitted)
-                  Obx(() {
-                    if (controller.feedbackMessage.value.isEmpty) {
-                      return const SizedBox.shrink();
-                    }
-                    final isCorrect = controller.isAnswerCorrect.value ?? false;
-                    return Padding(
-                      padding: EdgeInsets.only(top: isLandscape ? 6 : 8.h),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
-                        decoration: BoxDecoration(
-                          color: isCorrect
-                              ? const Color(0xFF00C853)
-                              : const Color(0xFFE53935),
-                          borderRadius: BorderRadius.circular(8.r),
-                        ),
-                        child: Text(
-                          controller.feedbackMessage.value,
-                          style: TextStyle(
-                            fontFamily: segoeFont,
-                            fontSize: isLandscape ? 11 : 12.sp,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    );
-                  }),
-
-                  SizedBox(height: isLandscape ? 12 : 14.h),
-
-                  // Submit Button (Matching Figma)
-                  GestureDetector(
-                    onTap: controller.submitAnswerFromDialog,
-                    child: Container(
-                      height: isLandscape ? 36 : 42.h,
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFFFF5252),
-                            Color(0xFFFF3B30),
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(12.r),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xFFFF3B30).withValues(alpha: 0.35),
-                            blurRadius: 6,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Submit',
-                          style: TextStyle(
-                            fontFamily: segoeFont,
-                            fontSize: isLandscape ? 13 : 14.5.sp,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            letterSpacing: 0.3,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 }
