@@ -115,10 +115,10 @@ class LeaderboardScreen extends StatelessWidget {
       height: 48.h,
       padding: EdgeInsets.all(4.r),
       decoration: BoxDecoration(
-        color: const Color(0xFF094358).withValues(alpha: 0.85),
+        color: Colors.white.withValues(alpha: 0.25),
         borderRadius: BorderRadius.circular(24.r),
         border: Border.all(
-          color: const Color(0xFF38E5D8).withValues(alpha: 0.3),
+          color: Colors.white.withValues(alpha: 0.45),
           width: 1.w,
         ),
       ),
@@ -135,13 +135,13 @@ class LeaderboardScreen extends StatelessWidget {
                   duration: const Duration(milliseconds: 200),
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? const Color(0xFF3358FE)
+                        ? const Color(0xFFFF3B30)
                         : Colors.transparent,
                     borderRadius: BorderRadius.circular(20.r),
                     boxShadow: isSelected
                         ? [
                             BoxShadow(
-                              color: const Color(0xFF3358FE).withValues(alpha: 0.4),
+                              color: const Color(0xFFFF3B30).withValues(alpha: 0.35),
                               blurRadius: 8,
                               offset: const Offset(0, 2),
                             )
@@ -156,10 +156,10 @@ class LeaderboardScreen extends StatelessWidget {
                         fontSize: 13.5.sp,
                         fontWeight: isSelected
                             ? FontWeight.bold
-                            : FontWeight.w500,
+                            : FontWeight.w600,
                         color: isSelected
                             ? Colors.white
-                            : Colors.white.withValues(alpha: 0.55),
+                            : const Color(0xFF222222),
                       ),
                     ),
                   ),
@@ -178,15 +178,15 @@ class LeaderboardScreen extends StatelessWidget {
       height: 72.h,
       padding: EdgeInsets.symmetric(horizontal: 14.w),
       decoration: BoxDecoration(
-        color: const Color(0xFF084156).withValues(alpha: 0.9),
+        color: const Color(0xFFFF3B30),
         borderRadius: BorderRadius.circular(18.r),
         border: Border.all(
-          color: const Color(0xFF38E5D8).withValues(alpha: 0.35),
+          color: Colors.white.withValues(alpha: 0.35),
           width: 1.w,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.15),
+            color: const Color(0xFFFF3B30).withValues(alpha: 0.35),
             blurRadius: 8,
             offset: const Offset(0, 3),
           ),
@@ -228,7 +228,7 @@ class LeaderboardScreen extends StatelessWidget {
                     fontFamily: segoeFont,
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w500,
-                    color: const Color(0xFF38E5D8),
+                    color: Colors.white70,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -248,7 +248,7 @@ class LeaderboardScreen extends StatelessWidget {
                   fontFamily: segoeFont,
                   fontSize: 18.sp,
                   fontWeight: FontWeight.bold,
-                  color: const Color(0xFFFF9E1B),
+                  color: Colors.white,
                 ),
               ),
               Text(
@@ -257,7 +257,7 @@ class LeaderboardScreen extends StatelessWidget {
                   fontFamily: segoeFont,
                   fontSize: 9.sp,
                   fontWeight: FontWeight.w600,
-                  color: Colors.white.withValues(alpha: 0.55),
+                  color: Colors.white.withValues(alpha: 0.8),
                   letterSpacing: 0.5,
                 ),
               ),
@@ -371,7 +371,7 @@ class LeaderboardScreen extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xFF2E1A68), Color(0xFF0F4C81)],
+          colors: [Color(0xFFF5B800), Color(0xFFFF7A00)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
