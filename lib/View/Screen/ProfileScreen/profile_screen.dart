@@ -68,7 +68,7 @@ class ProfileScreen extends StatelessWidget {
                                     fontFamily: segoeFont,
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.white,
+                                    color: const Color(0xFF222222),
                                   ),
                                 );
                               },
@@ -145,14 +145,14 @@ class ProfileScreen extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Color(0xFF295AF5), Color(0xFF244CE3)],
+          colors: [Color(0xFFFF4848), Color(0xFFFF7A00)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(24.r),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF2752E7).withValues(alpha: 0.35),
+            color: const Color(0xFFFF4848).withValues(alpha: 0.35),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -215,7 +215,7 @@ class ProfileScreen extends StatelessWidget {
                       child: Container(
                         decoration: const BoxDecoration(
                           gradient: LinearGradient(
-                            colors: [Color(0xFF2E1A68), Color(0xFF0F4C81)],
+                            colors: [Color(0xFFF5B800), Color(0xFFFF7A00)],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ),
@@ -371,15 +371,15 @@ class ProfileScreen extends StatelessWidget {
     return Container(
       height: 64.h,
       decoration: BoxDecoration(
-        color: const Color(0xFF0A6372).withValues(alpha: 0.55),
+        color: Colors.white.withValues(alpha: 0.25),
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(
-          color: const Color(0xFF38E5D8).withValues(alpha: 0.35),
+          color: Colors.white.withValues(alpha: 0.45),
           width: 1.w,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.12),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),
@@ -394,7 +394,7 @@ class ProfileScreen extends StatelessWidget {
               fontFamily: segoeFont,
               fontSize: 18.sp,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: const Color(0xFF222222),
             ),
           ),
           SizedBox(height: 2.h),
@@ -403,8 +403,8 @@ class ProfileScreen extends StatelessWidget {
             style: TextStyle(
               fontFamily: segoeFont,
               fontSize: 11.sp,
-              fontWeight: FontWeight.w500,
-              color: Colors.white.withValues(alpha: 0.6),
+              fontWeight: FontWeight.w600,
+              color: const Color(0xFF555555),
             ),
           ),
         ],
@@ -418,15 +418,15 @@ class ProfileScreen extends StatelessWidget {
       width: double.infinity,
       height: 140.h,
       decoration: BoxDecoration(
-        color: const Color(0xFF0A6372).withValues(alpha: 0.55),
+        color: Colors.white.withValues(alpha: 0.25),
         borderRadius: BorderRadius.circular(20.r),
         border: Border.all(
-          color: const Color(0xFF38E5D8).withValues(alpha: 0.35),
+          color: Colors.white.withValues(alpha: 0.45),
           width: 1.w,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.12),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),
@@ -456,8 +456,8 @@ class ProfileScreen extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: segoeFont,
                   fontSize: 13.sp,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white.withValues(alpha: 0.9),
+                  fontWeight: FontWeight.w600,
+                  color: const Color(0xFF222222),
                 ),
               );
             },
@@ -473,10 +473,10 @@ class ProfileScreen extends StatelessWidget {
       height: 56.h,
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       decoration: BoxDecoration(
-        color: const Color(0xFF0A6372).withValues(alpha: 0.55),
+        color: Colors.white.withValues(alpha: 0.25),
         borderRadius: BorderRadius.circular(18.r),
         border: Border.all(
-          color: const Color(0xFF38E5D8).withValues(alpha: 0.35),
+          color: Colors.white.withValues(alpha: 0.45),
           width: 1.w,
         ),
       ),
@@ -492,7 +492,7 @@ class ProfileScreen extends StatelessWidget {
                   fontFamily: segoeFont,
                   fontSize: 15.sp,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: const Color(0xFF222222),
                 ),
               );
             },
@@ -504,7 +504,7 @@ class ProfileScreen extends StatelessWidget {
               height: 36.h,
               padding: EdgeInsets.all(3.r),
               decoration: BoxDecoration(
-                color: const Color(0xFF052A38),
+                color: Colors.black.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(18.r),
               ),
               child: Row(
@@ -521,7 +521,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: controller.currentLanguage.value == 'English'
-                            ? const Color(0xFF3358FE)
+                            ? const Color(0xFFFF3B30)
                             : Colors.transparent,
                         borderRadius: BorderRadius.circular(14.r),
                       ),
@@ -536,7 +536,7 @@ class ProfileScreen extends StatelessWidget {
                                   : FontWeight.w500,
                           color: controller.currentLanguage.value == 'English'
                               ? Colors.white
-                              : const Color(0xFF38E5D8),
+                              : const Color(0xFF555555),
                         ),
                       ),
                     ),
@@ -553,7 +553,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: controller.currentLanguage.value == 'عربي'
-                            ? const Color(0xFF3358FE)
+                            ? const Color(0xFFFF3B30)
                             : Colors.transparent,
                         borderRadius: BorderRadius.circular(14.r),
                       ),
@@ -568,7 +568,7 @@ class ProfileScreen extends StatelessWidget {
                                   : FontWeight.w500,
                           color: controller.currentLanguage.value == 'عربي'
                               ? Colors.white
-                              : const Color(0xFF38E5D8),
+                              : const Color(0xFF555555),
                         ),
                       ),
                     ),
@@ -590,10 +590,10 @@ class ProfileScreen extends StatelessWidget {
         height: 52.h,
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         decoration: BoxDecoration(
-          color: const Color(0xFF0A6372).withValues(alpha: 0.55),
+          color: Colors.white.withValues(alpha: 0.25),
           borderRadius: BorderRadius.circular(18.r),
           border: Border.all(
-            color: const Color(0xFF38E5D8).withValues(alpha: 0.35),
+            color: Colors.white.withValues(alpha: 0.45),
             width: 1.w,
           ),
         ),
